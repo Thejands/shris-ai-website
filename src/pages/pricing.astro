@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import PricingCalculator from '../components/pricing/PricingCalculator.astro';
+import HowItWorks from '../components/workflows/HowItWorks.astro';
+import FaqSection from '../components/faq/FAQSection.astro';
+---
+
+<Layout 
+  title="Pricing & ROI Calculator — Shris AI"
+  description="Transparent pay-as-you-scale pricing based exclusively on connected call minutes. Zero charges for unanswered or busy calls."
+>
+  <Header />
+
+  <main id="main-content" style="padding-top: 5rem;">
+    <!-- 01. Pricing Tiers & Interactive ROI Calculator -->
+    <PricingCalculator />
+
+    <!-- 02. Implementation Blueprint (5 Stages) -->
+    <HowItWorks />
+
+    <!-- 03. Frequently Asked Questions -->
+    <FaqSection />
+  </main>
+
+  <Footer />
+</Layout>

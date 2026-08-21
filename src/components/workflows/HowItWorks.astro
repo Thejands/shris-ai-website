@@ -1,0 +1,120 @@
+---
+const STEPS = [
+  {
+    step: '01',
+    title: 'Define Goal & Playbook',
+    badge: 'Scope Selection',
+    description: 'Select your communication objective: lead qualification, appointment booking, patient reminders, or candidate screening.'
+  },
+  {
+    step: '02',
+    title: 'Configure Persona',
+    badge: 'Vocal Identity',
+    description: 'Select your vocal tone, primary regional language, speaking cadence, and upload your company knowledge base.'
+  },
+  {
+    step: '03',
+    title: 'Connect Systems',
+    badge: 'Bidirectional Sync',
+    description: 'Hook your Salesforce, HubSpot, Google Calendar, WhatsApp Cloud API, or internal REST webhooks with 1-click connectors.'
+  },
+  {
+    step: '04',
+    title: 'Deploy to Telephony',
+    badge: 'Instant Activation',
+    description: 'Trigger automated outbound campaigns from CRM webhooks or route inbound customer calls to your Shris AI phone number.'
+  },
+  {
+    step: '05',
+    title: 'Analyze & Optimize',
+    badge: 'Continuous Loop',
+    description: 'Inspect live call recordings, sentiment trends, and intent clustering to continuously refine conversion rates and script fidelity.'
+  }
+];
+---
+
+<section class="section-wrapper" id="how-it-works">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">IMPLEMENTATION BLUEPRINT</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Deploy your first AI voice agent in 5 simple stages.</h2>
+      <p class="lead">
+        From playbook configuration to live telephony deployment, Shris AI is architected for zero-friction enterprise onboarding.
+      </p>
+    </div>
+
+    <!-- 5-Step Process Grid -->
+    <div class="how-it-works-grid">
+      {STEPS.map((s) => (
+        <div class="hiw-card card-light reveal-stagger-child">
+          <div class="hiw-top">
+            <span class="hiw-step-num">{s.step}</span>
+            <span class="badge badge-indigo">{s.badge}</span>
+          </div>
+
+          <h3 class="hiw-title">{s.title}</h3>
+          <p class="hiw-desc">{s.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-it-works-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+  }
+
+  .hiw-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .hiw-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .hiw-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--sf-indigo-500);
+  }
+
+  .hiw-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: #1E2033;
+    line-height: 1.25;
+    margin-bottom: 0.4rem;
+  }
+
+  .hiw-desc {
+    font-size: 0.82rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 1200px) {
+    .how-it-works-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .how-it-works-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,479 @@
+---
+import { DOMAINS, OTHER_INDUSTRIES } from '../../data/domains';
+---
+
+<section class="section-wrapper" id="domains">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">Industry Playbooks</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>One voice platform. Every industry.</h2>
+      <p class="lead">
+        Build specialized voice agents for the workflows your enterprise runs every day.
+      </p>
+    </div>
+
+    <!-- Domain Pill Buttons -->
+    <div class="domain-tabs-nav reveal-fade-up" role="tablist">
+      {DOMAINS.map((domain, idx) => (
+        <button
+          class={`domain-tab-btn ${idx === 0 ? 'active' : ''}`}
+          data-domain-tab={domain.id}
+          role="tab"
+          aria-selected={idx === 0 ? 'true' : 'false'}
+          id={`tab-${domain.id}`}
+        >
+          <span>{domain.name}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Domain Panels Grid -->
+    <div class="domain-panels-wrap">
+      {DOMAINS.map((domain, idx) => (
+        <div
+          class="domain-panel-grid"
+          data-domain-panel={domain.id}
+          style={`display: ${idx === 0 ? 'grid' : 'none'};`}
+        >
+          <!-- Left: Architecture & Metrics -->
+          <div class="domain-col-left card-light">
+            <div class="panel-tag-row">
+              <span class="badge badge-indigo">{domain.badge}</span>
+              <span class="badge badge-emerald">HD 24kHz Audio</span>
+            </div>
+
+            <h3 class="panel-headline">{domain.tagline}</h3>
+            <p class="panel-desc">{domain.description}</p>
+
+            <div class="problem-box">
+              <span class="prob-title">Operational Challenge:</span>
+              <p>{domain.industryProblem}</p>
+            </div>
+
+            <div class="workflow-box">
+              <span class="wf-title">Automated Execution Flow:</span>
+              <ol class="wf-list">
+                {domain.workflowSteps.map((step) => (
+                  <li>{step}</li>
+                ))}
+              </ol>
+            </div>
+
+            <div class="impact-metrics-row">
+              {domain.impactMetrics.map((m) => (
+                <div class="impact-block">
+                  <span class="impact-figure">{m.metric}</span>
+                  <span class="impact-text">{m.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Right: Live Conversation Stream (Dark Contrast Card) -->
+          <div class="domain-col-right card-dark">
+            <div class="chat-header">
+              <div class="agent-profile-mini">
+                <span class="pulse-dot"></span>
+                <strong>{domain.agentName}</strong>
+                <span class="agent-title-text">({domain.agentRole})</span>
+              </div>
+              <span class="badge badge-dark">Verified Turn Flow</span>
+            </div>
+
+            <div class="chat-stream-list">
+              {domain.sampleConversation.map((msg) => (
+                <div class={`chat-msg ${msg.speaker === 'agent' ? 'agent-msg' : 'user-msg'}`}>
+                  <div class="msg-meta-row">
+                    <span class="speaker-lbl">{msg.speaker === 'agent' ? domain.agentName : 'Customer'}</span>
+                    <span class="time-lbl">{msg.timestamp}</span>
+                    {msg.intentTag && (
+                      <span class="badge badge-indigo" style="font-size: 0.65rem;">{msg.intentTag}</span>
+                    )}
+                  </div>
+                  <p class="msg-txt">{msg.message}</p>
+                </div>
+              ))}
+            </div>
+
+            <!-- Extracted Business Parameters -->
+            <div class="extractions-box-dark">
+              <span class="ext-title">Extracted Entities & Actions</span>
+              <div class="ext-pills-row">
+                {domain.extractedEntities.map((ent) => (
+                  <div class="ext-pill-item">
+                    <span class="ent-k">{ent.label}:</span>
+                    <strong class="ent-v">{ent.value}</strong>
+                  </div>
+                ))}
+              </div>
+
+              <div class="mutations-list">
+                {domain.actionsExecuted.map((act) => (
+                  <div class="mutation-item">
+                    <span class="check-mark">✓</span>
+                    <span><strong>{act.system}:</strong> {act.action}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Secondary Ecosystem Section -->
+    <div class="ecosystem-strip-section reveal-fade-up">
+      <div class="ecosystem-header">
+        <div class="eyebrow-container">
+          <div class="eyebrow-line"></div>
+          <p class="eyebrow-text">Enterprise Workforce</p>
+          <div class="eyebrow-line"></div>
+        </div>
+        <h3>Built for any business with high-volume communication workflows</h3>
+      </div>
+
+      <div class="ecosystem-cards-grid">
+        {OTHER_INDUSTRIES.map((ind) => (
+          <div class="eco-card card-light reveal-stagger-child">
+            <h4 class="eco-name">{ind.name}</h4>
+            <p class="eco-desc">{ind.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .domain-tabs-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .domain-tab-btn {
+    padding: 0.6rem 1.35rem;
+    background: #FFFFFF;
+    border: 1px solid var(--sf-border-subtle);
+    border-radius: var(--radius-full);
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--sf-slate-900);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .domain-tab-btn:hover {
+    background: #F3F4F8;
+  }
+
+  .domain-tab-btn.active {
+    background: #1E2033;
+    color: #FFFFFF;
+    border-color: #1E2033;
+  }
+
+  /* Grid */
+  .domain-panels-wrap {
+    margin-bottom: 5rem;
+  }
+
+  .domain-panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .domain-col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .panel-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .panel-headline {
+    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+    color: #1E2033;
+    line-height: 1.2;
+  }
+
+  .panel-desc {
+    font-size: 0.95rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.6;
+  }
+
+  .problem-box {
+    background: #FFF1F2;
+    border: 1px solid #FECDD3;
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    font-size: 0.86rem;
+  }
+
+  .prob-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #E11D48;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .problem-box p {
+    color: #9F1239;
+    margin: 0;
+  }
+
+  .workflow-box {
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+  }
+
+  .wf-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--sf-tx-indigo);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .wf-list {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--sf-tx-secondary);
+  }
+
+  .impact-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sf-border-subtle);
+  }
+
+  .impact-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .impact-figure {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #1E2033;
+    font-weight: 400;
+  }
+
+  .impact-text {
+    font-size: 0.72rem;
+    color: var(--sf-tx-tertiary);
+    line-height: 1.3;
+  }
+
+  /* Right Col Dark */
+  .domain-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .agent-profile-mini {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+  }
+
+  .agent-title-text {
+    font-size: 0.78rem;
+    color: #94A3B8;
+  }
+
+  .chat-stream-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 360px;
+    overflow-y: auto;
+  }
+
+  .chat-msg {
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+  }
+
+  .agent-msg {
+    background: rgba(106, 136, 226, 0.12);
+    border: 1px solid rgba(106, 136, 226, 0.25);
+    color: #FFFFFF;
+  }
+
+  .user-msg {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #CBD5E1;
+  }
+
+  .msg-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .time-lbl {
+    font-family: var(--font-mono);
+    color: #64748B;
+  }
+
+  .msg-txt {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Extractions Box */
+  .extractions-box-dark {
+    background: #141624;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+  }
+
+  .ext-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #A5BBFC;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .ext-pills-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .ext-pill-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 0.4rem 0.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.78rem;
+  }
+
+  .ent-k {
+    color: #94A3B8;
+  }
+
+  .ent-v {
+    color: #FFFFFF;
+  }
+
+  .mutations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 6px;
+    padding: 0.65rem;
+    font-size: 0.76rem;
+    color: #CBD5E1;
+  }
+
+  .check-mark {
+    color: #10B981;
+    font-weight: bold;
+    margin-right: 0.3rem;
+  }
+
+  /* Ecosystem */
+  .ecosystem-strip-section {
+    padding-top: 4rem;
+    border-top: 1px solid var(--sf-border-subtle);
+  }
+
+  .ecosystem-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .ecosystem-header h3 {
+    font-size: 1.75rem;
+    color: #1E2033;
+  }
+
+  .ecosystem-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .eco-card {
+    padding: 1.25rem;
+  }
+
+  .eco-name {
+    font-size: 1rem;
+    color: #1E2033;
+    margin-bottom: 0.35rem;
+  }
+
+  .eco-desc {
+    font-size: 0.82rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 1080px) {
+    .domain-panel-grid {
+      grid-template-columns: 1fr;
+    }
+    .ecosystem-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ecosystem-cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

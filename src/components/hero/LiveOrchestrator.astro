@@ -1,0 +1,376 @@
+---
+---
+
+<div class="orchestrator-outer-wrap" id="hero-demo">
+  <div class="orchestrator-card card-dark">
+    <!-- Telephony Status Bar -->
+    <div class="telephony-bar">
+      <div class="caller-meta">
+        <div class="caller-avatar-vector">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A5BBFC" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span class="pulse-dot" id="hero-pulse-dot"></span>
+        </div>
+        <div class="caller-info">
+          <div class="caller-title-row">
+            <span class="caller-title">Shris Conversational Voice Agent</span>
+            <span id="hero-agent-state-badge" class="badge badge-emerald">Ready to Speak</span>
+          </div>
+          <div class="caller-sub">
+            <span id="hero-call-state-text" class="status-stream">Powered by Sarvam Voice Engine (276ms latency)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons: Talk via Mic & Sample Trigger -->
+      <div class="telephony-buttons">
+        <button id="hero-mic-toggle-btn" class="btn btn-filled btn-sm" aria-label="Speak with Shris AI">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span id="hero-mic-btn-label">Speak to Agent (Mic)</span>
+        </button>
+
+        <button id="hero-play-sample-btn" class="btn btn-outline btn-sm" style="color: #FFFFFF; background: rgba(255,255,255,0.08);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span id="hero-sample-btn-label">Hear Demo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Audio Spectrum Canvas -->
+    <div class="waveform-box">
+      <div class="waveform-meta-row">
+        <div class="spectrum-label">
+          <span class="pulse-dot"></span>
+          <span>Neural Audio Spectrum</span>
+        </div>
+        <span class="telemetry-latency">Latency P50: <strong>276ms</strong> • 24kHz HD Voice</span>
+      </div>
+      <canvas id="hero-waveform-canvas" class="waveform-canvas" height="75"></canvas>
+    </div>
+
+    <!-- Split Grid: Live Stream & Structured Action -->
+    <div class="orchestrator-split-grid">
+      <!-- Conversation Stream -->
+      <div class="stream-box">
+        <div class="box-head">
+          <span>Live Conversation Stream</span>
+          <span class="badge badge-indigo" id="hero-turn-badge">Turn #2</span>
+        </div>
+
+        <div class="messages-list" id="hero-messages-list">
+          <div class="msg-bubble customer-side">
+            <div class="speaker-meta">
+              <strong>You (Caller)</strong>
+              <span class="msg-time">00:04</span>
+            </div>
+            <p id="hero-last-user-msg">"Hi, I'm looking for a 3 BHK apartment and want to visit this Saturday around 11:30 AM."</p>
+          </div>
+
+          <div class="msg-bubble agent-side highlight-bubble">
+            <div class="speaker-meta">
+              <strong>Shris AI</strong>
+              <span class="msg-time">00:07</span>
+              <span class="badge badge-emerald">276ms</span>
+            </div>
+            <p id="hero-last-agent-msg">"Namaste! Slot confirmed for Saturday 11:30 AM with Senior Manager Rohit. I have sent the floor plan and location map to your WhatsApp right now."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Extractions & Actions -->
+      <div class="extractions-box">
+        <div class="box-head">
+          <span>Verified System Actions</span>
+          <span class="badge badge-emerald">100% Accuracy</span>
+        </div>
+
+        <div class="entities-list">
+          <div class="ent-card">
+            <span class="ent-lbl">Parsed Intent</span>
+            <strong class="ent-txt">Site Visit Booking (Self-Use)</strong>
+          </div>
+          <div class="ent-card">
+            <span class="ent-lbl">Confirmed Slot</span>
+            <strong class="ent-txt">Saturday, 11:30 AM IST</strong>
+          </div>
+        </div>
+
+        <div class="actions-wrapper">
+          <div class="act-item">
+            <span class="check-icon">✓</span>
+            <span><strong>CRM Updated:</strong> Lead moved to "Site Visit Confirmed"</span>
+          </div>
+          <div class="act-item">
+            <span class="check-icon">✓</span>
+            <span><strong>Calendar Dispatched:</strong> Invite sent to Rohit & Customer</span>
+          </div>
+          <div class="act-item">
+            <span class="check-icon">✓</span>
+            <span><strong>WhatsApp Cloud:</strong> Floor plan PDF dispatched</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .orchestrator-outer-wrap {
+    max-width: 1080px;
+    margin: 3.5rem auto 0;
+    text-align: left;
+  }
+
+  .orchestrator-card {
+    background: #1E2033;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-2xl);
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    box-shadow: 0 20px 60px rgba(30, 32, 51, 0.3);
+  }
+
+  .telephony-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .caller-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .caller-avatar-vector {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: #292C44;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .caller-avatar-vector .pulse-dot {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+  }
+
+  .caller-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .caller-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #FFFFFF;
+  }
+
+  .caller-sub {
+    font-size: 0.8rem;
+  }
+
+  .status-stream {
+    color: #A5BBFC;
+  }
+
+  .telephony-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  /* Waveform */
+  .waveform-box {
+    background: #141624;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem 1.15rem 0.4rem;
+    margin: 1.25rem 0;
+  }
+
+  .waveform-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+
+  .spectrum-label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #A5BBFC;
+    font-weight: 700;
+  }
+
+  .telemetry-latency {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #94A3B8;
+  }
+
+  .telemetry-latency strong {
+    color: #10B981;
+  }
+
+  .waveform-canvas {
+    width: 100%;
+    height: 70px;
+    display: block;
+  }
+
+  /* Split Grid */
+  .orchestrator-split-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.25rem;
+  }
+
+  .stream-box, .extractions-box {
+    background: #141624;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem;
+  }
+
+  .box-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #94A3B8;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .msg-bubble {
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .agent-side {
+    background: rgba(106, 136, 226, 0.12);
+    border: 1px solid rgba(106, 136, 226, 0.25);
+    color: #F8FAFC;
+  }
+
+  .agent-side.highlight-bubble {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.1);
+  }
+
+  .customer-side {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #CBD5E1;
+  }
+
+  .speaker-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.2rem;
+    font-size: 0.75rem;
+  }
+
+  .msg-time {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #64748B;
+  }
+
+  .msg-bubble p {
+    color: inherit;
+    font-size: 0.84rem;
+    margin: 0;
+  }
+
+  .entities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .ent-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ent-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #94A3B8;
+    text-transform: uppercase;
+  }
+
+  .ent-txt {
+    font-size: 0.82rem;
+    color: #FFFFFF;
+  }
+
+  .actions-wrapper {
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 6px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .act-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.76rem;
+    color: #CBD5E1;
+    line-height: 1.35;
+  }
+
+  .check-icon {
+    color: #10B981;
+    font-weight: bold;
+  }
+
+  @media (max-width: 860px) {
+    .orchestrator-split-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

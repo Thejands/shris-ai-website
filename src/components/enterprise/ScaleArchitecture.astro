@@ -1,0 +1,226 @@
+---
+const ARCH_PILLARS = [
+  {
+    title: 'Elastic Telephony Grid',
+    badge: 'Multi-Carrier SIP',
+    description: 'Direct SIP interconnects with tier-1 national and global telecom carriers with automatic failover within 40ms.'
+  },
+  {
+    title: 'Distributed Worker Nodes',
+    badge: 'Autoscaling Kubernetes',
+    description: 'Stateless voice agent workers scale up or down dynamically based on queue depth, handling high-volume bursts.'
+  },
+  {
+    title: 'Low-Bandwidth OPUS Stream',
+    badge: 'WebRTC / RTP Streaming',
+    description: 'Custom jitter buffers and low-bandwidth OPUS compression ensure crystal-clear voice clarity even on 2G/3G networks.'
+  },
+  {
+    title: 'Mission-Critical Governance',
+    badge: '99.95% Enterprise SLA',
+    description: 'Distributed tracing across every conversational turn with automated anomaly detection and live fail-safes.'
+  }
+];
+---
+
+<section class="section-wrapper" id="scale">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">DISTRIBUTED VOICE RUNTIME</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>One agent or one million conversations.</h2>
+      <p class="lead">
+        Engineered for massive horizontal scalability, resilient telephony failovers, and sub-300ms conversational execution at national scale.
+      </p>
+    </div>
+
+    <!-- Pillars Grid -->
+    <div class="scale-pillars-grid">
+      {ARCH_PILLARS.map((pillar) => (
+        <div class="pillar-card card-light reveal-stagger-child">
+          <div class="pillar-top">
+            <span class="badge badge-indigo">{pillar.badge}</span>
+          </div>
+
+          <h3 class="pillar-title">{pillar.title}</h3>
+          <p class="pillar-desc">{pillar.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Topology Card (Dark Card) -->
+    <div class="topology-card card-dark reveal-fade-up">
+      <div class="topo-hdr">
+        <span class="pulse-dot"></span>
+        <span>DISTRIBUTED VOICE WORKFORCE TOPOLOGY</span>
+      </div>
+
+      <div class="topo-steps-row">
+        <div class="topo-step">
+          <span class="step-tag">INGRESS</span>
+          <div class="step-card">
+            <strong>Event Trigger</strong>
+            <small>Webhooks / SIP</small>
+          </div>
+        </div>
+
+        <div class="topo-arrow">➔</div>
+
+        <div class="topo-step">
+          <span class="step-tag">QUEUE</span>
+          <div class="step-card">
+            <strong>Priority Queue</strong>
+            <small>Kafka Streaming</small>
+          </div>
+        </div>
+
+        <div class="topo-arrow">➔</div>
+
+        <div class="topo-step highlight-step">
+          <span class="step-tag">RUNTIME</span>
+          <div class="step-card">
+            <strong>Shris Engine</strong>
+            <small>ASR + NLU + TTS</small>
+          </div>
+        </div>
+
+        <div class="topo-arrow">➔</div>
+
+        <div class="topo-step">
+          <span class="step-tag">ACTION</span>
+          <div class="step-card">
+            <strong>Execution</strong>
+            <small>CRM / Calendar</small>
+          </div>
+        </div>
+
+        <div class="topo-arrow">➔</div>
+
+        <div class="topo-step">
+          <span class="step-tag">FAILSAFE</span>
+          <div class="step-card">
+            <strong>Human Transfer</strong>
+            <small>Full Context</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scale-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pillar-card {
+    padding: 1.75rem;
+  }
+
+  .pillar-top {
+    margin-bottom: 1rem;
+  }
+
+  .pillar-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: #1E2033;
+    margin-bottom: 0.35rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.86rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Topology Dark */
+  .topology-card {
+    padding: 1.75rem;
+  }
+
+  .topo-hdr {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #A5BBFC;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .topo-steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .topo-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 130px;
+  }
+
+  .step-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #94A3B8;
+  }
+
+  .step-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 0.6rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .topo-step.highlight-step .step-card {
+    background: rgba(106, 136, 226, 0.15);
+    border-color: rgba(106, 136, 226, 0.35);
+  }
+
+  .step-card strong {
+    font-size: 0.82rem;
+    color: #FFFFFF;
+  }
+
+  .step-card small {
+    font-size: 0.7rem;
+    color: #94A3B8;
+  }
+
+  .topo-arrow {
+    color: #64748B;
+    font-weight: bold;
+  }
+
+  @media (max-width: 1080px) {
+    .scale-pillars-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .scale-pillars-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

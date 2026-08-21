@@ -1,0 +1,198 @@
+---
+import LiveOrchestrator from './LiveOrchestrator.astro';
+---
+
+<section class="sarvam-hero-section" id="hero">
+  <!-- Radial Glow Atmosphere -->
+  <div class="hero-radial-glow" aria-hidden="true"></div>
+
+  <div class="container hero-container">
+    <div class="hero-center-content">
+      <!-- Top SVG Motif -->
+      <div class="top-motif-vector" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="16" stroke="url(#motifGrad)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <circle cx="18" cy="18" r="8" fill="#1E2033"/>
+          <circle cx="18" cy="18" r="3" fill="#6A88E2"/>
+          <defs>
+            <linearGradient id="motifGrad" x1="2" y1="2" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6A88E2"/>
+              <stop offset="1" stop-color="#A5BBFC"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Eyebrow with Radial Divider Lines -->
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">India's Sovereign AI Voice Platform</p>
+        <div class="eyebrow-line"></div>
+      </div>
+
+      <!-- Main Editorial Headline -->
+      <h1 class="hero-main-title">
+        AI Voice for all from India
+      </h1>
+
+      <!-- Supporting Editorial Copy -->
+      <p class="hero-lead-text">
+        Built on sovereign voice compute. Powered by frontier-class conversational agents.
+        <br class="desktop-break" />
+        Delivering population-scale enterprise impact.
+      </p>
+
+      <!-- Action Buttons Row -->
+      <div class="hero-actions-row">
+        <a href="#agent-builder" class="btn btn-filled btn-lg">
+          <span>Sign up</span>
+        </a>
+        <a href="#pricing" class="btn btn-outline btn-lg">
+          <span>Contact Us</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Partner Logos Strip (100% Pure Vector SVGs, ZERO IMAGES) -->
+    <div class="partner-ticker-section">
+      <p class="ticker-heading">ENTERPRISES BUILD WITH SHRIS AI</p>
+      
+      <div class="svg-logos-track">
+        <div class="svg-logo-badge">
+          <svg width="85" height="26" viewBox="0 0 85 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" letter-spacing="-0.5">AADHAAR</text></svg>
+        </div>
+        <div class="svg-logo-badge">
+          <svg width="95" height="26" viewBox="0 0 95 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" letter-spacing="-0.5">AXIS BANK</text></svg>
+        </div>
+        <div class="svg-logo-badge">
+          <svg width="65" height="26" viewBox="0 0 65 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="800" letter-spacing="1">CRED</text></svg>
+        </div>
+        <div class="svg-logo-badge">
+          <svg width="90" height="26" viewBox="0 0 90 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" letter-spacing="-0.5">IDFC FIRST</text></svg>
+        </div>
+        <div class="svg-logo-badge">
+          <svg width="85" height="26" viewBox="0 0 85 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" letter-spacing="-0.5">INFOSYS</text></svg>
+        </div>
+        <div class="svg-logo-badge">
+          <svg width="120" height="26" viewBox="0 0 120 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" letter-spacing="-0.5">TATA CAPITAL</text></svg>
+        </div>
+        <div class="svg-logo-badge">
+          <svg width="130" height="26" viewBox="0 0 130 26" fill="none"><text x="0" y="20" fill="#1E2033" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="800" letter-spacing="-0.5">URBAN COMPANY</text></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Interactive Voice Orchestrator Demo -->
+    <LiveOrchestrator />
+  </div>
+</section>
+
+<style>
+  .sarvam-hero-section {
+    position: relative;
+    padding-top: clamp(8rem, 14vw, 11rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-radial-glow {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(320px, 60vw, 850px);
+    height: clamp(300px, 45vw, 550px);
+    background: var(--sf-gradient-hero-glow);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-center-content {
+    max-width: 920px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .top-motif-vector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-main-title {
+    font-size: clamp(2.75rem, 6.2vw, 4.85rem);
+    color: #1E2033;
+    margin-bottom: 1.25rem;
+    line-height: 1.05;
+  }
+
+  .hero-lead-text {
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    color: var(--sf-tx-secondary);
+    line-height: 1.7;
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-actions-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  /* Ticker Section */
+  .partner-ticker-section {
+    margin: 4rem auto 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(30, 32, 51, 0.08);
+    max-width: 1080px;
+  }
+
+  .ticker-heading {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--sf-tx-muted);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .svg-logos-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .svg-logo-badge {
+    opacity: 0.55;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+  }
+
+  .svg-logo-badge:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.05);
+  }
+
+  .desktop-break {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-break {
+      display: none;
+    }
+  }
+</style>

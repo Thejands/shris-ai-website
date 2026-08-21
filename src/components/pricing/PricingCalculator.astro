@@ -1,0 +1,320 @@
+---
+import { PRICING_TIERS } from '../../data/pricing';
+---
+
+<section class="section-wrapper" id="pricing">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">Transparent Pricing</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Pay as you scale. Zero wasted spend.</h2>
+      <p class="lead">
+        Transparent pricing based exclusively on connected conversation minutes. No charges for busy tones or failed attempts.
+      </p>
+    </div>
+
+    <!-- Volume ROI Calculator -->
+    <div class="calculator-card card-light reveal-fade-up">
+      <div class="calc-top">
+        <h3 class="calc-heading">Estimate your monthly calling ROI vs human call centers</h3>
+      </div>
+
+      <div class="calc-grid">
+        <!-- Sliders -->
+        <div class="sliders-col">
+          <div class="range-group">
+            <div class="range-head">
+              <label for="pricing-call-slider">Daily Call Volume</label>
+              <span class="range-val"><strong id="calc-daily-calls-val">2,500</strong> calls / day</span>
+            </div>
+            <input type="range" id="pricing-call-slider" min="100" max="20000" step="100" value="2500" class="ctrl-range" />
+          </div>
+
+          <div class="range-group">
+            <div class="range-head">
+              <label for="pricing-duration-slider">Average Call Duration</label>
+              <span class="range-val"><strong id="calc-duration-val">2.5</strong> minutes</span>
+            </div>
+            <input type="range" id="pricing-duration-slider" min="1" max="5" step="0.5" value="2.5" class="ctrl-range" />
+          </div>
+        </div>
+
+        <!-- Output Box (Dark Card) -->
+        <div class="output-col card-dark">
+          <div class="calc-stat-row">
+            <span>Monthly Call Volume:</span>
+            <strong id="calc-total-calls">75,000</strong>
+          </div>
+          <div class="calc-stat-row">
+            <span>Estimated Shris AI Cost:</span>
+            <strong id="calc-monthly-cost" style="color: #A5BBFC;">₹6,00,000</strong>
+          </div>
+          <div class="calc-stat-row">
+            <span>Traditional Call Center Cost:</span>
+            <span id="calc-human-cost" style="color: #64748B; text-decoration: line-through;">₹16,10,000</span>
+          </div>
+
+          <div class="savings-highlight-box">
+            <span class="sav-lbl">Estimated Net Monthly Savings:</span>
+            <strong id="calc-total-savings" class="sav-num">₹10,10,000 (63% Saved)</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tiers Grid -->
+    <div class="pricing-tiers-grid">
+      {PRICING_TIERS.map((tier) => (
+        <div class={`tier-card ${tier.popular ? 'card-dark tier-popular' : 'card-light'} reveal-stagger-child`}>
+          <div class="tier-top">
+            <h3 class="tier-name">{tier.name}</h3>
+            <span class={`badge ${tier.popular ? 'badge-emerald' : 'badge-indigo'}`}>{tier.pricingModel}</span>
+          </div>
+
+          <p class="tier-tagline">{tier.tagline}</p>
+
+          <div class="tier-rate-row">
+            <span class="tier-rate">{tier.pricePerMinute}</span>
+            <span class="tier-unit">{tier.pricePerMinute === 'Custom' ? '' : '/ connected min'}</span>
+          </div>
+          <span class="tier-base">{tier.monthlyBase}</span>
+
+          <div class="tier-feats">
+            <span class="feats-hdr">Included with plan:</span>
+            <ul>
+              {tier.features.map((f) => (
+                <li>
+                  <span class="feat-chk">✓</span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <a href="#agent-builder" class={`btn ${tier.popular ? 'btn-filled' : 'btn-outline'}`} style="width: 100%; margin-top: auto;">
+            {tier.ctaText}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .calculator-card {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    margin-bottom: 3.5rem;
+  }
+
+  .calc-top {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .calc-heading {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    color: #1E2033;
+  }
+
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .sliders-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .range-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .range-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .range-head label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--sf-tx-indigo);
+    font-weight: 700;
+  }
+
+  .range-val {
+    font-size: 0.88rem;
+    color: #1E2033;
+  }
+
+  .ctrl-range {
+    width: 100%;
+    accent-color: var(--sf-indigo-900);
+    cursor: pointer;
+  }
+
+  .output-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.5rem;
+  }
+
+  .calc-stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .calc-stat-row strong {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    color: #FFFFFF;
+  }
+
+  .savings-highlight-box {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+
+  .sav-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #10B981;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .sav-num {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: #FFFFFF;
+  }
+
+  /* Tiers */
+  .pricing-tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tier-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  .tier-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .tier-name {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: inherit;
+  }
+
+  .tier-tagline {
+    font-size: 0.85rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.45;
+    margin-bottom: 1.25rem;
+    min-height: 44px;
+  }
+
+  .tier-card.tier-popular .tier-tagline {
+    color: #94A3B8;
+  }
+
+  .tier-rate-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+
+  .tier-rate {
+    font-family: var(--font-serif);
+    font-size: 2.35rem;
+    font-weight: 400;
+    color: inherit;
+  }
+
+  .tier-unit {
+    font-size: 0.82rem;
+    color: var(--sf-tx-tertiary);
+  }
+
+  .tier-base {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--sf-tx-indigo);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .tier-card.tier-popular .tier-base {
+    color: #A5BBFC;
+  }
+
+  .tier-feats {
+    margin-bottom: 1.75rem;
+    flex: 1;
+  }
+
+  .feats-hdr {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--sf-tx-tertiary);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .tier-feats ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    font-size: 0.84rem;
+  }
+
+  .tier-feats li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    line-height: 1.4;
+  }
+
+  .feat-chk {
+    color: #10B981;
+    font-weight: bold;
+  }
+
+  @media (max-width: 1080px) {
+    .calc-grid {
+      grid-template-columns: 1fr;
+    }
+    .pricing-tiers-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

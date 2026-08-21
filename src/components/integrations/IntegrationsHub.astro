@@ -1,0 +1,135 @@
+---
+import { INTEGRATIONS_CATEGORIES } from '../../data/integrations';
+---
+
+<section class="section-wrapper" id="integrations">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">ENTERPRISE INTEGRATIONS</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Your systems of record remain the source of truth.</h2>
+      <p class="lead">
+        Shris AI connects directly to your existing CRM, ERP, calendar, and messaging infrastructure.
+      </p>
+    </div>
+
+    <!-- Integrations Stack -->
+    <div class="integrations-stack">
+      {INTEGRATIONS_CATEGORIES.map((cat) => (
+        <div class="cat-section-block reveal-stagger-child">
+          <div class="cat-heading-row">
+            <h3 class="cat-title">{cat.name}</h3>
+            <p class="cat-sub">{cat.description}</p>
+          </div>
+
+          <div class="integrations-grid">
+            {cat.integrations.map((item) => (
+              <div class="integration-item card-light">
+                <div class="int-top">
+                  <div class="logo-box">
+                    <span>{item.logoText}</span>
+                  </div>
+                  <span class={`badge ${item.status === 'Native' ? 'badge-emerald' : 'badge-indigo'}`}>{item.status}</span>
+                </div>
+
+                <h4 class="int-name">{item.name}</h4>
+                <p class="int-desc">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .integrations-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .cat-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .cat-heading-row {
+    border-left: 2px solid var(--sf-indigo-500);
+    padding-left: 1rem;
+  }
+
+  .cat-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #1E2033;
+    margin-bottom: 0.2rem;
+  }
+
+  .cat-sub {
+    font-size: 0.88rem;
+    color: var(--sf-tx-secondary);
+  }
+
+  .integrations-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .integration-item {
+    padding: 1.35rem;
+  }
+
+  .int-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+  }
+
+  .logo-box {
+    width: 36px;
+    height: 36px;
+    background: #F3F4F8;
+    border: 1px solid rgba(30, 32, 51, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #1E2033;
+  }
+
+  .int-name {
+    font-size: 1.05rem;
+    color: #1E2033;
+    margin-bottom: 0.3rem;
+  }
+
+  .int-desc {
+    font-size: 0.82rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  @media (max-width: 1080px) {
+    .integrations-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .integrations-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

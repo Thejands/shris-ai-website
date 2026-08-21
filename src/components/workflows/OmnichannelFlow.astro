@@ -1,0 +1,126 @@
+---
+const CHANNELS = [
+  {
+    step: '01',
+    channel: 'Voice Call',
+    role: 'Primary Touchpoint (Sub-300ms)',
+    detail: 'Shris AI initiates or receives the phone call, explores intent, handles questions, and captures structured data.',
+    badge: 'Voice Core'
+  },
+  {
+    step: '02',
+    channel: 'WhatsApp Follow-Up',
+    role: 'Instant Media Delivery',
+    detail: 'Seconds after the call concludes, Shris AI dispatches verified floor plans, clinic directions, or booking tokens.',
+    badge: 'Real-Time'
+  },
+  {
+    step: '03',
+    channel: 'Transactional SMS',
+    role: 'Encrypted 1-Click Action',
+    detail: 'Sends tokenized payment links, KYC upload portals, or appointment verification codes directly to the customer.',
+    badge: 'Secure'
+  },
+  {
+    step: '04',
+    channel: 'CRM & Calendar Sync',
+    role: 'Source of Truth',
+    detail: 'Updates Salesforce, books calendar slots, and notifies account executives via Slack with full transcripts.',
+    badge: 'Automated'
+  }
+];
+---
+
+<section class="section-wrapper" id="omnichannel">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">OMNICHANNEL EXECUTION</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Voice starts the conversation. Your systems finish the workflow.</h2>
+      <p class="lead">
+        Seamlessly transition from a phone conversation into verified messaging, document delivery, and CRM updates.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="channel-flow-grid">
+      {CHANNELS.map((ch) => (
+        <div class="channel-card card-light reveal-stagger-child">
+          <div class="ch-top">
+            <span class="ch-num">{ch.step}</span>
+            <span class="badge badge-indigo">{ch.badge}</span>
+          </div>
+
+          <h3 class="ch-title">{ch.channel}</h3>
+          <span class="ch-role">{ch.role}</span>
+          <p class="ch-detail">{ch.detail}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .channel-flow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .channel-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+  }
+
+  .ch-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .ch-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--sf-indigo-500);
+  }
+
+  .ch-title {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: #1E2033;
+    margin-bottom: 0.2rem;
+  }
+
+  .ch-role {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--sf-tx-indigo);
+    margin-bottom: 0.85rem;
+    display: block;
+  }
+
+  .ch-detail {
+    font-size: 0.86rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 1080px) {
+    .channel-flow-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .channel-flow-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

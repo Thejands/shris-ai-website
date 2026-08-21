@@ -1,0 +1,99 @@
+---
+import { FAQ_ITEMS } from '../../data/faq';
+---
+
+<section class="section-wrapper" id="faq">
+  <div class="container container-narrow">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">FREQUENTLY ASKED QUESTIONS</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Everything you need to know about Shris AI.</h2>
+    </div>
+
+    <!-- Accordion List -->
+    <div class="faq-accordion-list reveal-fade-up">
+      {FAQ_ITEMS.map((item, idx) => (
+        <div class="faq-item card-light" data-faq-item>
+          <button class="faq-question-btn" aria-expanded={idx === 0 ? 'true' : 'false'}>
+            <span class="faq-q-text">{item.question}</span>
+            <span class="faq-chevron">{idx === 0 ? '−' : '+'}</span>
+          </button>
+          <div class="faq-answer-panel" style={`display: ${idx === 0 ? 'block' : 'none'};`}>
+            <p>{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .faq-question-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.35rem 1.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .faq-q-text {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1E2033;
+  }
+
+  .faq-chevron {
+    font-size: 1.35rem;
+    color: var(--sf-indigo-500);
+    font-weight: bold;
+  }
+
+  .faq-answer-panel {
+    padding: 0 1.75rem 1.5rem;
+  }
+
+  .faq-answer-panel p {
+    font-size: 0.92rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-faq-item]').forEach((item) => {
+    const btn = item.querySelector('.faq-question-btn');
+    const panel = item.querySelector('.faq-answer-panel') as HTMLElement;
+    const chevron = item.querySelector('.faq-chevron');
+
+    btn?.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      if (panel) {
+        panel.style.display = !isExpanded ? 'block' : 'none';
+      }
+      if (chevron) {
+        chevron.textContent = !isExpanded ? '−' : '+';
+      }
+    });
+  });
+</script>

@@ -1,0 +1,94 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+---
+
+<Layout 
+  title="Company & Mission — Shris AI"
+  description="Building India's full-stack sovereign AI voice platform. Engineering foundational conversational agents for population-scale impact."
+>
+  <Header />
+
+  <main id="main-content" style="padding-top: 5.5rem;">
+    <!-- Hero -->
+    <section class="section-wrapper" style="text-align: center; padding-bottom: 3rem;">
+      <div class="container container-narrow">
+        <div class="eyebrow-container">
+          <div class="eyebrow-line"></div>
+          <p class="eyebrow-text">Sovereign Intelligence</p>
+          <div class="eyebrow-line"></div>
+        </div>
+        <h1 style="font-size: clamp(2.5rem, 5.5vw, 4.25rem); color: #1E2033; margin-bottom: 1.25rem;">
+          Voice intelligence for all from India.
+        </h1>
+        <p class="lead">
+          Shris AI is engineered by Thejands LLP to build sovereign, full-duplex conversational voice platforms that understand diverse Indian accents, dialects, and code-mixed speech while executing complex business actions.
+        </p>
+      </div>
+    </section>
+
+    <!-- Core Values / Pillars -->
+    <section class="section-wrapper" style="background: #FFFFFF; border-top: 1px solid rgba(30,32,51,0.06); border-bottom: 1px solid rgba(30,32,51,0.06);">
+      <div class="container">
+        <div class="grid-3">
+          <div class="card-light">
+            <div class="badge badge-indigo" style="margin-bottom: 1rem;">Sovereignty</div>
+            <h3 style="font-size: 1.5rem; color: #1E2033; margin-bottom: 0.5rem;">Sovereign Compute & Data Privacy</h3>
+            <p style="font-size: 0.92rem; color: var(--sf-tx-secondary); line-height: 1.6;">
+              Hosted on domestic sovereign infrastructure with strict data boundaries, Zero Data Retention (ZDR) options, and full regulatory compliance.
+            </p>
+          </div>
+
+          <div class="card-light">
+            <div class="badge badge-emerald" style="margin-bottom: 1rem;">Linguistic Depth</div>
+            <h3 style="font-size: 1.5rem; color: #1E2033; margin-bottom: 0.5rem;">Linguistic & Cultural Precision</h3>
+            <p style="font-size: 0.92rem; color: var(--sf-tx-secondary); line-height: 1.6;">
+              Deeply customized speech models trained on natural Indian communication patterns, regional colloquialisms, and code-mixed dialogues.
+            </p>
+          </div>
+
+          <div class="card-light">
+            <div class="badge badge-indigo" style="margin-bottom: 1rem;">Workflow Impact</div>
+            <h3 style="font-size: 1.5rem; color: #1E2033; margin-bottom: 0.5rem;">Enterprise-Grade Reliability</h3>
+            <p style="font-size: 0.92rem; color: var(--sf-tx-secondary); line-height: 1.6;">
+              Engineered with 99.95% telephony uptime SLAs, sub-300ms latency, and direct transactional integration into enterprise systems of record.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research & Technology Stack -->
+    <section class="section-wrapper">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <div class="eyebrow-container">
+            <div class="eyebrow-line"></div>
+            <p class="eyebrow-text">Research & Engineering</p>
+            <div class="eyebrow-line"></div>
+          </div>
+          <h2>Pioneering the future of voice interaction</h2>
+          <p class="lead">
+            Our team of speech scientists, acoustic researchers, and systems architects work at the intersection of streaming ASR, full-duplex neural TTS, and state-machine reasoning.
+          </p>
+        </div>
+
+        <div class="card-dark" style="padding: 2.5rem;">
+          <h3 style="font-size: 1.75rem; margin-bottom: 1rem; color: #FFFFFF;">Thejands LLP Research Labs</h3>
+          <p style="color: #94A3B8; line-height: 1.7; margin-bottom: 1.5rem;">
+            From custom acoustic loss functions to real-time low-bandwidth OPUS streaming across 2G/3G networks, our engineering philosophy is grounded in solving the real-world communication challenges of the Indian sub-continent.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span class="badge badge-dark">Neural Acoustic Modeling</span>
+            <span class="badge badge-dark">Full-Duplex Telephony</span>
+            <span class="badge badge-dark">Dialectical Code-Mixing</span>
+            <span class="badge badge-dark">Zero-Latency SIP Trunking</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

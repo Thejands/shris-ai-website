@@ -1,0 +1,340 @@
+---
+---
+
+<section class="section-wrapper" id="agent-builder">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">SAMVAAD AGENT STUDIO</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Configure specialized voice workers in minutes.</h2>
+      <p class="lead">
+        Define role objectives, knowledge bases, speaking personas, and downstream business actions through an intuitive console.
+      </p>
+    </div>
+
+    <!-- Builder Studio Card -->
+    <div class="builder-card card-light reveal-fade-up">
+      <div class="studio-top">
+        <div class="studio-badge-left">
+          <span class="pulse-dot"></span>
+          <span class="studio-id">Shris Samvaad Studio — v2.4</span>
+        </div>
+        <span class="badge badge-indigo">Agent Configurator</span>
+      </div>
+
+      <div class="studio-grid">
+        <!-- Left: Form Controls -->
+        <div class="studio-controls-col">
+          <div class="ctrl-group">
+            <label for="builder-role-select" class="ctrl-label">AGENT ROLE & OBJECTIVE</label>
+            <select id="builder-role-select" class="ctrl-select">
+              <option value="sales" selected>Senior Inbound Sales & Lead Qualification Agent</option>
+              <option value="support">Tier 1 & 2 Customer Resolution Support Agent</option>
+              <option value="scheduling">Clinical & Executive Appointment Desk Agent</option>
+              <option value="collections">Empathetic EMI & Debt Payment Recovery Agent</option>
+              <option value="recruitment">High-Volume Talent Screening Coordinator</option>
+            </select>
+          </div>
+
+          <div class="ctrl-row">
+            <div class="ctrl-group">
+              <label for="builder-tone-select" class="ctrl-label">VOCAL PERSONA & TONE</label>
+              <select id="builder-tone-select" class="ctrl-select">
+                <option value="Professional & Assertive" selected>Professional & Assertive (Aarav)</option>
+                <option value="Empathetic & Caring">Empathetic & Caring (Priya)</option>
+                <option value="Modern & Conversational">Modern & Conversational (Kavya)</option>
+                <option value="Authoritative Corporate">Authoritative Corporate (Vikram)</option>
+              </select>
+            </div>
+
+            <div class="ctrl-group">
+              <label class="ctrl-label">PRIMARY LANGUAGE</label>
+              <select class="ctrl-select">
+                <option selected>Indian English (en-IN)</option>
+                <option>Hindi (hi-IN)</option>
+                <option>Tamil (ta-IN)</option>
+                <option>Telugu (te-IN)</option>
+                <option>Bilingual Hinglish</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sliders -->
+          <div class="ctrl-group">
+            <div class="slider-head">
+              <label class="ctrl-label">SPEECH PACING & CADENCE</label>
+              <span id="builder-speed-val" class="slider-badge">1.0x</span>
+            </div>
+            <input type="range" id="builder-speed-slider" min="0.8" max="1.3" step="0.05" value="1.0" class="ctrl-range" />
+          </div>
+
+          <div class="ctrl-group">
+            <div class="slider-head">
+              <label class="ctrl-label">HUMAN HANDOFF CONFIDENCE THRESHOLD</label>
+              <span id="builder-escalation-val" class="slider-badge">85%</span>
+            </div>
+            <input type="range" id="builder-escalation-slider" min="60" max="95" step="5" value="85" class="ctrl-range" />
+          </div>
+
+          <!-- Tools -->
+          <div class="ctrl-group">
+            <label class="ctrl-label">CONNECTED SYSTEM TOOLS</label>
+            <div class="tools-grid">
+              <label class="tool-item">
+                <input type="checkbox" checked />
+                <span>Salesforce CRM Sync</span>
+              </label>
+              <label class="tool-item">
+                <input type="checkbox" checked />
+                <span>Google Calendar Booking</span>
+              </label>
+              <label class="tool-item">
+                <input type="checkbox" checked />
+                <span>WhatsApp Cloud API</span>
+              </label>
+              <label class="tool-item">
+                <input type="checkbox" checked />
+                <span>Webhook Streaming</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Preview (Dark Card) -->
+        <div class="studio-preview-col card-dark">
+          <div class="preview-head">
+            <span class="preview-badge-txt">DEPLOYED AGENT PREVIEW</span>
+            <span class="badge badge-emerald">Ready for Staging</span>
+          </div>
+
+          <div class="preview-content">
+            <div class="agent-preview-title">
+              <h4 id="builder-preview-name">Custom SALES Agent</h4>
+              <p id="builder-preview-role">Senior Inbound Sales & Lead Qualification Agent</p>
+            </div>
+
+            <div class="preview-tags">
+              <span id="builder-preview-tone" class="badge badge-dark">Tone: Professional</span>
+              <span id="builder-preview-speed" class="badge badge-dark">Pacing: 1.0x</span>
+              <span id="builder-preview-escalation" class="badge badge-dark">Handoff: &lt; 85%</span>
+            </div>
+
+            <div class="kb-status-box">
+              <span class="kb-hdr">INGESTED KNOWLEDGE BASE:</span>
+              <div class="kb-line">
+                <span>Product_Catalog_2026.pdf</span>
+                <span class="kb-ok">Indexed</span>
+              </div>
+              <div class="kb-line">
+                <span>Sales_Playbook_v3.docx</span>
+                <span class="kb-ok">Indexed</span>
+              </div>
+            </div>
+
+            <button class="btn btn-filled" style="width: 100%; margin-top: auto;">
+              <span>Dispatch Test Call to My Phone</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .builder-card {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .studio-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--sf-border-subtle);
+    margin-bottom: 1.75rem;
+  }
+
+  .studio-badge-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .studio-id {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--sf-slate-900);
+    font-weight: 600;
+  }
+
+  .studio-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+  }
+
+  .studio-controls-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .ctrl-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .ctrl-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .ctrl-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--sf-tx-indigo);
+    letter-spacing: 0.05em;
+  }
+
+  .ctrl-select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.12);
+    border-radius: var(--radius-sm);
+    color: var(--sf-slate-900);
+    font-size: 0.88rem;
+    outline: none;
+  }
+
+  .slider-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .slider-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sf-indigo-500);
+  }
+
+  .ctrl-range {
+    width: 100%;
+    accent-color: var(--sf-indigo-900);
+    cursor: pointer;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .tool-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: 6px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--sf-slate-900);
+    cursor: pointer;
+  }
+
+  .tool-item input {
+    accent-color: var(--sf-indigo-900);
+  }
+
+  /* Preview Col Dark */
+  .studio-preview-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .preview-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1rem;
+  }
+
+  .preview-badge-txt {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #A5BBFC;
+    font-weight: 700;
+  }
+
+  .agent-preview-title h4 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: #FFFFFF;
+    margin-bottom: 0.2rem;
+  }
+
+  .agent-preview-title p {
+    font-size: 0.82rem;
+    color: #94A3B8;
+    margin-bottom: 1rem;
+  }
+
+  .preview-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .kb-status-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .kb-hdr {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #A5BBFC;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .kb-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: #CBD5E1;
+    padding: 0.25rem 0;
+  }
+
+  .kb-ok {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #10B981;
+  }
+
+  @media (max-width: 960px) {
+    .studio-grid {
+      grid-template-columns: 1fr;
+    }
+    .ctrl-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

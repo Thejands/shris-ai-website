@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import VoiceIntelligence from '../components/voice/VoiceIntelligence.astro';
+import MultilingualEngine from '../components/voice/MultilingualEngine.astro';
+import ScaleArchitecture from '../components/enterprise/ScaleArchitecture.astro';
+import EnterpriseSecurity from '../components/enterprise/EnterpriseSecurity.astro';
+import HumanEscalation from '../components/enterprise/HumanEscalation.astro';
+---
+
+<Layout 
+  title="Platform & Voice Intelligence — Shris AI"
+  description="Full-stack sovereign conversational voice runtime engineered for sub-300ms full-duplex latency, 10+ Indian languages, and enterprise data boundaries."
+>
+  <Header />
+
+  <main id="main-content" style="padding-top: 5rem;">
+    <!-- 01. Voice Intelligence & Latency Stack -->
+    <VoiceIntelligence />
+
+    <!-- 02. Multilingual Voice Engine (10+ Languages) -->
+    <MultilingualEngine />
+
+    <!-- 03. Human Escalation (Warm Transfer Protocol) -->
+    <HumanEscalation />
+
+    <!-- 04. Scale & Distributed Telephony Architecture -->
+    <ScaleArchitecture />
+
+    <!-- 05. Enterprise Security & Zero Retention -->
+    <EnterpriseSecurity />
+  </main>
+
+  <Footer />
+</Layout>

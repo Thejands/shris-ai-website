@@ -1,0 +1,147 @@
+---
+const STEPS = [
+  {
+    step: '01',
+    title: 'Business Trigger',
+    badge: 'Inbound or Outbound',
+    description: 'A lead form submission, incoming hotline call, EHR appointment alert, or overdue payment event dispatches Shris AI instantly.',
+    codeSnippet: 'event: "crm.lead.created" → dispatch_agent()'
+  },
+  {
+    step: '02',
+    title: 'Natural Voice Dialogue',
+    badge: 'Sub-300ms Full Duplex',
+    description: 'Shris AI initiates a fluid, 2-way phone conversation with human-level cadence, natural pauses, and interruption handling.',
+    codeSnippet: 'stream: full_duplex_audio (24kHz HD)'
+  },
+  {
+    step: '03',
+    title: 'Intent & Entity Extraction',
+    badge: 'Neural Understanding',
+    description: 'During speech, Shris AI extracts crucial parameters: budget, timeline, location, pain points, and customer emotional sentiment in real-time.',
+    codeSnippet: 'entities: { budget: "1.5Cr", slot: "Saturday 11:30" }'
+  },
+  {
+    step: '04',
+    title: 'Decision & Qualification',
+    badge: 'Business Rules Engine',
+    description: 'The AI evaluates conversation criteria against your company playbook: qualifying high-intent prospects and navigating custom pricing tiers.',
+    codeSnippet: 'qualification_score: 94/100 (Tier 1 Hot Lead)'
+  },
+  {
+    step: '05',
+    title: 'Autonomous System Action',
+    badge: 'Execution Layer',
+    description: 'The conversation directly updates Salesforce, books calendar slots, triggers WhatsApp PDF brochures, and pushes payment links.',
+    codeSnippet: 'POST /v1/salesforce/lead_update + /calendar/book'
+  },
+  {
+    step: '06',
+    title: 'Contextual Human Escalation',
+    badge: 'Warm Handoff',
+    description: 'If a customer requests a human or hits custom complexity thresholds, the call transfers instantly with full transcript and context pre-loaded.',
+    codeSnippet: 'escalate_to_human(context_package)'
+  }
+];
+---
+
+<section class="section-wrapper" id="product-loop">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">THE CORE PRODUCT LOOP</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>A conversation is only useful when action follows.</h2>
+      <p class="lead">
+        Voice is the interface. AI is the intelligence. Automation is the execution layer. Business systems are the source of truth.
+      </p>
+    </div>
+
+    <!-- Steps Grid -->
+    <div class="product-loop-grid">
+      {STEPS.map((s) => (
+        <div class="loop-step-card card-light reveal-stagger-child">
+          <div class="step-top-row">
+            <span class="step-num-pill">{s.step}</span>
+            <span class="badge badge-indigo">{s.badge}</span>
+          </div>
+
+          <h3 class="step-title">{s.title}</h3>
+          <p class="step-desc">{s.description}</p>
+
+          <div class="step-code-preview">
+            <code>{s.codeSnippet}</code>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-loop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .loop-step-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .step-num-pill {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--sf-indigo-500);
+  }
+
+  .step-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #1E2033;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .step-desc {
+    font-size: 0.92rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .step-code-preview {
+    background: #F3F4F8;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--sf-slate-900);
+    overflow-x: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .product-loop-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .product-loop-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

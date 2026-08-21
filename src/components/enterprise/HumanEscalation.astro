@@ -1,0 +1,181 @@
+---
+---
+
+<section class="section-wrapper" id="human-escalation">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">WARM ESCALATION PROTOCOL</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>AI when it can. Humans when they should.</h2>
+      <p class="lead">
+        Shris AI automatically transfers complex conversations to human specialists with complete contextual briefings and zero customer friction.
+      </p>
+    </div>
+
+    <!-- Showcase Grid -->
+    <div class="escalation-grid card-light reveal-fade-up">
+      <div class="handoff-steps-row">
+        <!-- Step 1 -->
+        <div class="handoff-box">
+          <div class="hb-head">
+            <span class="hb-num">01</span>
+            <span class="badge badge-indigo">Monitoring</span>
+          </div>
+          <h3 class="hb-title">Sentiment & Confidence Tracking</h3>
+          <p class="hb-desc">
+            The neural engine continuously evaluates objection severity and caller requests for human specialists.
+          </p>
+          <div class="hb-code">
+            <code>if (confidence &lt; 0.85 || request === "HUMAN")</code>
+          </div>
+        </div>
+
+        <div class="hb-sep">➔</div>
+
+        <!-- Step 2 (Dark Card) -->
+        <div class="handoff-box card-dark">
+          <div class="hb-head">
+            <span class="hb-num" style="color: #A5BBFC;">02</span>
+            <span class="badge badge-emerald">Screen-Pop</span>
+          </div>
+          <h3 class="hb-title" style="color: #FFFFFF;">Real-Time Context Packaging</h3>
+          <p class="hb-desc" style="color: #94A3B8;">
+            Within 200ms, Shris AI synthesizes the call into a 3-bullet briefing with verified intent and customer parameters.
+          </p>
+          <div class="hb-briefing">
+            <span>• Lead: Marcus (Budget: ₹1.5Cr)</span>
+            <span>• Need: 3 BHK Falcon City Luxury</span>
+            <span>• Reason: Requesting custom payment plan</span>
+          </div>
+        </div>
+
+        <div class="hb-sep">➔</div>
+
+        <!-- Step 3 -->
+        <div class="handoff-box">
+          <div class="hb-head">
+            <span class="hb-num">03</span>
+            <span class="badge badge-emerald">Warm Handoff</span>
+          </div>
+          <h3 class="hb-title">Seamless Human Pickup</h3>
+          <p class="hb-desc">
+            The Account Executive answers already knowing the customer’s exact requirements without asking them to repeat themselves.
+          </p>
+          <div class="hb-quote">
+            <em>"Hi Marcus! I see you are looking at the 3 BHK corner unit. Let's look at the custom schedule together."</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .escalation-grid {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .handoff-steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .handoff-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-lg);
+    height: 100%;
+  }
+
+  .handoff-box.card-dark {
+    background: #1E2033;
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .hb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+  }
+
+  .hb-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--sf-indigo-500);
+  }
+
+  .hb-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: #1E2033;
+    margin-bottom: 0.4rem;
+    line-height: 1.25;
+  }
+
+  .hb-desc {
+    font-size: 0.85rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex: 1;
+  }
+
+  .hb-code {
+    background: #FFFFFF;
+    border: 1px solid rgba(30, 32, 51, 0.1);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--sf-slate-900);
+  }
+
+  .hb-briefing {
+    background: #141624;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.76rem;
+    color: #E2E8F0;
+  }
+
+  .hb-quote {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.78rem;
+    color: #065F46;
+    line-height: 1.45;
+  }
+
+  .hb-sep {
+    color: #94A3B8;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 960px) {
+    .handoff-steps-row {
+      flex-direction: column;
+    }
+    .hb-sep {
+      transform: rotate(90deg);
+      margin: 0.5rem 0;
+    }
+  }
+</style>

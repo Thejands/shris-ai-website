@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import DomainExplorer from '../components/domains/DomainExplorer.astro';
+import AgentBuilder from '../components/agents/AgentBuilder.astro';
+import AgentGallery from '../components/agents/AgentGallery.astro';
+import IntegrationsHub from '../components/integrations/IntegrationsHub.astro';
+import OmnichannelFlow from '../components/workflows/OmnichannelFlow.astro';
+---
+
+<Layout 
+  title="Solutions & Industry Playbooks — Shris AI"
+  description="Explore purpose-trained voice agent playbooks across Real Estate, Healthcare, BFSI, E-commerce, and Logistics with native CRM integrations."
+>
+  <Header />
+
+  <main id="main-content" style="padding-top: 5rem;">
+    <!-- 01. Domain Explorer with Butter-Smooth Tab Transitions -->
+    <DomainExplorer />
+
+    <!-- 02. Interactive Agent Builder Studio -->
+    <AgentBuilder />
+
+    <!-- 03. Specialized Workforce Profiles -->
+    <AgentGallery />
+
+    <!-- 04. Enterprise Integrations Hub -->
+    <IntegrationsHub />
+
+    <!-- 05. Omnichannel Workflow Delivery -->
+    <OmnichannelFlow />
+  </main>
+
+  <Footer />
+</Layout>

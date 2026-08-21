@@ -1,0 +1,89 @@
+---
+const SECURITY_FEATURES = [
+  {
+    title: 'Zero Data Retention (ZDR) Mode',
+    badge: 'Cryptographic Purging',
+    description: 'Enterprises can configure automatic, immediate shredding of call recordings and transcripts once CRM sync completes.'
+  },
+  {
+    title: 'End-to-End Voice Encryption',
+    badge: 'TLS 1.3 & AES-256',
+    description: 'All telephony audio streams are encrypted in transit via SRTP/TLS 1.3, with all databases encrypted with customer-managed keys.'
+  },
+  {
+    title: 'Dedicated VPC Deployment',
+    badge: 'Tenant Isolation',
+    description: 'Deploy Shris AI within your isolated AWS, Azure, or GCP Virtual Private Cloud (VPC) with complete data sovereignty.'
+  },
+  {
+    title: 'Role-Based Access & Audit Logs',
+    badge: 'Enterprise Governance',
+    description: 'Granular RBAC permissions with immutable audit logs recording every agent modification and tool invocation.'
+  }
+];
+---
+
+<section class="section-wrapper" id="security">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">SOVEREIGNTY & SECURITY</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Enterprise security and privacy built into the foundation.</h2>
+      <p class="lead">
+        Designed for financial institutions, healthcare providers, and regulated enterprises requiring strict data boundary controls.
+      </p>
+    </div>
+
+    <div class="security-grid">
+      {SECURITY_FEATURES.map((feat) => (
+        <div class="security-card card-light reveal-stagger-child">
+          <div class="sec-top">
+            <span class="badge badge-indigo">{feat.badge}</span>
+          </div>
+
+          <h3 class="sec-title">{feat.title}</h3>
+          <p class="sec-desc">{feat.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .security-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+
+  .security-card {
+    padding: 2rem;
+  }
+
+  .sec-top {
+    margin-bottom: 1rem;
+  }
+
+  .sec-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #1E2033;
+    margin-bottom: 0.4rem;
+  }
+
+  .sec-desc {
+    font-size: 0.92rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .security-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

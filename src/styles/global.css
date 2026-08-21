@@ -1,0 +1,294 @@
+@import './tokens.css';
+@import './animations.css';
+
+/* ==========================================================================
+   RESET & BASE STYLES — SARVAM VIBECODING AESTHETIC
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--sf-bg);
+  color: var(--sf-tx-main);
+  font-size: 16px;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--sf-bg);
+  background-image: 
+    radial-gradient(circle at 50% -10%, #E2ECFF 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(213, 226, 255, 0.4), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(226, 236, 255, 0.4), transparent 40%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: #D5E2FF;
+  color: #1E2033;
+}
+
+/* Typography Scale */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--sf-tx-main);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 6.5vw, 4.75rem);
+}
+
+h2 {
+  font-size: clamp(2.15rem, 4.5vw, 3.5rem);
+}
+
+h3 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+p {
+  color: var(--sf-tx-secondary);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+p.lead {
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  color: var(--sf-tx-secondary);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width-site);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+}
+
+.container-narrow {
+  max-width: var(--max-width-narrow);
+}
+
+.section-wrapper {
+  position: relative;
+  padding-top: clamp(4.5rem, 8vw, 8rem);
+  padding-bottom: clamp(4.5rem, 8vw, 8rem);
+  overflow: hidden;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* Sarvam Radial Eyebrow Motif */
+.eyebrow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow-line {
+  width: 120px;
+  height: 1px;
+  background: var(--sf-divider-radial);
+}
+
+.eyebrow-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sf-tx-indigo);
+  padding: 0 1rem;
+}
+
+/* Sarvam Pill Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-filled {
+  background: var(--sf-gradient-dark-btn);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(30, 32, 51, 0.18);
+}
+
+.btn-filled:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(30, 32, 51, 0.28);
+}
+
+.btn-outline {
+  background: var(--sf-gradient-light-btn);
+  box-shadow: inset 0 0 0 1px rgba(30, 32, 51, 0.14);
+  color: var(--sf-slate-900);
+}
+
+.btn-outline:hover {
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(30, 32, 51, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: scale(1.02);
+}
+
+.btn-sm {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.85rem;
+}
+
+.btn-lg {
+  padding: 1rem 2.2rem;
+  font-size: 1.05rem;
+}
+
+/* Sarvam Floating Glass Surfaces */
+.card-light {
+  background: var(--sf-surface);
+  border: 1px solid var(--sf-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--sf-shadow-card);
+  transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.card-light:hover {
+  border-color: rgba(106, 136, 226, 0.4);
+  box-shadow: 0 12px 32px rgba(106, 136, 226, 0.08);
+  transform: translateY(-2px);
+}
+
+.card-dark {
+  background: var(--sf-surface-dark);
+  color: #FFFFFF;
+  border: 1px solid var(--sf-border-dark);
+  border-radius: var(--radius-xl);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  box-shadow: var(--sf-shadow-dark-card);
+}
+
+.card-dark h3, .card-dark h4 {
+  color: #FFFFFF;
+}
+
+.card-dark p {
+  color: #94A3B8;
+}
+
+/* Badges & Status */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-indigo {
+  background: rgba(106, 136, 226, 0.12);
+  color: var(--sf-tx-indigo);
+  border: 1px solid rgba(106, 136, 226, 0.3);
+}
+
+.badge-emerald {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.badge-dark {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sf-emerald-500);
+  display: inline-block;
+}
+
+/* Responsive Grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .grid-3, .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

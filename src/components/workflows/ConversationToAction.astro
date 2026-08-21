@@ -1,0 +1,154 @@
+---
+const COMPARISONS = [
+  {
+    type: 'Legacy IVR Systems',
+    status: 'Obsolete',
+    drawbacks: ['Rigid "Press 1" numerical menus', 'High customer drop-off (>45%)', 'Zero conversational context', 'Cannot extract complex entities']
+  },
+  {
+    type: 'Generic Text Chatbots',
+    status: 'Limited Channel',
+    drawbacks: ['Constrained to screen interfaces', 'Cannot capture vocal urgency', 'Low response completion rates', 'Disconnected from telephony']
+  },
+  {
+    type: 'Outsourced Call Centers',
+    status: 'High Overhead',
+    drawbacks: ['High agent attrition & training costs', 'Limited 8-hour operating shifts', 'Inconsistent script adherence', 'Unscalable during sudden surges']
+  },
+  {
+    type: 'Shris AI Voice Workforce',
+    status: 'Next-Gen Standard',
+    highlight: true,
+    advantages: [
+      'Sub-300ms natural conversational dialogue',
+      'Autonomous CRM & ERP system mutations',
+      'Infinite concurrency with 24/7/365 availability',
+      'Full-context warm human escalation protocol'
+    ]
+  }
+];
+---
+
+<section class="section-wrapper" id="conversation-to-action">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">ENTERPRISE DIFFERENTIATION</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>More than a voice bot. An active workforce.</h2>
+      <p class="lead">
+        Most voice tools stop when speech ends. Shris AI is architected to execute downstream enterprise workflows immediately.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="comparison-grid">
+      {COMPARISONS.map((item) => (
+        <div class={`comp-card ${item.highlight ? 'card-dark highlight-card' : 'card-light'} reveal-stagger-child`}>
+          <div class="comp-head">
+            <h3 class="comp-title">{item.type}</h3>
+            <span class={`badge ${item.highlight ? 'badge-emerald' : 'badge-indigo'}`}>{item.status}</span>
+          </div>
+
+          {item.drawbacks && (
+            <ul class="points-list drawbacks">
+              {item.drawbacks.map((db) => (
+                <li>
+                  <span class="x-mark">✕</span>
+                  <span>{db}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {item.advantages && (
+            <ul class="points-list advantages">
+              {item.advantages.map((adv) => (
+                <li>
+                  <span class="chk-mark">✓</span>
+                  <span>{adv}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .comp-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+  }
+
+  .comp-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .comp-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: inherit;
+    line-height: 1.2;
+  }
+
+  .points-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .drawbacks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    color: var(--sf-tx-tertiary);
+  }
+
+  .x-mark {
+    color: #E11D48;
+    font-weight: 700;
+  }
+
+  .advantages li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    color: #F1F5F9;
+  }
+
+  .chk-mark {
+    color: #10B981;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1120px) {
+    .comparison-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .comparison-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

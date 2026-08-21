@@ -1,0 +1,132 @@
+---
+const METRICS = [
+  {
+    target: '280',
+    prefix: '< ',
+    suffix: 'ms',
+    label: 'Conversational Latency',
+    sublabel: 'Full-duplex turn taking with human cadence'
+  },
+  {
+    target: '10',
+    prefix: '',
+    suffix: '+',
+    label: 'Regional Languages',
+    sublabel: 'Indian dialects, accents, and code-mixing'
+  },
+  {
+    target: '99.4',
+    prefix: '',
+    suffix: '%',
+    decimals: 1,
+    label: 'Intent Extraction',
+    sublabel: 'Precision entity parsing into CRM fields'
+  },
+  {
+    target: '3.8',
+    prefix: '',
+    suffix: 'x',
+    decimals: 1,
+    label: 'Pipeline Conversion',
+    sublabel: 'Lead qualification velocity vs call centers'
+  },
+  {
+    target: '68',
+    prefix: '',
+    suffix: '%',
+    label: 'Cost Reduction',
+    sublabel: 'Decrease in cost per completed appointment'
+  }
+];
+---
+
+<section class="sarvam-metrics-section">
+  <div class="container">
+    <div class="metrics-row-grid">
+      {METRICS.map((m) => (
+        <div class="metric-block reveal-stagger-child">
+          <div class="metric-num-wrap">
+            <span 
+              class="metric-num"
+              data-counter-target={m.target}
+              data-counter-prefix={m.prefix}
+              data-counter-suffix={m.suffix}
+              data-counter-decimals={m.decimals || '0'}
+            >
+              {m.prefix}{m.target}{m.suffix}
+            </span>
+          </div>
+          <span class="metric-title">{m.label}</span>
+          <p class="metric-desc">{m.sublabel}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sarvam-metrics-section {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(30, 32, 51, 0.08);
+    border-bottom: 1px solid rgba(30, 32, 51, 0.08);
+    background: #FFFFFF;
+  }
+
+  .metrics-row-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+  }
+
+  .metric-block {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    border-left: 1px solid rgba(30, 32, 51, 0.08);
+  }
+
+  .metric-block:first-child {
+    border-left: none;
+  }
+
+  .metric-num {
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 3.2vw, 2.85rem);
+    font-weight: 400;
+    line-height: 1;
+    color: #1E2033;
+    letter-spacing: -0.03em;
+  }
+
+  .metric-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #0B0F19;
+    margin: 0.4rem 0 0.2rem;
+  }
+
+  .metric-desc {
+    font-size: 0.78rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .metrics-row-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .metrics-row-grid {
+      grid-template-columns: 1fr;
+    }
+    .metric-block {
+      border-left: none;
+      border-bottom: 1px solid rgba(30, 32, 51, 0.08);
+      padding-bottom: 1rem;
+    }
+  }
+</style>

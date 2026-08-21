@@ -1,0 +1,285 @@
+---
+const ARCHITECTURE_LAYERS = [
+  {
+    layer: '01',
+    title: 'Streaming Speech Recognition (ASR)',
+    latency: '74ms',
+    badge: 'Code-Mixed Speech',
+    description: 'Acoustic models trained on Indian dialects, heavy accents, code-switching (Hinglish/Tanglish), and noisy telephony channels.',
+    metrics: '99.1% Word Accuracy'
+  },
+  {
+    layer: '02',
+    title: 'Contextual Intent & Dialogue Reasoning',
+    latency: '110ms',
+    badge: 'Multi-Turn Memory',
+    description: 'Understands complex conversational context across 20+ turns, preserving user requirements, objections, and sentiment nuances.',
+    metrics: 'Full State Tracking'
+  },
+  {
+    layer: '03',
+    title: 'Dynamic Tool Execution Layer',
+    latency: '45ms',
+    badge: 'Autonomous Function Calling',
+    description: 'Executes real-time database queries, calendar slot verification, and CRM updates during live calls.',
+    metrics: 'Sub-second API Execution'
+  },
+  {
+    layer: '04',
+    title: 'Neural Speech Synthesis (TTS)',
+    latency: '92ms',
+    badge: 'Emotional Prosody',
+    description: 'Lifelike vocal delivery with natural pauses, breathing cadence, pitch modulation, and accent fidelity.',
+    metrics: '24kHz HD Audio'
+  }
+];
+---
+
+<section class="section-wrapper" id="voice-intelligence">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">Speech Architecture</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Natural conversations. Intelligent outcomes.</h2>
+      <p class="lead">
+        A full-duplex conversational voice stack engineered for sub-300ms latency, human-like cadence, and deep business reasoning.
+      </p>
+    </div>
+
+    <div class="voice-arch-grid">
+      <!-- Left Layers -->
+      <div class="layers-stack">
+        {ARCHITECTURE_LAYERS.map((layer) => (
+          <div class="layer-item card-light reveal-stagger-child">
+            <div class="layer-head">
+              <span class="layer-pill">{layer.layer}</span>
+              <span class="badge badge-indigo">{layer.badge}</span>
+              <span class="latency-lbl">P50: <strong>{layer.latency}</strong></span>
+            </div>
+
+            <h3 class="layer-name">{layer.title}</h3>
+            <p class="layer-desc">{layer.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Right Latency Diagram (Dark Card) -->
+      <div class="latency-visual-col card-dark reveal-fade-up">
+        <div class="diagram-meta-head">
+          <span class="pulse-dot"></span>
+          <span class="dia-title">Sub-300ms Full-Duplex Latency</span>
+        </div>
+
+        <div class="segments-list">
+          <div class="seg-item">
+            <div class="seg-top">
+              <span>1. Streaming ASR Engine</span>
+              <strong>74ms</strong>
+            </div>
+            <div class="seg-track"><div class="seg-bar" style="width: 27%; background: #6A88E2;"></div></div>
+          </div>
+
+          <div class="seg-item">
+            <div class="seg-top">
+              <span>2. Intent & Decision Model</span>
+              <strong>110ms</strong>
+            </div>
+            <div class="seg-track"><div class="seg-bar" style="width: 40%; background: #A5BBFC;"></div></div>
+          </div>
+
+          <div class="seg-item">
+            <div class="seg-top">
+              <span>3. Neural Voice Synthesis (TTS)</span>
+              <strong>92ms</strong>
+            </div>
+            <div class="seg-track"><div class="seg-bar" style="width: 33%; background: #10B981;"></div></div>
+          </div>
+        </div>
+
+        <div class="total-latency-box">
+          <div class="total-content">
+            <span class="tot-lbl">Time to First Audio Token</span>
+            <span class="tot-val">276ms</span>
+          </div>
+          <p class="tot-sub">Imperceptible to the human ear. Zero awkward delays or robotic pauses.</p>
+        </div>
+
+        <div class="bargein-box">
+          <h4>Barge-In & Interruption Handling</h4>
+          <p>When a caller speaks over the AI, speech synthesis cuts within 60ms to listen to the new constraint.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .voice-arch-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .layers-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .layer-item {
+    padding: 1.5rem;
+  }
+
+  .layer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .layer-pill {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--sf-indigo-500);
+  }
+
+  .latency-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--sf-tx-tertiary);
+  }
+
+  .latency-lbl strong {
+    color: #059669;
+  }
+
+  .layer-name {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: #1E2033;
+    margin-bottom: 0.35rem;
+  }
+
+  .layer-desc {
+    font-size: 0.88rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Right Card */
+  .latency-visual-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .diagram-meta-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #A5BBFC;
+    font-weight: 700;
+  }
+
+  .segments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .seg-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .seg-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #CBD5E1;
+  }
+
+  .seg-top strong {
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+  }
+
+  .seg-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .seg-bar {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .total-latency-box {
+    background: #141624;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+
+  .total-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+  }
+
+  .tot-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #A5BBFC;
+  }
+
+  .tot-val {
+    font-family: var(--font-serif);
+    font-size: 1.85rem;
+    color: #FFFFFF;
+  }
+
+  .tot-sub {
+    font-size: 0.82rem;
+    color: #94A3B8;
+    margin: 0;
+  }
+
+  .bargein-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+  }
+
+  .bargein-box h4 {
+    font-size: 0.95rem;
+    color: #FFFFFF;
+    margin-bottom: 0.25rem;
+  }
+
+  .bargein-box p {
+    font-size: 0.82rem;
+    color: #94A3B8;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .voice-arch-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

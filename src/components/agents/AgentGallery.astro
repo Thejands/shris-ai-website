@@ -1,0 +1,160 @@
+---
+import { AGENT_TYPES } from '../../data/agents';
+---
+
+<section class="section-wrapper" id="agent-workforce">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">SPECIALIZED ROLES</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Configurable voice workers for every team.</h2>
+      <p class="lead">
+        Deploy purpose-trained voice personas for sales, support, operations, scheduling, and billing desks.
+      </p>
+    </div>
+
+    <!-- Agent Cards Grid -->
+    <div class="agent-grid">
+      {AGENT_TYPES.map((agent) => (
+        <div class="agent-card card-light reveal-stagger-child">
+          <div class="agent-top">
+            <span class="agent-role-pill badge badge-indigo">{agent.role}</span>
+          </div>
+
+          <h3 class="agent-title">{agent.name}</h3>
+          <p class="agent-subtitle">{agent.subtitle}</p>
+          <p class="agent-desc">{agent.description}</p>
+
+          <div class="agent-cap-box">
+            <span class="cap-title">KEY CAPABILITIES:</span>
+            <ul class="cap-items">
+              {agent.keyCapabilities.slice(0, 3).map((cap) => (
+                <li>
+                  <span class="dot-mark">•</span>
+                  <span>{cap}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="agent-stat-footer">
+            <span class="stat-lbl">{agent.stats.label}:</span>
+            <strong class="stat-val">{agent.stats.value}</strong>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .agent-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+  }
+
+  .agent-top {
+    margin-bottom: 1rem;
+  }
+
+  .agent-title {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    color: #1E2033;
+    margin-bottom: 0.2rem;
+    line-height: 1.2;
+  }
+
+  .agent-subtitle {
+    font-size: 0.8rem;
+    color: var(--sf-tx-indigo);
+    font-weight: 600;
+    margin-bottom: 0.85rem;
+  }
+
+  .agent-desc {
+    font-size: 0.86rem;
+    color: var(--sf-tx-secondary);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .agent-cap-box {
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cap-title {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--sf-tx-tertiary);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .cap-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--sf-tx-secondary);
+  }
+
+  .cap-items li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    line-height: 1.35;
+  }
+
+  .dot-mark {
+    color: var(--sf-indigo-500);
+    font-weight: bold;
+  }
+
+  .agent-stat-footer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--sf-border-subtle);
+  }
+
+  .stat-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--sf-tx-tertiary);
+  }
+
+  .stat-val {
+    font-size: 0.92rem;
+    color: #1E2033;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1200px) {
+    .agent-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .agent-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

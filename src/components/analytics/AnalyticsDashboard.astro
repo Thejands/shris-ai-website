@@ -1,0 +1,296 @@
+---
+---
+
+<section class="section-wrapper" id="analytics">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">SAMVAAD MONITOR & OBSERVABILITY</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Real-time telemetry and conversation analytics.</h2>
+      <p class="lead">
+        Monitor call connect rates, qualification funnels, latency distribution, and sentiment analytics across your entire agent fleet.
+      </p>
+    </div>
+
+    <!-- Analytics Dashboard Card -->
+    <div class="analytics-card card-light reveal-fade-up">
+      <!-- Top KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-block">
+          <span class="kpi-title">TOTAL CONVERSATIONS</span>
+          <strong class="kpi-figure">148,290</strong>
+          <span class="kpi-trend">↑ 24.8% vs last month</span>
+        </div>
+
+        <div class="kpi-block">
+          <span class="kpi-title">CALL CONNECTION RATE</span>
+          <strong class="kpi-figure">93.8%</strong>
+          <span class="kpi-trend">↑ 3.2% optimization</span>
+        </div>
+
+        <div class="kpi-block">
+          <span class="kpi-title">QUALIFICATION / ACTION RATE</span>
+          <strong class="kpi-figure">76.4%</strong>
+          <span class="kpi-trend">↑ 14.1% conversion</span>
+        </div>
+
+        <div class="kpi-block">
+          <span class="kpi-title">WARM ESCALATION RATE</span>
+          <strong class="kpi-figure">4.2%</strong>
+          <span class="kpi-sub">Within SLA threshold (&lt;5%)</span>
+        </div>
+      </div>
+
+      <!-- Split: Charts & Logs (Dark Card on right) -->
+      <div class="dash-split-grid">
+        <!-- Left: Intent breakdown -->
+        <div class="charts-col">
+          <div class="chart-box">
+            <span class="chart-hdr">CALLER INTENT DISTRIBUTION</span>
+            <div class="bars-stack">
+              <div class="bar-row">
+                <span class="bar-name">Property & Site Visit Booking</span>
+                <div class="bar-bg"><div class="bar-fill" style="width: 48%; background: #1E2033;"></div></div>
+                <span class="bar-pct">48%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-name">Pricing & Loan Eligibility</span>
+                <div class="bar-bg"><div class="bar-fill" style="width: 28%; background: #6A88E2;"></div></div>
+                <span class="bar-pct">28%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-name">Appointment Rescheduling</span>
+                <div class="bar-bg"><div class="bar-fill" style="width: 16%; background: #10B981;"></div></div>
+                <span class="bar-pct">16%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-name">General FAQ & Directions</span>
+                <div class="bar-bg"><div class="bar-fill" style="width: 8%; background: #94A3B8;"></div></div>
+                <span class="bar-pct">8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Logs (Dark Card) -->
+        <div class="logs-col card-dark">
+          <div class="logs-head">
+            <span class="pulse-dot"></span>
+            <span>LIVE DISPATCH TELEMETRY STREAM</span>
+            <span class="badge badge-emerald">Live</span>
+          </div>
+
+          <div class="logs-stream-list">
+            <div class="log-row">
+              <div class="log-top-row">
+                <span class="log-id">#call_982410a</span>
+                <span class="badge badge-emerald">Site Visit Booked</span>
+                <span class="log-time">2s ago</span>
+              </div>
+              <p>Aarav (Real Estate) • +91 98765... • Duration: 2m 14s • P50: 278ms</p>
+            </div>
+
+            <div class="log-row">
+              <div class="log-top-row">
+                <span class="log-id">#call_982409f</span>
+                <span class="badge badge-indigo">Slot Rescheduled</span>
+                <span class="log-time">14s ago</span>
+              </div>
+              <p>Dr. Priya (Healthcare) • +91 94451... • Duration: 1m 42s • P50: 284ms</p>
+            </div>
+
+            <div class="log-row">
+              <div class="log-top-row">
+                <span class="log-id">#call_982408c</span>
+                <span class="badge badge-emerald">Prepaid Converted</span>
+                <span class="log-time">45s ago</span>
+              </div>
+              <p>Kavya (Retail) • +91 98200... • Duration: 1m 18s • P50: 265ms</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .analytics-card {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--sf-border-subtle);
+    margin-bottom: 2rem;
+  }
+
+  .kpi-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .kpi-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--sf-tx-tertiary);
+    margin-bottom: 0.25rem;
+  }
+
+  .kpi-figure {
+    font-family: var(--font-serif);
+    font-size: 2.35rem;
+    color: #1E2033;
+    line-height: 1.1;
+  }
+
+  .kpi-trend {
+    font-size: 0.78rem;
+    color: #059669;
+    font-weight: 600;
+  }
+
+  .kpi-sub {
+    font-size: 0.78rem;
+    color: var(--sf-tx-tertiary);
+  }
+
+  /* Split */
+  .dash-split-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2rem;
+  }
+
+  .chart-box {
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+  }
+
+  .chart-hdr {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--sf-tx-indigo);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .bars-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  .bar-name {
+    width: 170px;
+    color: var(--sf-tx-secondary);
+  }
+
+  .bar-bg {
+    flex: 1;
+    height: 8px;
+    background: #E2E8F0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .bar-pct {
+    width: 35px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #1E2033;
+  }
+
+  /* Right Logs Dark */
+  .logs-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logs-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #A5BBFC;
+    font-weight: 700;
+  }
+
+  .logs-stream-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .log-row {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 0.75rem;
+  }
+
+  .log-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+  }
+
+  .log-id {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #A5BBFC;
+  }
+
+  .log-time {
+    font-size: 0.7rem;
+    color: #64748B;
+  }
+
+  .log-row p {
+    font-size: 0.78rem;
+    color: #CBD5E1;
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .kpi-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .dash-split-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .kpi-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

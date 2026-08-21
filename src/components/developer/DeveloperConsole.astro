@@ -1,0 +1,162 @@
+---
+import { DEVELOPER_SNIPPETS } from '../../data/developer';
+---
+
+<section class="section-wrapper" id="developers">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">Developer APIs & SDKs</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Voice intelligence, programmable.</h2>
+      <p class="lead">
+        Trigger outbound calls, stream real-time transcripts via WebSockets, and register custom tool handlers with clean, typed SDKs.
+      </p>
+    </div>
+
+    <!-- Dev Terminal Card (Dark Card) -->
+    <div class="dev-terminal-card card-dark reveal-fade-up">
+      <div class="terminal-nav">
+        <div class="tabs-list">
+          {DEVELOPER_SNIPPETS.map((snip, idx) => (
+            <button
+              class={`tab-code-btn ${idx === 0 ? 'active' : ''}`}
+              data-code-tab={snip.id}
+            >
+              <span>{snip.title}</span>
+            </button>
+          ))}
+        </div>
+
+        <button id="copy-code-btn" class="btn btn-sm btn-outline" style="color: #FFFFFF; background: rgba(255,255,255,0.08);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy Snippet</span>
+        </button>
+      </div>
+
+      <div class="terminal-body">
+        {DEVELOPER_SNIPPETS.map((snip, idx) => (
+          <div
+            class="code-pane"
+            data-code-content={snip.id}
+            style={`display: ${idx === 0 ? 'block' : 'none'};`}
+          >
+            <p class="code-intro">{snip.description}</p>
+            <div class="pre-box">
+              <pre class="code-txt"><code>{snip.code}</code></pre>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="terminal-foot">
+        <div class="tech-tags">
+          <span class="badge badge-dark">Python 3.10+</span>
+          <span class="badge badge-dark">Node.js 18+</span>
+          <span class="badge badge-dark">OpenAPI 3.0</span>
+          <span class="badge badge-dark">WebSocket Audio</span>
+        </div>
+
+        <a href="#pricing" class="btn btn-sm btn-filled">Get API Key</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dev-terminal-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .terminal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    background: #141624;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tabs-list {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-code-btn {
+    padding: 0.4rem 0.85rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    color: #94A3B8;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-code-btn:hover {
+    color: #FFFFFF;
+  }
+
+  .tab-code-btn.active {
+    background: rgba(106, 136, 226, 0.2);
+    border-color: rgba(106, 136, 226, 0.4);
+    color: #FFFFFF;
+  }
+
+  .terminal-body {
+    padding: 1.5rem;
+    background: #10121D;
+  }
+
+  .code-intro {
+    font-size: 0.88rem;
+    color: #94A3B8;
+    margin-bottom: 1rem;
+  }
+
+  .pre-box {
+    background: #0D0F18;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    overflow-x: auto;
+  }
+
+  .code-txt {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: #E2E8F0;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .terminal-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: #141624;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .tech-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+</style>

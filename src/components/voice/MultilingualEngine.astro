@@ -1,0 +1,241 @@
+---
+import { LANGUAGES } from '../../data/languages';
+---
+
+<section class="section-wrapper" id="multilingual">
+  <div class="container">
+    <div class="section-header reveal-fade-up">
+      <div class="eyebrow-container">
+        <div class="eyebrow-line"></div>
+        <p class="eyebrow-text">Multilingual Voice Intelligence</p>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2>Voice AI built for India and the world.</h2>
+      <p class="lead">
+        Deliver localized, accent-fluent voice conversations across 10 major languages with code-mixing and dialect comprehension.
+      </p>
+    </div>
+
+    <!-- Multilingual Studio Card -->
+    <div class="multilingual-showcase card-light reveal-fade-up">
+      <!-- Language Pill Buttons -->
+      <div class="lang-nav-bar">
+        <span class="lang-nav-title">Select Language Preview</span>
+        <div class="lang-pills-wrap">
+          {LANGUAGES.map((lang, idx) => (
+            <button
+              class={`lang-tab-pill ${idx === 0 ? 'active' : ''}`}
+              data-lang-btn
+              data-lang-code={lang.code}
+              data-lang-name={lang.name}
+              data-lang-native={lang.nativeName}
+              data-lang-latency={lang.latency}
+              data-lang-sample={lang.sampleText}
+            >
+              <span>{lang.name}</span>
+              <small>({lang.nativeName})</small>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Studio Grid -->
+      <div class="studio-grid-box">
+        <!-- Left: Text & Dialects -->
+        <div class="studio-left-col">
+          <div class="studio-meta">
+            <div class="lang-name-tag">
+              <span class="pulse-dot"></span>
+              <strong id="lang-native-name">English (India)</strong>
+            </div>
+            <span id="lang-latency-pill" class="badge badge-emerald">P50 Latency: 280ms</span>
+          </div>
+
+          <div class="quote-container">
+            <p id="lang-sample-text" class="quote-text">
+              "Good afternoon! I am calling from Shris AI to confirm your consultation schedule for tomorrow."
+            </p>
+          </div>
+
+          <div class="dialects-row">
+            <span class="dialects-hdr">Supported Dialects</span>
+            <div class="dialects-list">
+              <span class="badge badge-indigo">Neutral Corporate</span>
+              <span class="badge badge-indigo">Urban Contemporary</span>
+              <span class="badge badge-indigo">Regional Inflections</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Audio Spectrum (Dark Card) -->
+        <div class="studio-right-col card-dark">
+          <div class="player-top">
+            <span class="player-hdr">24kHz Neural Spectrum</span>
+            <span class="badge badge-emerald">Sarvam Engine</span>
+          </div>
+
+          <canvas id="lang-waveform-canvas" class="lang-waveform-canvas" height="85"></canvas>
+
+          <button id="lang-play-btn" class="btn btn-filled" style="width: 100%;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span id="lang-play-btn-label">Play Voice Sample</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .multilingual-showcase {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .lang-nav-bar {
+    margin-bottom: 2rem;
+  }
+
+  .lang-nav-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--sf-tx-tertiary);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .lang-pills-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .lang-tab-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.95rem;
+    background: #F3F4F8;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--sf-slate-900);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .lang-tab-pill:hover {
+    background: #E8EBF2;
+  }
+
+  .lang-tab-pill.active {
+    background: #1E2033;
+    color: #FFFFFF;
+    border-color: #1E2033;
+  }
+
+  .lang-tab-pill small {
+    opacity: 0.8;
+  }
+
+  /* Grid */
+  .studio-grid-box {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+  }
+
+  .studio-left-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .studio-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .lang-name-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.05rem;
+    color: #1E2033;
+  }
+
+  .quote-container {
+    background: #F8F9FC;
+    border: 1px solid rgba(30, 32, 51, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .quote-text {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: #1E2033;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .dialects-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .dialects-hdr {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--sf-tx-tertiary);
+  }
+
+  .dialects-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  /* Right Col Dark */
+  .studio-right-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .player-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .player-hdr {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: #A5BBFC;
+    font-weight: 700;
+  }
+
+  .lang-waveform-canvas {
+    width: 100%;
+    height: 85px;
+    display: block;
+    margin: 0.75rem 0 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .studio-grid-box {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
