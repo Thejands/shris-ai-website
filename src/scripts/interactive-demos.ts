@@ -74,7 +74,7 @@ function initHeroVoiceStudio(): void {
             stateBadge.textContent = 'Agent Speaking';
             stateBadge.className = 'badge badge-emerald';
           }
-          if (statusText) statusText.textContent = 'Streaming 24kHz HD neural speech (Sarvam Engine)';
+          if (statusText) statusText.textContent = 'Streaming 24kHz HD neural speech (Sovereign Engine)';
           if (pulseDot) pulseDot.style.background = '#10B981';
           if (micLabel) micLabel.textContent = 'Speak to Agent (Mic)';
           if (sampleLabel) sampleLabel.textContent = 'Stop Audio';
@@ -83,7 +83,7 @@ function initHeroVoiceStudio(): void {
             stateBadge.textContent = 'Ready to Speak';
             stateBadge.className = 'badge badge-emerald';
           }
-          if (statusText) statusText.textContent = 'Powered by Sarvam Voice Engine (276ms latency)';
+          if (statusText) statusText.textContent = 'Powered by Shris Sovereign Engine (276ms latency)';
           if (pulseDot) pulseDot.style.background = '#10B981';
           if (micLabel) micLabel.textContent = 'Speak to Agent (Mic)';
           if (sampleLabel) sampleLabel.textContent = 'Hear Demo';

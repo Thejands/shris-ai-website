@@ -40,7 +40,7 @@ const METRICS = [
 ];
 ---
 
-<section class="sarvam-metrics-section">
+<section class="shris-metrics-section">
   <div class="container">
     <div class="metrics-row-grid">
       {METRICS.map((m) => (
@@ -65,10 +65,10 @@ const METRICS = [
 </section>
 
 <style>
-  .sarvam-metrics-section {
-    padding: 3rem 0;
-    border-top: 1px solid rgba(30, 32, 51, 0.08);
-    border-bottom: 1px solid rgba(30, 32, 51, 0.08);
+  .shris-metrics-section {
+    padding: 3.5rem 0;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
     background: #FFFFFF;
   }
 
@@ -82,7 +82,7 @@ const METRICS = [
     display: flex;
     flex-direction: column;
     padding: 0.5rem 1rem;
-    border-left: 1px solid rgba(30, 32, 51, 0.08);
+    border-left: 1px solid rgba(15, 23, 42, 0.08);
   }
 
   .metric-block:first-child {
@@ -90,11 +90,11 @@ const METRICS = [
   }
 
   .metric-num {
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-size: clamp(2.2rem, 3.2vw, 2.85rem);
-    font-weight: 400;
+    font-weight: 800;
     line-height: 1;
-    color: #1E2033;
+    color: var(--shris-navy-950);
     letter-spacing: -0.03em;
   }
 
@@ -102,13 +102,13 @@ const METRICS = [
     font-family: var(--font-sans);
     font-weight: 700;
     font-size: 0.92rem;
-    color: #0B0F19;
-    margin: 0.4rem 0 0.2rem;
+    color: var(--shris-tx-primary);
+    margin: 0.5rem 0 0.2rem;
   }
 
   .metric-desc {
     font-size: 0.78rem;
-    color: var(--sf-tx-secondary);
+    color: var(--shris-tx-secondary);
     line-height: 1.4;
     margin: 0;
   }
@@ -125,7 +125,7 @@ const METRICS = [
     }
     .metric-block {
       border-left: none;
-      border-bottom: 1px solid rgba(30, 32, 51, 0.08);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
       padding-bottom: 1rem;
     }
   }

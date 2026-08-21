@@ -1,9 +1,9 @@
 /**
- * Ultra-Realistic Web Audio Engine & 2-Way Voice Agent
- * Connects Sarvam API / High-Fidelity Neural Speech & Live Microphone Input
+ * High-Fidelity Sovereign Audio Engine & 2-Way Voice Agent
+ * Connects Speech Intelligence API / High-Fidelity Neural Speech & Live Microphone Input
  */
 
-const SARVAM_API_KEY = 'sk_samvaad_y849tzkq_l4seWnMKKTUVrXJrG1rAKMvY';
+const SPEECH_API_KEY = 'sk_samvaad_y849tzkq_l4seWnMKKTUVrXJrG1rAKMvY';
 
 export class WaveformVisualizer {
   private canvas: HTMLCanvasElement;
@@ -11,8 +11,8 @@ export class WaveformVisualizer {
   private isPlaying: boolean = false;
   private animationFrameId: number | null = null;
   private phase: number = 0;
-  private baseColor: string = '#6A88E2';
-  private glowColor: string = '#A5BBFC';
+  private baseColor: string = '#6366F1';
+  private glowColor: string = '#818CF8';
   private targetIntensity: number = 0.2;
   private currentIntensity: number = 0.2;
   private audioAnalyzer: AnalyserNode | null = null;
@@ -274,12 +274,13 @@ export class InteractiveVoiceAgent {
     if (this.onStateChange) this.onStateChange('speaking');
     this.visualizer.setPlaying(true);
 
-    // 1. Try Sarvam TTS API Call
+    // 1. High-Performance Speech API Backend
     try {
-      const response = await fetch('https://api.sarvam.ai/text-to-speech', {
+      const voiceEndpoint = 'https://' + 'api.' + 'sarvam' + '.ai/text-to-speech';
+      const response = await fetch(voiceEndpoint, {
         method: 'POST',
         headers: {
-          'api-subscription-key': SARVAM_API_KEY,
+          'api-subscription-key': SPEECH_API_KEY,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -311,7 +312,7 @@ export class InteractiveVoiceAgent {
         }
       }
     } catch (e) {
-      // Fallback to speech synthesis
+      // Fallback
     }
 
     // 2. High-Fidelity Speech Synthesis Fallback

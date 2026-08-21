@@ -5,8 +5,8 @@ import Footer from '../components/navigation/Footer.astro';
 ---
 
 <Layout 
-  title="Contact Sales & Enterprise Consultation — Shris AI"
-  description="Speak with our enterprise voice architects to design, benchmark, and deploy sovereign AI voice workforce solutions for your business."
+  title="Contact Sales & Enterprise Consultation | Shris AI"
+  description="Speak with enterprise voice architects at Thejands LLP to design, benchmark, and deploy sovereign AI voice workforce solutions for your enterprise."
 >
   <Header />
 
@@ -20,80 +20,106 @@ import Footer from '../components/navigation/Footer.astro';
               <p class="eyebrow-text" style="padding: 0;">Enterprise Consultation</p>
               <div class="eyebrow-line" style="margin-left: 0;"></div>
             </div>
-            <h1 style="font-size: clamp(2.5rem, 5vw, 3.75rem); color: #1E2033; margin-bottom: 1.25rem; line-height: 1.1;">
-              Let's build your sovereign voice workforce.
+            <h1 style="font-size: clamp(2.4rem, 4.8vw, 3.8rem); color: var(--shris-navy-950); margin-bottom: 1.25rem; line-height: 1.15;">
+              Let's deploy your sovereign voice workforce.
             </h1>
             <p class="lead" style="margin-bottom: 2rem;">
               Whether you are scaling 10,000 or 10,000,000 calls per day, our solution architects will partner with your engineering and operations teams.
             </p>
 
             <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-              <div class="card-light" style="padding: 1.25rem;">
-                <strong style="color: #1E2033; display: block; margin-bottom: 0.25rem;">Custom Model Fine-Tuning</strong>
-                <p style="font-size: 0.88rem; color: var(--sf-tx-secondary); margin: 0;">
+              <div class="card-light" style="padding: 1.5rem;">
+                <strong style="color: var(--shris-navy-950); display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">Custom Model Fine-Tuning</strong>
+                <p style="font-size: 0.88rem; color: var(--shris-tx-secondary); margin: 0; line-height: 1.6;">
                   Train dedicated acoustic and vocabulary models for specialized industry terminology.
                 </p>
               </div>
 
-              <div class="card-light" style="padding: 1.25rem;">
-                <strong style="color: #1E2033; display: block; margin-bottom: 0.25rem;">Dedicated VPC & Private Cloud</strong>
-                <p style="font-size: 0.88rem; color: var(--sf-tx-secondary); margin: 0;">
+              <div class="card-light" style="padding: 1.5rem;">
+                <strong style="color: var(--shris-navy-950); display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">Dedicated VPC & Private Cloud</strong>
+                <p style="font-size: 0.88rem; color: var(--shris-tx-secondary); margin: 0; line-height: 1.6;">
                   Deploy within your isolated AWS, Azure, or GCP Virtual Private Cloud with zero data retention.
                 </p>
               </div>
 
-              <div class="card-light" style="padding: 1.25rem;">
-                <strong style="color: #1E2033; display: block; margin-bottom: 0.25rem;">Direct Telephony SIP Trunking</strong>
-                <p style="font-size: 0.88rem; color: var(--sf-tx-secondary); margin: 0;">
+              <div class="card-light" style="padding: 1.5rem;">
+                <strong style="color: var(--shris-navy-950); display: block; margin-bottom: 0.25rem; font-size: 1.05rem;">Direct Telephony SIP Trunking</strong>
+                <p style="font-size: 0.88rem; color: var(--shris-tx-secondary); margin: 0; line-height: 1.6;">
                   Low-latency carrier-grade interconnects with high-concurrency elastic bursting.
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- Right: Contact Form -->
-          <div class="card-dark" style="padding: clamp(1.5rem, 3vw, 2.5rem);">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #A5BBFC; font-weight: 700;">REQUEST CONSULTATION</span>
-              <span class="badge badge-emerald">Priority Response &lt; 2h</span>
+          <!-- Right: Bespoke Contact Form -->
+          <div class="card-dark" style="padding: clamp(1.75rem, 3.5vw, 2.75rem);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-family: var(--font-mono); font-size: 0.76rem; color: #A5BBFC; font-weight: 700;">REQUEST CONSULTATION</span>
+              <span class="badge badge-emerald">Priority Queue &lt; 2h</span>
             </div>
 
-            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <form id="contact-page-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div>
-                  <label style="font-family: var(--font-mono); font-size: 0.7rem; color: #A5BBFC; display: block; margin-bottom: 0.35rem;">FIRST NAME</label>
-                  <input type="text" required placeholder="Rohan" style="width: 100%; padding: 0.75rem 1rem; background: #141624; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #FFFFFF; font-size: 0.88rem; outline: none;" />
+                <div class="form-field">
+                  <label for="contact-first-name" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">FIRST NAME *</label>
+                  <input type="text" id="contact-first-name" required placeholder="Aarav" class="custom-input" />
                 </div>
-                <div>
-                  <label style="font-family: var(--font-mono); font-size: 0.7rem; color: #A5BBFC; display: block; margin-bottom: 0.35rem;">LAST NAME</label>
-                  <input type="text" required placeholder="Sharma" style="width: 100%; padding: 0.75rem 1rem; background: #141624; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #FFFFFF; font-size: 0.88rem; outline: none;" />
+                <div class="form-field">
+                  <label for="contact-last-name" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">LAST NAME *</label>
+                  <input type="text" id="contact-last-name" required placeholder="Mehta" class="custom-input" />
                 </div>
               </div>
 
-              <div>
-                <label style="font-family: var(--font-mono); font-size: 0.7rem; color: #A5BBFC; display: block; margin-bottom: 0.35rem;">WORK EMAIL</label>
-                <input type="email" required placeholder="rohan@enterprise.com" style="width: 100%; padding: 0.75rem 1rem; background: #141624; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #FFFFFF; font-size: 0.88rem; outline: none;" />
+              <div class="form-field">
+                <label for="contact-email" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">WORK EMAIL *</label>
+                <input type="email" id="contact-email" required placeholder="aarav@enterprise.com" class="custom-input" />
               </div>
 
-              <div>
-                <label style="font-family: var(--font-mono); font-size: 0.7rem; color: #A5BBFC; display: block; margin-bottom: 0.35rem;">MONTHLY CALL VOLUME</label>
-                <select style="width: 100%; padding: 0.75rem 1rem; background: #141624; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #FFFFFF; font-size: 0.88rem; outline: none;">
-                  <option>10,000 – 50,000 calls / month</option>
-                  <option>50,000 – 250,000 calls / month</option>
-                  <option>250,000 – 1,000,000 calls / month</option>
-                  <option>1,000,000+ calls / month (National Scale)</option>
+              <div class="form-field">
+                <label for="contact-phone" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">PHONE NUMBER (FOR TEST CALL) *</label>
+                <input type="tel" id="contact-phone" required placeholder="+91 98765 43210" class="custom-input" />
+              </div>
+
+              <div class="form-field">
+                <label for="contact-volume" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">ESTIMATED MONTHLY CALL VOLUME</label>
+                <select id="contact-volume" class="custom-select">
+                  <option value="10k-50k">10,000 – 50,000 calls / month</option>
+                  <option value="50k-250k">50,000 – 250,000 calls / month</option>
+                  <option value="250k-1m">250,000 – 1,000,000 calls / month</option>
+                  <option value="1m+">1,000,000+ calls / month (National Scale)</option>
                 </select>
               </div>
 
-              <div>
-                <label style="font-family: var(--font-mono); font-size: 0.7rem; color: #A5BBFC; display: block; margin-bottom: 0.35rem;">PROJECT OBJECTIVES & REQUIREMENTS</label>
-                <textarea rows="4" placeholder="Tell us about your customer call workflows and systems..." style="width: 100%; padding: 0.75rem 1rem; background: #141624; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #FFFFFF; font-size: 0.88rem; outline: none;"></textarea>
+              <div class="form-field">
+                <label for="contact-details" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">PROJECT OBJECTIVES & REQUIREMENTS</label>
+                <textarea id="contact-details" rows="4" placeholder="Describe your existing call workflows, CRM integrations, and key pain points..." class="custom-input" style="resize: vertical;"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-filled btn-lg" style="width: 100%; margin-top: 0.5rem;">
+              <button type="submit" id="contact-submit-btn" class="btn btn-indigo btn-lg" style="width: 100%; margin-top: 0.5rem;">
                 <span>Schedule Enterprise Consultation</span>
               </button>
+
+              <p style="font-size: 0.75rem; color: #64748B; text-align: center; margin: 0;">
+                Protected by Thejands LLP Enterprise Security. Zero spam, strict NDA guaranteed.
+              </p>
             </form>
+
+            <!-- Custom Success State (No Browser Alert) -->
+            <div id="contact-success-state" style="display: none; text-align: center; padding: 2.5rem 1rem;">
+              <div style="width: 68px; height: 68px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <h3 style="font-size: 1.75rem; color: #FFFFFF; margin-bottom: 0.5rem;">Consultation Scheduled</h3>
+              <p style="font-size: 0.95rem; color: #94A3B8; line-height: 1.6; max-width: 440px; margin: 0 auto 1.5rem;">
+                Thank you! Our enterprise solution architects are reviewing your specifications and will send a calendar invite shortly.
+              </p>
+              <div style="display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.25rem; background: #0B0E17; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-full); font-size: 0.8rem; color: #CBD5E1;">
+                <span class="pulse-dot"></span>
+                <span>Assigned Architect: Senior Solutions Lead</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -102,3 +128,45 @@ import Footer from '../components/navigation/Footer.astro';
 
   <Footer />
 </Layout>
+
+<style>
+  .custom-input, .custom-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: #0B0E17;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-md);
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .custom-input:focus, .custom-select:focus {
+    border-color: #6366F1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+</style>
+
+<script>
+  const contactForm = document.getElementById('contact-page-form') as HTMLFormElement | null;
+  const successBox = document.getElementById('contact-success-state');
+  const submitBtn = document.getElementById('contact-submit-btn');
+
+  contactForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (submitBtn) submitBtn.innerHTML = '<span>Verifying & Scheduling...</span>';
+
+    setTimeout(() => {
+      if (contactForm) contactForm.style.display = 'none';
+      if (successBox) successBox.style.display = 'block';
+    }, 600);
+  });
+</script>

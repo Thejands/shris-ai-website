@@ -3,43 +3,49 @@
   <url>
     <loc>https://shris.ai/</loc>
     <lastmod>2026-08-21</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://shris.ai/#domains</loc>
+    <loc>https://shris.ai/platform</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shris.ai/#voice-intelligence</loc>
+    <loc>https://shris.ai/solutions</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://shris.ai/#agent-builder</loc>
+    <loc>https://shris.ai/developers</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://shris.ai/#integrations</loc>
+    <loc>https://shris.ai/pricing</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://shris.ai/company</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://shris.ai/#developers</loc>
+    <loc>https://shris.ai/contact</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://shris.ai/#pricing</loc>
+    <loc>https://shris.ai/resources</loc>
     <lastmod>2026-08-21</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

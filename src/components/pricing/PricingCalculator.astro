@@ -94,9 +94,9 @@ import { PRICING_TIERS } from '../../data/pricing';
             </ul>
           </div>
 
-          <a href="#agent-builder" class={`btn ${tier.popular ? 'btn-filled' : 'btn-outline'}`} style="width: 100%; margin-top: auto;">
+          <button data-open-demo class={`btn ${tier.popular ? 'btn-filled' : 'btn-outline'}`} style="width: 100%; margin-top: auto;">
             {tier.ctaText}
-          </a>
+          </button>
         </div>
       ))}
     </div>

@@ -16,7 +16,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Real-time Audio Waveform & Transcripts',
       'Community & Standard Email Support'
     ],
-    ctaText: 'Start Free Sandbox',
+    ctaText: 'Book Starter Demo',
     ctaVariant: 'secondary'
   },
   {
@@ -36,7 +36,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Human Warm Transfer & Escalation Protocol',
       'Dedicated Customer Success Manager & 99.9% SLA'
     ],
-    ctaText: 'Deploy Growth Fleet',
+    ctaText: 'Book Growth Demo',
     ctaVariant: 'primary'
   },
   {
@@ -55,7 +55,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Custom ERP/Core Banking Connectors (SAP, Oracle, Finacle)',
       '24/7 Priority Mission-Critical Engineering Support'
     ],
-    ctaText: 'Talk to Enterprise Solutions',
+    ctaText: 'Request Enterprise Access',
     ctaVariant: 'outline'
   }
 ];
