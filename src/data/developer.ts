@@ -28,9 +28,9 @@ export const DEVELOPER_SNIPPETS: DeveloperSnippet[] = [
   },
   {
     id: 'python-sdk',
-    title: 'Python SDK — Agent Orchestration',
+    title: 'Python SDK: Agent Orchestration',
     language: 'python',
-    description: 'Instantiate and configure dynamic AI voice agents with programmatic tool execution and strict fallback escalation rules.',
+    description: 'Instantiate and manage conversational agent fleet lifecycle with type safety and streaming session control.',
     code: `from shris import ShrisClient, VoiceAgent, Tool
 
 client = ShrisClient(api_key="shris_live_sk_948f91048b29...")

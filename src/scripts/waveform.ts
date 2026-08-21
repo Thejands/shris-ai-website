@@ -1,9 +1,8 @@
 /**
- * High-Fidelity Sovereign Audio Engine & 2-Way Voice Agent
- * Connects Speech Intelligence API / High-Fidelity Neural Speech & Live Microphone Input
+ * SHRIS AI: HIGH-FIDELITY SOVEREIGN SPEECH & AUDIO ENGINE
+ * Full-duplex conversational voice runtime & live 2-way microphone analyzer
+ * Engineered by Thejands LLP
  */
-
-const SPEECH_API_KEY = 'sk_samvaad_y849tzkq_l4seWnMKKTUVrXJrG1rAKMvY';
 
 export class WaveformVisualizer {
   private canvas: HTMLCanvasElement;
@@ -220,7 +219,7 @@ export class InteractiveVoiceAgent {
         }, 2500);
       }
     } catch (err) {
-      console.warn('Microphone permission or speech init fallback:', err);
+      console.warn('Microphone permission fallback mode:', err);
       if (this.onTranscriptUpdate) this.onTranscriptUpdate('user', "Hi, I'm interested in booking a site visit this Saturday at 11:30 AM.");
       this.handleUserQuery("Hi, I'm interested in booking a site visit this Saturday at 11:30 AM.");
     }
@@ -274,48 +273,7 @@ export class InteractiveVoiceAgent {
     if (this.onStateChange) this.onStateChange('speaking');
     this.visualizer.setPlaying(true);
 
-    // 1. High-Performance Speech API Backend
-    try {
-      const voiceEndpoint = 'https://' + 'api.' + 'sarvam' + '.ai/text-to-speech';
-      const response = await fetch(voiceEndpoint, {
-        method: 'POST',
-        headers: {
-          'api-subscription-key': SPEECH_API_KEY,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          inputs: [text],
-          target_language_code: langCode,
-          speaker: 'meera',
-          model: 'bulbul:v1'
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.audios && data.audios[0]) {
-          this.currentAudio = new Audio(`data:audio/wav;base64,${data.audios[0]}`);
-          this.currentAudio.onended = () => {
-            this.isSpeaking = false;
-            this.currentAudio = null;
-            this.visualizer.setPlaying(false);
-            if (this.onStateChange) this.onStateChange('idle');
-          };
-          this.currentAudio.onerror = () => {
-            this.isSpeaking = false;
-            this.currentAudio = null;
-            this.visualizer.setPlaying(false);
-            if (this.onStateChange) this.onStateChange('idle');
-          };
-          await this.currentAudio.play();
-          return;
-        }
-      }
-    } catch (e) {
-      // Fallback
-    }
-
-    // 2. High-Fidelity Speech Synthesis Fallback
+    // High-Fidelity Speech Synthesis with Formant Warmth
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);

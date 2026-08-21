@@ -1,7 +1,7 @@
 {
   "name": "shris-ai-enterprise-platform",
   "version": "1.0.0",
-  "description": "Shris AI — Universal Enterprise AI Voice Workforce Platform",
+  "description": "Shris AI: Sovereign Enterprise AI Voice Workforce Platform by Thejands LLP",
   "type": "module",
   "scripts": {
     "dev": "astro dev --host",
