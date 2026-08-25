@@ -1,0 +1,16 @@
+{
+  "name": "Shris AI Platform",
+  "install": "npm ci",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "npm run dev"
+    }
+  ],
+  "ports": [
+    {
+      "name": "Astro dev server",
+      "port": 4321
+    }
+  ]
+}
