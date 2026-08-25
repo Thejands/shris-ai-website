@@ -1,12 +1,19 @@
 import { formatLeadSummary } from './validation';
 import type { LeadPayload, LeadSubmissionResult } from './types';
+import {
+  getContactEmailFrom,
+  getContactEmailTo,
+  getLeadWebhookUrl,
+  getResendApiKey,
+  isDevWithoutLeadConfig,
+} from './env';
 
 function createReferenceId(): string {
   return `SHRIS-${Date.now().toString(36).toUpperCase()}`;
 }
 
 async function sendWebhook(lead: LeadPayload, referenceId: string): Promise<void> {
-  const webhookUrl = import.meta.env.LEAD_WEBHOOK_URL;
+  const webhookUrl = getLeadWebhookUrl();
 
   if (!webhookUrl) {
     return;
@@ -31,9 +38,9 @@ async function sendWebhook(lead: LeadPayload, referenceId: string): Promise<void
 }
 
 async function sendEmail(lead: LeadPayload, referenceId: string): Promise<void> {
-  const apiKey = import.meta.env.RESEND_API_KEY;
-  const toEmail = import.meta.env.CONTACT_EMAIL_TO;
-  const fromEmail = import.meta.env.CONTACT_EMAIL_FROM ?? 'Shris AI Leads <onboarding@resend.dev>';
+  const apiKey = getResendApiKey();
+  const toEmail = getContactEmailTo();
+  const fromEmail = getContactEmailFrom();
 
   if (!apiKey || !toEmail) {
     return;
@@ -59,13 +66,13 @@ async function sendEmail(lead: LeadPayload, referenceId: string): Promise<void> 
 }
 
 export async function submitLead(lead: LeadPayload): Promise<LeadSubmissionResult> {
-  const webhookUrl = import.meta.env.LEAD_WEBHOOK_URL;
-  const resendKey = import.meta.env.RESEND_API_KEY;
-  const contactEmail = import.meta.env.CONTACT_EMAIL_TO;
+  const webhookUrl = getLeadWebhookUrl();
+  const resendKey = getResendApiKey();
+  const contactEmail = getContactEmailTo();
   const referenceId = createReferenceId();
 
   if (!webhookUrl && !(resendKey && contactEmail)) {
-    if (import.meta.env.DEV) {
+    if (isDevWithoutLeadConfig()) {
       console.info('[lead-capture:dev]', referenceId, lead);
       return {
         ok: true,
@@ -82,22 +89,37 @@ export async function submitLead(lead: LeadPayload): Promise<LeadSubmissionResul
   }
 
   try {
-    await Promise.all([sendWebhook(lead, referenceId), sendEmail(lead, referenceId)]);
+    const results = await Promise.allSettled([
+      sendWebhook(lead, referenceId),
+      sendEmail(lead, referenceId),
+    ]);
 
-    const deliveredViaWebhook = Boolean(webhookUrl);
-    const deliveredViaEmail = Boolean(resendKey && contactEmail);
+    const webhookConfigured = Boolean(webhookUrl);
+    const emailConfigured = Boolean(resendKey && contactEmail);
+    const webhookOk = results[0].status === 'fulfilled';
+    const emailOk = results[1].status === 'fulfilled';
 
-    if (!deliveredViaWebhook && !deliveredViaEmail) {
+    const deliveredViaWebhook = webhookConfigured && webhookOk;
+    const deliveredViaEmail = emailConfigured && emailOk;
+
+    if (deliveredViaWebhook || deliveredViaEmail) {
       return {
-        ok: false,
-        message: 'No lead delivery channel is configured.',
+        ok: true,
+        message: 'Your request was submitted successfully.',
+        referenceId,
       };
     }
 
+    if (webhookConfigured && !webhookOk) {
+      console.error('[lead-capture] webhook failed', results[0]);
+    }
+    if (emailConfigured && !emailOk) {
+      console.error('[lead-capture] email failed', results[1]);
+    }
+
     return {
-      ok: true,
-      message: 'Your request was submitted successfully.',
-      referenceId,
+      ok: false,
+      message: 'We could not submit your request right now. Please try again or email sales@shris.ai.',
     };
   } catch {
     return {
