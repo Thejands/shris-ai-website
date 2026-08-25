@@ -1,4 +1,6 @@
 ---
+import AskAiPrompt from '../cta/AskAiPrompt.astro';
+import BrandWordmark from '../brand/BrandWordmark.astro';
 ---
 
 <footer class="shris-footer">
@@ -32,18 +34,12 @@
     <div class="footer-links-grid">
       <!-- Brand Col -->
       <div class="footer-brand-col">
-        <div class="brand-wordmark">
-          <svg class="brand-motif-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="28" height="28" rx="8" fill="#111625"/>
-            <path d="M7 14C7 10.134 10.134 7 14 7C17.866 7 21 10.134 21 14C21 17.866 17.866 21 14 21" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round"/>
-            <circle cx="14" cy="14" r="3" fill="#F59E0B"/>
-          </svg>
-          <span class="brand-text">SHRIS <span class="brand-ai">AI</span></span>
-        </div>
+        <BrandWordmark variant="footer" href="/" />
         <p class="brand-desc">
           Sovereign enterprise conversational AI voice platform engineered by Thejands LLP. Autonomous agents that talk, understand intent, and execute business actions.
         </p>
         <span class="badge badge-emerald">Operational • 99.95% Telephony SLA</span>
+        <AskAiPrompt />
       </div>
 
       <!-- Links 1: Platform -->
@@ -148,23 +144,6 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .brand-wordmark {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .brand-text {
-    font-family: var(--font-sans);
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--shris-navy-950);
-  }
-
-  .brand-ai {
-    color: var(--shris-indigo);
   }
 
   .brand-desc {
