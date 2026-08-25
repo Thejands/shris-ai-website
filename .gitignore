@@ -1,6 +1,7 @@
 # Build and cache
 dist/
 .astro/
+.vercel/
 node_modules/
 
 # Logs
