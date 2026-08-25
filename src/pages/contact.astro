@@ -58,7 +58,9 @@ import Footer from '../components/navigation/Footer.astro';
               <span class="badge badge-emerald">Priority Queue &lt; 2h</span>
             </div>
 
-            <form id="contact-page-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <form id="contact-page-form" style="display: flex; flex-direction: column; gap: 1.25rem;" novalidate>
+              <input type="text" name="website" id="contact-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; opacity: 0; height: 0; width: 0;" />
+
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-field">
                   <label for="contact-first-name" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">FIRST NAME *</label>
@@ -99,6 +101,8 @@ import Footer from '../components/navigation/Footer.astro';
                 <span>Schedule Enterprise Consultation</span>
               </button>
 
+              <p id="contact-error-state" role="alert" style="display: none; font-size: 0.82rem; color: #FCA5A5; text-align: center; margin: 0;"></p>
+
               <p style="font-size: 0.75rem; color: #64748B; text-align: center; margin: 0;">
                 Protected by Thejands LLP Enterprise Security. Zero spam, strict NDA guaranteed.
               </p>
@@ -119,6 +123,7 @@ import Footer from '../components/navigation/Footer.astro';
                 <span class="pulse-dot"></span>
                 <span>Assigned Architect: Senior Solutions Lead</span>
               </div>
+              <p data-lead-reference style="margin-top: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: #64748B;"></p>
             </div>
           </div>
         </div>
@@ -156,17 +161,37 @@ import Footer from '../components/navigation/Footer.astro';
 </style>
 
 <script>
+  import { submitLeadForm } from '../scripts/form-submission';
+
   const contactForm = document.getElementById('contact-page-form') as HTMLFormElement | null;
   const successBox = document.getElementById('contact-success-state');
-  const submitBtn = document.getElementById('contact-submit-btn');
+  const submitBtn = document.getElementById('contact-submit-btn') as HTMLButtonElement | null;
+  const errorBox = document.getElementById('contact-error-state');
 
-  contactForm?.addEventListener('submit', (e) => {
+  contactForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (submitBtn) submitBtn.innerHTML = '<span>Verifying & Scheduling...</span>';
 
-    setTimeout(() => {
-      if (contactForm) contactForm.style.display = 'none';
-      if (successBox) successBox.style.display = 'block';
-    }, 600);
+    if (!contactForm.reportValidity()) {
+      return;
+    }
+
+    await submitLeadForm({
+      source: 'contact',
+      form: contactForm,
+      submitButton: submitBtn,
+      successBox,
+      errorBox,
+      defaultButtonLabel: 'Schedule Enterprise Consultation',
+      loadingLabel: 'Verifying & Scheduling...',
+      getPayload: (form) => ({
+        firstName: (form.querySelector('#contact-first-name') as HTMLInputElement).value.trim(),
+        lastName: (form.querySelector('#contact-last-name') as HTMLInputElement).value.trim(),
+        email: (form.querySelector('#contact-email') as HTMLInputElement).value.trim(),
+        phone: (form.querySelector('#contact-phone') as HTMLInputElement).value.trim(),
+        callVolume: (form.querySelector('#contact-volume') as HTMLSelectElement).value,
+        message: (form.querySelector('#contact-details') as HTMLTextAreaElement).value.trim(),
+        website: (form.querySelector('#contact-website') as HTMLInputElement).value.trim(),
+      }),
+    });
   });
 </script>

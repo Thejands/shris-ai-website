@@ -216,4 +216,11 @@ const currentPath = Astro.url.pathname;
       drawer.style.display = !isExpanded ? 'block' : 'none';
     }
   });
+
+  drawer?.querySelectorAll('a, button[data-open-demo]').forEach((item) => {
+    item.addEventListener('click', () => {
+      if (drawer) drawer.style.display = 'none';
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+    });
+  });
 </script>

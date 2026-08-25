@@ -23,7 +23,9 @@
     </div>
 
     <!-- Active Form View -->
-    <form id="enterprise-demo-form" class="modal-form">
+    <form id="enterprise-demo-form" class="modal-form" novalidate>
+      <input type="text" name="website" id="demo-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; opacity: 0; height: 0; width: 0;" />
+
       <div class="form-row-2">
         <div class="form-field">
           <label for="demo-first-name">Full Name *</label>
@@ -84,6 +86,8 @@
         <span>Schedule Live Demo & Architecture Review</span>
       </button>
 
+      <p id="demo-error-state" role="alert" class="form-error" style="display: none;"></p>
+
       <p class="form-footnote">
         Protected by Thejands LLP Enterprise Security. Zero spam, NDA guaranteed.
       </p>
@@ -104,6 +108,7 @@
         <span class="pulse-dot"></span>
         <span>Priority queue assigned • Response within 2 business hours</span>
       </div>
+      <p data-lead-reference class="success-reference"></p>
       <button type="button" id="modal-success-done-btn" class="btn btn-filled btn-md" style="margin-top: 1.5rem;">
         Done
       </button>
@@ -294,6 +299,20 @@
     margin-top: 0.5rem;
   }
 
+  .form-error {
+    font-size: 0.82rem;
+    color: #FCA5A5;
+    text-align: center;
+    margin: 0;
+  }
+
+  .success-reference {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #64748B;
+  }
+
   /* Success State */
   .modal-success-box {
     text-align: center;
@@ -349,6 +368,20 @@
 </style>
 
 <script>
+  import { submitLeadForm } from '../../scripts/form-submission';
+
+  function resetDemoModal(form: HTMLFormElement | null, successBox: HTMLElement | null, errorBox: HTMLElement | null) {
+    form?.reset();
+    if (form) form.style.display = 'flex';
+    if (successBox) successBox.style.display = 'none';
+    if (errorBox) {
+      errorBox.textContent = '';
+      errorBox.style.display = 'none';
+    }
+    const reference = successBox?.querySelector('[data-lead-reference]');
+    if (reference) reference.textContent = '';
+  }
+
   function setupDemoModal() {
     const modal = document.getElementById('demo-modal');
     const closeBtn = document.getElementById('modal-close-btn');
@@ -356,6 +389,8 @@
     const form = document.getElementById('enterprise-demo-form') as HTMLFormElement | null;
     const successBox = document.getElementById('demo-success-state');
     const doneBtn = document.getElementById('modal-success-done-btn');
+    const submitBtn = document.getElementById('demo-submit-btn') as HTMLButtonElement | null;
+    const errorBox = document.getElementById('demo-error-state');
 
     function openModal() {
       if (modal) {
@@ -373,10 +408,10 @@
       }
     }
 
-    // Attach to all elements with [data-open-demo]
     document.querySelectorAll('[data-open-demo]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        resetDemoModal(form, successBox, errorBox);
         openModal();
       });
     });
@@ -385,31 +420,39 @@
     backdrop?.addEventListener('click', closeModal);
     doneBtn?.addEventListener('click', () => {
       closeModal();
-      // Reset view after close
-      setTimeout(() => {
-        if (form) form.style.display = 'flex';
-        if (successBox) successBox.style.display = 'none';
-      }, 300);
+      setTimeout(() => resetDemoModal(form, successBox, errorBox), 300);
     });
 
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = document.getElementById('demo-submit-btn');
-      if (submitBtn) {
-        submitBtn.innerHTML = '<span>Verifying & Submitting...</span>';
+
+      if (!form.reportValidity()) {
+        return;
       }
 
-      setTimeout(() => {
-        if (form) form.style.display = 'none';
-        if (successBox) successBox.style.display = 'block';
-        if (submitBtn) {
-          submitBtn.innerHTML = '<span>Schedule Live Demo & Architecture Review</span>';
-        }
-      }, 600);
+      const selectedVolume = form.querySelector<HTMLInputElement>('input[name="call-volume"]:checked');
+
+      await submitLeadForm({
+        source: 'demo',
+        form,
+        submitButton: submitBtn,
+        successBox,
+        errorBox,
+        defaultButtonLabel: 'Schedule Live Demo & Architecture Review',
+        loadingLabel: 'Verifying & Submitting...',
+        getPayload: () => ({
+          fullName: (form.querySelector('#demo-first-name') as HTMLInputElement).value.trim(),
+          email: (form.querySelector('#demo-work-email') as HTMLInputElement).value.trim(),
+          phone: (form.querySelector('#demo-phone') as HTMLInputElement).value.trim(),
+          company: (form.querySelector('#demo-company') as HTMLInputElement).value.trim(),
+          industry: (form.querySelector('#demo-industry') as HTMLSelectElement).value,
+          callVolume: selectedVolume?.value ?? '',
+          website: (form.querySelector('#demo-website') as HTMLInputElement).value.trim(),
+        }),
+      });
     });
   }
 
-  // Run on page load
   setupDemoModal();
   document.addEventListener('astro:page-load', setupDemoModal);
 </script>
