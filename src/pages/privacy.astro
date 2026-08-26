@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+---
+
+<Layout
+  title="Privacy Policy | Shris AI"
+  description="How Thejands LLP processes personal data on the Shris AI sovereign voice platform under DPDP and enterprise contracts."
+>
+  <Header />
+  <main id="main-content" class="legal-main">
+    <div class="container container-narrow">
+      <p class="eyebrow-text">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="lead">Last updated 26 August 2026. This policy covers the Shris AI marketing site and the voice workforce platform operated by Thejands LLP.</p>
+
+      <h2>Data we process</h2>
+      <p>Depending on the product surface, we may process work emails, phone numbers used for demo or production calls, conversation audio, transcripts, extracted business entities, CRM identifiers, and technical logs (latency, SIP codes, IP of API clients).</p>
+
+      <h2>Purpose limitation (DPDP)</h2>
+      <p>Personal data is used to provide voice workforce services, TRAI/DND/DLT compliance, billing, security, and support. We do not sell personal data. Marketing site demo forms are used only to schedule architecture sessions.</p>
+
+      <h2>Retention</h2>
+      <p>Enterprise tenants may enable Zero Data Retention so recordings and transcripts are purged after CRM sync. Runtime transcripts also expire after SHRIS_RETENTION_DAYS (default 90, BRD 90–180). Compliance artefacts required under TRAI and contractual audit are retained per the order form without unnecessary phone numbers after erasure. Demo form submissions are retained until the sales cycle closes or 18 months, whichever is earlier.</p>
+
+      <h2>Rights</h2>
+      <p>Data principals may request access, correction, or erasure via <a href="/contact">Contact Sales</a> or through the tenant admin APIs POST /v1/privacy/export and POST /v1/privacy/erase. See <a href="/docs/dpdp-security">DPDP documentation</a>. We authenticate the request against the tenant administrator of record.</p>
+
+      <h2>Security</h2>
+      <p>TLS 1.3 in transit, AES-256 at rest, tenant isolation, and optional dedicated VPC. See the <a href="/security">Security Statement</a> and <a href="/docs/dpdp-security">DPDP documentation</a>.</p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-main { padding-top: 6.5rem; padding-bottom: 4rem; }
+  .legal-main h1 { color: var(--shris-navy-950); margin: 0.75rem 0 1rem; }
+  .legal-main h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  .legal-main p { color: var(--shris-tx-secondary); line-height: 1.7; }
+  .legal-main a { color: var(--shris-indigo); font-weight: 600; }
+</style>

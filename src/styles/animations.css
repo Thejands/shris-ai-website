@@ -77,6 +77,11 @@
 .equalizer-bar:nth-child(5) { animation-delay: 0.3s; height: 16px; }
 .equalizer-bar:nth-child(6) { animation-delay: 0.5s; height: 10px; }
 
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 880px;
+}
+
 /* GSAP Reveal Helper Classes */
 .reveal-fade-up {
   opacity: 0;

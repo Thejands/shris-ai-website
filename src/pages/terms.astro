@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+---
+
+<Layout
+  title="Terms of Service | Shris AI"
+  description="Terms governing use of the Shris AI marketing site, APIs, and enterprise voice workforce platform."
+>
+  <Header />
+  <main id="main-content" class="legal-main">
+    <div class="container container-narrow">
+      <p class="eyebrow-text">Legal</p>
+      <h1>Terms of Service</h1>
+      <p class="lead">Last updated 26 August 2026. By using shris.ai, the APIs, or a paid tenant, you agree to these terms with Thejands LLP.</p>
+
+      <h2>Services</h2>
+      <p>Shris AI provides conversational voice agents, telephony orchestration, speech stack processing, and system integrations. Production telephony requires a signed order form, carrier or CPaaS credentials supplied by the customer, and completed DLT / DND configuration for Indian traffic.</p>
+
+      <h2>Acceptable use</h2>
+      <p>You must not use the platform for unsolicited commercial communication that violates TRAI, DND, or DLT rules; for impersonation without AI disclosure; or to process data beyond the purposes in your DPDP notice. Simulated console calls in /app do not place PSTN traffic.</p>
+
+      <h2>Pricing</h2>
+      <p>Connected conversation minutes are billed per the <a href="/pricing">pricing</a> page or custom enterprise contract. Unanswered rings are not billed on standard plans.</p>
+
+      <h2>Liability</h2>
+      <p>The marketing website and local simulators are provided as-is. Production SLAs (99.9% platform / 99.95% telephony interconnect) apply only under an executed enterprise agreement.</p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-main { padding-top: 6.5rem; padding-bottom: 4rem; }
+  .legal-main h1 { color: var(--shris-navy-950); margin: 0.75rem 0 1rem; }
+  .legal-main h2 { font-size: 1.3rem; margin: 2rem 0 0.6rem; }
+  .legal-main p { color: var(--shris-tx-secondary); line-height: 1.7; }
+  .legal-main a { color: var(--shris-indigo); font-weight: 600; }
+</style>

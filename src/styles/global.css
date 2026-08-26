@@ -5,6 +5,31 @@
 
 @import './tokens.css';
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: 4000;
+  transform: translateY(-120%);
+  background: var(--shris-navy-900);
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(1rem);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid #4338CA;
+  outline-offset: 2px;
+}
+
 /* CSS Reset & Defaults */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -26,6 +51,17 @@ body {
   line-height: 1.65;
   overflow-x: hidden;
   position: relative;
+}
+
+html.app-console {
+  --font-sans: system-ui, -apple-system, sans-serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+  --font-display: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html.app-console body {
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
 /* Background Atmosphere Grid */
@@ -97,6 +133,20 @@ a {
   position: relative;
 }
 
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pulse-dot {
+    animation: none;
+  }
+}
+
 .section-header {
   text-align: center;
   max-width: 800px;
@@ -135,7 +185,7 @@ a {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--shris-indigo);
+  color: #4338CA;
   margin: 0;
 }
 
@@ -245,14 +295,48 @@ a {
 
 .badge-indigo {
   background: rgba(99, 102, 241, 0.12);
-  color: #6366F1;
+  color: #4338CA;
   border: 1px solid rgba(99, 102, 241, 0.28);
+}
+
+.card-dark .badge-indigo {
+  background: rgba(165, 187, 252, 0.16);
+  color: #C7D2FE;
+  border: 1px solid rgba(165, 187, 252, 0.28);
+}
+
+html.surface-aa {
+  --shris-indigo: #4338CA;
+  --shris-tx-secondary: #334155;
+  --shris-tx-tertiary: #475569;
+}
+
+html.surface-aa .badge-indigo {
+  color: #4338CA;
+  background: rgba(67, 56, 202, 0.12);
+}
+
+html.surface-aa .eyebrow-text,
+html.surface-aa .learn-link {
+  color: #4338CA;
+}
+
+html.surface-aa .badge-emerald {
+  color: #047857;
+  background: rgba(4, 120, 87, 0.12);
+  border-color: rgba(4, 120, 87, 0.28);
 }
 
 .badge-emerald {
   background: rgba(16, 185, 129, 0.12);
-  color: #10B981;
-  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #047857;
+  border: 1px solid rgba(4, 120, 87, 0.28);
+}
+
+.card-dark .badge-emerald {
+  background: rgba(16, 185, 129, 0.16);
+  color: #6EE7B7;
+  border: 1px solid rgba(110, 231, 183, 0.28);
 }
 
 .badge-dark {
@@ -312,5 +396,53 @@ a {
   }
   100% {
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+html.app-console .ops-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+html.app-console .ops-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  background: var(--shris-navy-900);
+  color: #e2e8f0;
+  padding: 1.5rem 1rem;
+}
+
+html.app-console [hidden] {
+  display: none !important;
+}
+
+html.app-console .ops-topbar {
+  min-height: 10.5rem;
+}
+
+html.app-console .noc-strip {
+  height: 5.25rem;
+  overflow: hidden;
+}
+
+html.app-console .login-panel {
+  min-height: 26rem;
+}
+
+@media (max-width: 900px) {
+  html.app-console .noc-strip {
+    height: 11.5rem;
+  }
+}
+
+@media (min-width: 1101px) {
+  html.app-console .ops-shell {
+    grid-template-columns: 220px 1fr;
+  }
+  html.app-console .ops-nav {
+    display: block;
   }
 }

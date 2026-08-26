@@ -1,5 +1,26 @@
-import gsap from 'gsap';
 import { WaveformVisualizer, InteractiveVoiceAgent } from './waveform';
+
+function tweenIn(el: Element | null | undefined, y = 8, ms = 280): void {
+  if (!el || !(el instanceof HTMLElement)) return;
+  el.animate(
+    [
+      { opacity: 0, transform: `translateY(${y}px)` },
+      { opacity: 1, transform: 'translateY(0px)' }
+    ],
+    { duration: ms, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+  );
+}
+
+function flashScale(el: Element | null | undefined): void {
+  if (!el || !(el instanceof HTMLElement)) return;
+  el.animate(
+    [
+      { opacity: 0.4, transform: 'scale(0.98)' },
+      { opacity: 1, transform: 'scale(1)' }
+    ],
+    { duration: 300, easing: 'ease-out', fill: 'forwards' }
+  );
+}
 
 export function initInteractiveDemos(): void {
   initHeroVoiceStudio();
@@ -43,12 +64,12 @@ function initHeroVoiceStudio(): void {
         if (speaker === 'user') {
           if (userMsgEl) {
             userMsgEl.textContent = `"${text}"`;
-            gsap.fromTo(userMsgEl.parentElement, { opacity: 0.4, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3 });
+            flashScale(userMsgEl.parentElement);
           }
         } else {
           if (agentMsgEl) {
             agentMsgEl.textContent = `"${text}"`;
-            gsap.fromTo(agentMsgEl.parentElement, { opacity: 0.4, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3 });
+            flashScale(agentMsgEl.parentElement);
           }
         }
       },
@@ -129,10 +150,7 @@ function initDomainSwitcher(): void {
       domainPanels.forEach(panel => {
         if (panel.dataset.domainPanel === targetId) {
           panel.style.display = 'grid';
-          gsap.fromTo(panel, 
-            { opacity: 0, y: 14 }, 
-            { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
-          );
+          tweenIn(panel, 14, 300);
         } else {
           panel.style.display = 'none';
         }
@@ -174,8 +192,8 @@ function initLanguageSwitcher(): void {
       const latency = btn.dataset.langLatency || '280ms';
 
       if (langSampleText) {
-        gsap.fromTo(langSampleText, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3 });
         langSampleText.textContent = `"${currentSampleText}"`;
+        tweenIn(langSampleText, 8, 300);
       }
       if (langNativeName) langNativeName.textContent = `${name} (${native})`;
       if (langLatency) langLatency.textContent = `P50 Latency: ${latency}`;
@@ -255,7 +273,7 @@ function initAgentBuilder(): void {
     const selectedText = roleSelect.options[roleSelect.selectedIndex].text;
     if (previewRole) {
       previewRole.textContent = selectedText;
-      gsap.fromTo(previewRole, { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.25 });
+      tweenIn(previewRole, 4, 250);
     }
     if (previewName) previewName.textContent = `Custom ${roleSelect.value.toUpperCase()} Agent`;
   });
@@ -295,7 +313,7 @@ function initDeveloperConsole(): void {
       snippets.forEach(s => {
         if (s.dataset.codeContent === targetId) {
           s.style.display = 'block';
-          gsap.fromTo(s, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25 });
+          tweenIn(s, 8, 250);
         } else {
           s.style.display = 'none';
         }

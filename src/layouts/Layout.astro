@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import DemoModal from '../components/modals/DemoModal.astro';
+import VoiceWidget from '../components/voice/VoiceWidget.astro';
 
 interface Props {
   title?: string;
@@ -14,6 +15,9 @@ const {
   ogImage = '/og-image.svg'
 } = Astro.props;
 
+const isApp = Astro.url.pathname.startsWith('/app');
+const isDocs = Astro.url.pathname.startsWith('/docs');
+const htmlClass = [isDocs || isApp ? 'surface-aa' : '', isApp ? 'app-console' : ''].filter(Boolean).join(' ');
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://shris.ai');
 
 // Rich Schema.org Graph for SEO, EEO & GEO (Answer Engines)
@@ -72,7 +76,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class={htmlClass}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -105,34 +109,59 @@ const jsonLd = {
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
 
-    <!-- Google Fonts Preconnect & Preload -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" 
-      rel="stylesheet" 
-    />
+    {isApp ? null : (
+      <>
+        <link rel="preload" href="/fonts/plus-jakarta-latin.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="stylesheet" href="/fonts.css" />
+      </>
+    )}
 
     <!-- JSON-LD Structured Data for Search & Answer Engines -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body>
+  <body data-voice-api={import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8787/v1'}>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <slot />
 
-    <!-- Global Interactive Demo Modal -->
-    <DemoModal />
+    {isApp ? null : <DemoModal />}
+    {isApp ? null : <VoiceWidget />}
 
-    <!-- Motion & Interactive Engine -->
+    {!isApp && (
     <script>
-      import { initSmoothScroll } from '../scripts/lenis-scroll';
-      import { initGsapAnimations } from '../scripts/animations';
       import { initInteractiveDemos } from '../scripts/interactive-demos';
 
       document.addEventListener('DOMContentLoaded', () => {
-        initSmoothScroll();
-        initGsapAnimations();
-        initInteractiveDemos();
+        const startDemos = () => initInteractiveDemos();
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(startDemos, { timeout: 900 });
+        } else {
+          setTimeout(startDemos, 1);
+        }
+
+        const heavy = !location.pathname.startsWith('/docs');
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!heavy || reduced) return;
+        const boot = () => {
+          void Promise.all([
+            import('../scripts/lenis-scroll'),
+            import('../scripts/animations')
+          ]).then(([{ initSmoothScroll }, { initGsapAnimations }]) => {
+            initSmoothScroll();
+            initGsapAnimations();
+          });
+        };
+        const afterLoad = () => {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(boot, { timeout: 2200 });
+          } else {
+            setTimeout(boot, 50);
+          }
+        };
+        if (document.readyState === 'complete') afterLoad();
+        else window.addEventListener('load', afterLoad, { once: true });
       });
     </script>
+    )}
   </body>
 </html>

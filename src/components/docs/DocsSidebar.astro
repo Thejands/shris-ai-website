@@ -1,0 +1,74 @@
+---
+import { DOC_PAGES, DOC_GROUPS } from '../../data/docs';
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+---
+
+<nav class="docs-sidebar" aria-label="Documentation">
+  {DOC_GROUPS.map((group) => (
+    <div class="docs-group">
+      <p class="docs-group-label">{group}</p>
+      <ul>
+        {DOC_PAGES.filter((page) => page.group === group).map((page) => (
+          <li>
+            <a
+              href={`/docs/${page.slug}`}
+              class:list={['docs-link', { active: page.slug === currentSlug }]}
+            >
+              {page.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</nav>
+
+<style>
+  .docs-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .docs-group-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--shris-indigo);
+    margin-bottom: 0.55rem;
+  }
+
+  .docs-sidebar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .docs-link {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--shris-tx-secondary);
+    padding: 0.4rem 0.7rem;
+    border-radius: var(--radius-md);
+  }
+
+  .docs-link:hover,
+  .docs-link.active {
+    background: var(--shris-surface-subtle);
+    color: var(--shris-navy-950);
+  }
+
+  .docs-link.active {
+    background: var(--shris-navy-900);
+    color: #fff;
+  }
+</style>

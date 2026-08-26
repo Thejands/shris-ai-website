@@ -249,22 +249,29 @@ export class InteractiveVoiceAgent {
 
   private handleUserQuery(userText: string): void {
     if (this.onStateChange) this.onStateChange('thinking');
+    void this.resolveAgentReply(userText);
+  }
 
-    setTimeout(() => {
-      let responseText = "Namaste! I have confirmed your appointment for Saturday at 11:30 AM with Senior Manager Rohit. The full details have been sent to your WhatsApp.";
-      
+  private async resolveAgentReply(userText: string): Promise<void> {
+    const { postVoiceTurn } = await import('./voice-loop');
+    const remote = await postVoiceTurn(userText);
+    let responseText = remote?.say;
+    if (!responseText) {
       const lower = userText.toLowerCase();
+      responseText =
+        "Namaste! I have confirmed your appointment for Saturday at 11:30 AM with Senior Manager Rohit. The full details have been sent to your WhatsApp.";
       if (lower.includes('price') || lower.includes('cost') || lower.includes('budget')) {
-        responseText = "Our 3 BHK luxury residences range between 1.4 to 1.6 Crores. Would you like me to send the complete pricing breakdown to your WhatsApp?";
+        responseText =
+          'Our 3 BHK luxury residences range between 1.4 to 1.6 Crores. Would you like me to send the complete pricing breakdown to your WhatsApp?';
       } else if (lower.includes('hindi') || lower.includes('namaste')) {
-        responseText = "नमस्ते! मैं आपकी किस प्रकार सहायता कर सकता हूँ? क्या आप शनिवार को साइट विज़िट के लिए समय बुक करना चाहेंगे?";
+        responseText =
+          'नमस्ते! मैं आपकी किस प्रकार सहायता कर सकता हूँ? क्या आप शनिवार को साइट विज़िट के लिए समय बुक करना चाहेंगे?';
       } else if (lower.includes('doctor') || lower.includes('health') || lower.includes('clinic')) {
-        responseText = "Certainly. Dr. Priya is available tomorrow at 4:30 PM. Shall I reserve that slot and send you the clinic directions?";
+        responseText = 'Certainly. Dr. Priya is available tomorrow at 4:30 PM. Shall I reserve that slot and send you the clinic directions?';
       }
-
-      if (this.onTranscriptUpdate) this.onTranscriptUpdate('agent', responseText);
-      this.speak(responseText);
-    }, 280);
+    }
+    if (this.onTranscriptUpdate) this.onTranscriptUpdate('agent', responseText);
+    this.speak(responseText);
   }
 
   public async speak(text: string, langCode: string = 'en-IN'): Promise<void> {

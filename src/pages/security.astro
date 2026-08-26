@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+---
+
+<Layout
+  title="Security Statement | Shris AI"
+  description="Enterprise security architecture for Shris AI: encryption, isolation, ZDR, RBAC, and India-region sovereignty."
+>
+  <Header />
+  <main id="main-content" class="legal-main">
+    <div class="container container-narrow">
+      <p class="eyebrow-text">Platform</p>
+      <h1>Security Statement</h1>
+      <p class="lead">Designed for banks, hospitals, and regulated enterprises that require strict data boundary controls.</p>
+
+      <div class="grid-2" style="margin-top: 2rem;">
+        <div class="card-light">
+          <span class="badge badge-indigo">Transit</span>
+          <h2>TLS 1.3 & SRTP</h2>
+          <p>SIP signalling and media are encrypted. API traffic is TLS 1.3 only.</p>
+        </div>
+        <div class="card-light">
+          <span class="badge badge-indigo">At rest</span>
+          <h2>AES-256</h2>
+          <p>Databases use AES-256 with optional customer-managed keys on dedicated VPC.</p>
+        </div>
+        <div class="card-light">
+          <span class="badge badge-emerald">Isolation</span>
+          <h2>Tenant VPC</h2>
+          <p>Enterprise can deploy inside isolated AWS, Azure, or GCP VPCs in India.</p>
+        </div>
+        <div class="card-light">
+          <span class="badge badge-emerald">Governance</span>
+          <h2>RBAC & audit</h2>
+          <p>Immutable logs for every agent edit and tool invocation. See <a href="/docs/dpdp-security">DPDP docs</a>.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-main { padding-top: 6.5rem; padding-bottom: 4rem; }
+  .legal-main h1 { color: var(--shris-navy-950); margin: 0.75rem 0 1rem; }
+  .legal-main h2 { font-size: 1.2rem; margin: 0.85rem 0 0.45rem; }
+  .legal-main p { color: var(--shris-tx-secondary); line-height: 1.65; }
+  .legal-main a { color: var(--shris-indigo); font-weight: 600; }
+</style>

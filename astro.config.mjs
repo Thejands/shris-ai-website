@@ -7,5 +7,8 @@ export default defineConfig({
   adapter: vercel(),
   build: {
     inlineStylesheets: 'auto'
+  },
+  redirects: {
+    '/docs': '/docs/overview'
   }
 });

@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/navigation/Header.astro';
+import Footer from '../../components/navigation/Footer.astro';
+import DocsSidebar from '../../components/docs/DocsSidebar.astro';
+import { DOC_PAGES } from '../../data/docs';
+
+export function getStaticPaths() {
+  return DOC_PAGES.map((page) => ({ params: { slug: page.slug } }));
+}
+
+const { slug } = Astro.params;
+const page = DOC_PAGES.find((item) => item.slug === slug);
+
+if (!page) {
+  return Astro.redirect('/docs/overview');
+}
+---
+
+<Layout title={`${page.title} | Shris AI Docs`} description={page.description}>
+  <Header />
+  <main id="main-content" class="docs-main">
+    <div class="container docs-shell">
+      <aside class="docs-aside">
+        <DocsSidebar currentSlug={page.slug} />
+      </aside>
+      <article class="docs-article">
+        <div class="eyebrow-container" style="align-items: flex-start;">
+          <p class="eyebrow-text" style="padding: 0;">{page.group}</p>
+          <div class="eyebrow-line" style="margin-left: 0;"></div>
+        </div>
+        <h1>{page.title}</h1>
+        <p class="lead">{page.description}</p>
+        {page.sections.map((section) => (
+          <section class="docs-section">
+            <h2>{section.heading}</h2>
+            <p>{section.body}</p>
+            {section.code && (
+              <pre class="docs-code"><code>{section.code}</code></pre>
+            )}
+          </section>
+        ))}
+        <div class="docs-cta card-light">
+          <strong>Need a live architecture session?</strong>
+          <p>Book a demo or open the operations console to inspect campaigns, TRAI gates, and CRM actions.</p>
+          <div class="docs-cta-row">
+            <button data-open-demo class="btn btn-filled btn-sm">Book a Demo</button>
+            <a href="/app" class="btn btn-outline btn-sm">Open Console</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .docs-main {
+    padding-top: 6.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .docs-shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .docs-aside {
+    position: sticky;
+    top: 6.25rem;
+  }
+
+  .docs-article h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--shris-navy-950);
+    margin-bottom: 0.75rem;
+  }
+
+  .docs-article h2 {
+    font-size: 1.35rem;
+    margin: 2rem 0 0.6rem;
+    color: var(--shris-navy-950);
+  }
+
+  .docs-section p {
+    color: var(--shris-tx-secondary);
+    line-height: 1.7;
+  }
+
+  .docs-code {
+    margin-top: 1rem;
+    background: var(--shris-navy-900);
+    color: #F8FAFC;
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.25rem;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .docs-cta {
+    margin-top: 2.5rem;
+  }
+
+  .docs-cta-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .docs-shell {
+      grid-template-columns: 1fr;
+    }
+    .docs-aside {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,1176 @@
+---
+const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8787/v1';
+---
+
+<section class="ops-shell" id="main-content" data-api-base={apiBase}>
+  <aside class="ops-nav" aria-label="Console">
+    <p class="ops-brand">SHRIS <span>AI</span></p>
+    <p class="ops-nav-label">Workspace</p>
+    <a href="/app" class="ops-nav-item active" aria-current="page">Live operations</a>
+    <a href="/docs/ha-operations" class="ops-nav-item">HA runbook</a>
+    <a href="/docs/connect-checklist" class="ops-nav-item">Connect checklist</a>
+    <a href="/docs/overview" class="ops-nav-item">Docs</a>
+    <a href="/compliance" class="ops-nav-item">TRAI / DPDP</a>
+    <a href="/developers" class="ops-nav-item">APIs</a>
+    <a href="/" class="ops-nav-item">Marketing site</a>
+  </aside>
+
+  <div class="ops-main">
+    <header class="ops-topbar">
+      <div>
+        <p class="eyebrow-text" style="padding:0;">Sovereign Voice Operations</p>
+        <h1>Agentic communications console</h1>
+      </div>
+      <div class="ops-top-meta">
+        <span class="badge badge-emerald" id="trai-badge">TRAI window: —————</span>
+        <span class="badge badge-indigo" id="api-badge">API: —————————</span>
+        <span class="badge badge-emerald" id="hipaa-badge" hidden>HIPAA mode</span>
+        <span class="badge badge-indigo" id="role-badge" hidden>role</span>
+        <span class="badge badge-indigo" id="tenant-badge" hidden>tenant</span>
+        <button type="button" class="btn btn-sm btn-outline" id="logout-btn" hidden>Sign out</button>
+      </div>
+    </header>
+
+    <section class="noc-strip" id="noc-strip" aria-label="NOC health">
+      <article class="card-light noc-cell">
+        <span>API health</span>
+        <strong id="noc-status">—</strong>
+      </article>
+      <article class="card-light noc-cell">
+        <span>TRAI window</span>
+        <strong id="noc-trai">—</strong>
+      </article>
+      <article class="card-light noc-cell">
+        <span>Default tenant</span>
+        <strong id="noc-tenant">—</strong>
+      </article>
+      <article class="card-light noc-cell">
+        <span>Queue depth</span>
+        <strong id="noc-queue">—</strong>
+      </article>
+    </section>
+
+    <div id="login-panel" class="card-light login-panel">
+      <h2>Tenant sign-in</h2>
+      <p class="muted">JWT is tenant-scoped. Local admin <code>dev@shris.ai</code> · operator <code>operator@shris.ai</code> · viewer <code>viewer@shris.ai</code>. Second tenant: <code>acme@shris.ai</code>. Viewers cannot dispatch. Only admins manage users.</p>
+      <form id="login-form">
+        <label for="login-email">Work email</label>
+        <input id="login-email" name="email" type="email" required autocomplete="username" value="dev@shris.ai" />
+        <label for="login-password">Password</label>
+        <input id="login-password" name="password" type="password" required autocomplete="current-password" value="shris-dev-local" />
+        <button type="submit" class="btn btn-indigo" style="margin-top:1rem;">Issue JWT</button>
+      </form>
+      <p id="login-error" class="login-error" role="alert"></p>
+    </div>
+
+    <div id="ops-authenticated" hidden>
+      <div class="ops-metrics" aria-label="Funnel KPIs">
+        <article class="card-light ops-metric">
+          <span>Attempted</span>
+          <strong id="kpi-attempted">—</strong>
+        </article>
+        <article class="card-light ops-metric">
+          <span>Connected</span>
+          <strong id="kpi-connected">—</strong>
+        </article>
+        <article class="card-light ops-metric">
+          <span>Qualified</span>
+          <strong id="kpi-qualified">—</strong>
+        </article>
+        <article class="card-light ops-metric">
+          <span>Booked</span>
+          <strong id="kpi-booked">—</strong>
+        </article>
+      </div>
+
+      <div class="card-light funnel-card">
+        <h2 id="funnel-heading">Pipeline funnel</h2>
+        <p class="muted">Live counts from GET /v1/kpis. Bar length is each stage as a share of attempted.</p>
+        <ol class="funnel-visual" id="funnel-list" aria-labelledby="funnel-heading">
+          <li>
+            <div class="funnel-meta"><span>Attempted</span><b id="funnel-d">0</b></div>
+            <div class="funnel-track" role="img" aria-labelledby="funnel-d-label">
+              <div class="funnel-fill" id="funnel-fill-d" data-stage="attempted"></div>
+            </div>
+            <span class="sr-only" id="funnel-d-label">Attempted 0 of 0</span>
+          </li>
+          <li>
+            <div class="funnel-meta"><span>Connected</span><b id="funnel-c">0</b></div>
+            <div class="funnel-track" role="img" aria-labelledby="funnel-c-label">
+              <div class="funnel-fill" id="funnel-fill-c" data-stage="connected"></div>
+            </div>
+            <span class="sr-only" id="funnel-c-label">Connected 0 of 0</span>
+          </li>
+          <li>
+            <div class="funnel-meta"><span>Qualified</span><b id="funnel-q">0</b></div>
+            <div class="funnel-track" role="img" aria-labelledby="funnel-q-label">
+              <div class="funnel-fill" id="funnel-fill-q" data-stage="qualified"></div>
+            </div>
+            <span class="sr-only" id="funnel-q-label">Qualified 0 of 0</span>
+          </li>
+          <li>
+            <div class="funnel-meta"><span>Booked</span><b id="funnel-b">0</b></div>
+            <div class="funnel-track" role="img" aria-labelledby="funnel-b-label">
+              <div class="funnel-fill" id="funnel-fill-b" data-stage="booked"></div>
+            </div>
+            <span class="sr-only" id="funnel-b-label">Booked 0 of 0</span>
+          </li>
+        </ol>
+        <h3 id="lang-heading">Language mix</h3>
+        <ul class="lang-mix" aria-labelledby="lang-heading">
+          <li>
+            <span>English (en-IN)</span>
+            <div class="funnel-track" role="img" aria-labelledby="lang-en-label"><div class="funnel-fill lang-en" id="lang-fill-en"></div></div>
+            <b id="lang-en">0</b>
+            <span class="sr-only" id="lang-en-label">English 0</span>
+          </li>
+          <li>
+            <span>Hindi (hi-IN)</span>
+            <div class="funnel-track" role="img" aria-labelledby="lang-hi-label"><div class="funnel-fill lang-hi" id="lang-fill-hi"></div></div>
+            <b id="lang-hi">0</b>
+            <span class="sr-only" id="lang-hi-label">Hindi 0</span>
+          </li>
+          <li>
+            <span>Tamil (ta-IN)</span>
+            <div class="funnel-track" role="img" aria-labelledby="lang-ta-label"><div class="funnel-fill lang-ta" id="lang-fill-ta"></div></div>
+            <b id="lang-ta">0</b>
+            <span class="sr-only" id="lang-ta-label">Tamil 0</span>
+          </li>
+          <li>
+            <span>Telugu (te-IN)</span>
+            <div class="funnel-track" role="img" aria-labelledby="lang-te-label"><div class="funnel-fill lang-te" id="lang-fill-te"></div></div>
+            <b id="lang-te">0</b>
+            <span class="sr-only" id="lang-te-label">Telugu 0</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-light funnel-card" id="handoff-card">
+        <h2 id="handoff-heading">Warm handoff queue</h2>
+        <p class="muted">Conversations in <code>handoff</code> state. Operators accept, reply as the specialist, then resolve.</p>
+        <div id="handoff-list" class="handoff-list" aria-labelledby="handoff-heading">
+          <p class="muted">No live handoffs. Ask for a human in the voice loop.</p>
+        </div>
+        <p id="handoff-error" class="login-error" role="alert"></p>
+      </div>
+
+      <div class="card-light funnel-card" id="qa-card">
+        <div class="ops-card-head">
+          <h2 id="qa-heading">Call QA scores</h2>
+          <label class="qa-filter">
+            <input type="checkbox" id="qa-low-only" />
+            Low scores only (&lt;80%)
+          </label>
+        </div>
+        <p class="muted">From persisted call records (GET /v1/calls, optional qaMax). Disclosure and opt-out checks from the conversation QA scorer — not a live QA vendor.</p>
+        <div class="ops-table-wrap">
+          <table>
+            <caption class="sr-only">Call QA scores for this tenant</caption>
+            <thead>
+              <tr>
+                <th scope="col">Call</th>
+                <th scope="col">Score</th>
+                <th scope="col">Disclosure</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody id="qa-body">
+              <tr><td colspan="4" class="muted">Sign in to load QA scores.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+        <div class="card-light ops-table-card">
+          <div class="ops-card-head">
+            <h2>Persisted fleet</h2>
+            <span class="pulse-dot"></span>
+          </div>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Persisted voice calls for this tenant</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Call</th>
+                  <th scope="col">Agent</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Status</th>
+                    <th scope="col">Disclosure</th>
+                    <th scope="col">QA</th>
+                </tr>
+              </thead>
+              <tbody id="fleet-body">
+                <tr><td colspan="6" class="muted">Sign in to load persisted calls.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="ops-side">
+          <div class="card-dark dispatch-card" id="dispatch-card">
+            <h2>Dispatch test (simulator)</h2>
+            <p>JWT-authenticated. Live PSTN requires SIP/CPaaS env on Shris-ai-app. Every call records AI disclosure.</p>
+            <form id="dispatch-form">
+              <label for="dispatch-to">Destination E.164</label>
+              <input id="dispatch-to" name="to" type="tel" required placeholder="+919876543210" value="+919876543210" />
+              <label for="dispatch-agent">Playbook</label>
+              <select id="dispatch-agent" name="agent_id">
+                <option value="agent_re_falcon_city">Real Estate · Aarav</option>
+                <option value="agent_hc_opd">Healthcare · Priya</option>
+                <option value="agent_bfsi_kyc">BFSI · Vikram</option>
+                <option value="agent_edu_admit">Education · Ananya</option>
+                <option value="agent_retail_cod">Retail · Kavya</option>
+                <option value="agent_travel_vip">Travel · Kabir</option>
+              </select>
+              <button type="submit" class="btn btn-indigo" style="width:100%;margin-top:1rem;">Run compliance + dispatch</button>
+            </form>
+            <pre id="dispatch-result" class="dispatch-result" aria-live="polite">Idle. API {apiBase}</pre>
+          </div>
+
+          <div class="card-light" id="voice-loop-card">
+            <h2>Voice loop (no PSTN)</h2>
+            <p class="muted">POST /v1/conversations/:id/turns — Hinglish NLU, disclosure, CRM/calendar/WhatsApp on book.</p>
+            <form id="voice-loop-form" class="create-user-form">
+              <label for="voice-domain">Domain</label>
+              <select id="voice-domain" name="domain">
+                <option value="real_estate">Real estate</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="bfsi">BFSI</option>
+                <option value="education">Education</option>
+                <option value="retail">Retail</option>
+                <option value="travel">Travel</option>
+              </select>
+              <label for="voice-turn">Caller transcript</label>
+              <input id="voice-turn" name="text" type="text" required placeholder="3 bhk 1.5 crore Whitefield, confirm" />
+              <button type="submit" class="btn btn-indigo">Send turn</button>
+            </form>
+            <pre id="voice-loop-result" class="dispatch-result" aria-live="polite">Start a turn after sign-in (JWT optional on this route).</pre>
+          </div>
+
+          <div class="card-light" id="campaigns-card">
+            <h2>Campaigns</h2>
+            <p class="muted" id="campaigns-hint">Operators and admins can create campaigns. Viewers can list only.</p>
+            <form id="create-campaign-form" class="create-user-form">
+              <label for="camp-name">Name</label>
+              <input id="camp-name" name="name" type="text" required placeholder="Weekend site visits" />
+              <label for="camp-domain">Domain</label>
+              <input id="camp-domain" name="domain" type="text" placeholder="Real Estate" />
+              <label for="camp-agent">Agent playbook</label>
+              <select id="camp-agent" name="agent_id">
+                <option value="agent_re_falcon_city">Real Estate · Aarav</option>
+                <option value="agent_hc_opd">Healthcare · Priya</option>
+                <option value="agent_bfsi_kyc">BFSI · Vikram</option>
+                <option value="agent_edu_admit">Education · Ananya</option>
+                <option value="agent_retail_cod">Retail · Kavya</option>
+                <option value="agent_travel_vip">Travel · Kabir</option>
+              </select>
+              <button type="submit" class="btn btn-indigo">Create campaign</button>
+            </form>
+            <p id="campaign-error" class="login-error" role="alert"></p>
+            <ul class="campaign-list" id="campaign-list"></ul>
+          </div>
+
+          <div class="card-light" id="numbers-card">
+            <h2>DID inventory</h2>
+            <p class="muted">Simulator numbers. Operators can rotate; viewers list only. Live carrier DIDs stay in tenant env.</p>
+            <div class="ops-table-wrap">
+              <table>
+                <caption class="sr-only">Inbound DID inventory</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Label</th>
+                    <th scope="col">E.164</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Rotate</th>
+                  </tr>
+                </thead>
+                <tbody id="numbers-body">
+                  <tr><td colspan="4" class="muted">Sign in to load inventory.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p id="numbers-error" class="login-error" role="alert"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-light users-card" id="integrations-card" hidden>
+        <h2>Connect status</h2>
+        <p class="muted">Admin only. Modes come from env presence. Secrets are never shown. <a href="/docs/connect-checklist">Connect checklist</a>.</p>
+        <div class="ops-table-wrap">
+          <table>
+            <caption class="sr-only">Integration provider modes</caption>
+            <thead>
+              <tr>
+                <th scope="col">Provider</th>
+                <th scope="col">Mode</th>
+                <th scope="col">Env to unlock live</th>
+              </tr>
+            </thead>
+            <tbody id="integrations-body">
+              <tr><td colspan="3" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="integrations-note" class="muted"></p>
+        <p id="integrations-error" class="login-error" role="alert"></p>
+      </div>
+
+      <div class="card-light users-card" id="agents-card" hidden>
+        <h2>Agent playbooks</h2>
+        <p class="muted">Admin only. Per-tenant disclosure, qualify script, and language. JWT-scoped — Acme cannot edit local agents.</p>
+        <form id="agent-config-form" class="create-user-form">
+          <label for="agent-select">Agent</label>
+          <select id="agent-select" name="id"></select>
+          <label for="agent-language">Language</label>
+          <select id="agent-language" name="language">
+            <option value="en-IN">English (India)</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="te-IN">Telugu</option>
+          </select>
+          <label for="agent-disclosure">AI disclosure</label>
+          <input id="agent-disclosure" name="disclosure" type="text" required />
+          <label for="agent-script">Qualify script</label>
+          <input id="agent-script" name="qualifyScript" type="text" required />
+          <button type="submit" class="btn btn-indigo">Save playbook</button>
+        </form>
+        <p id="agents-error" class="login-error" role="alert"></p>
+      </div>
+
+      <div class="card-light users-card" id="users-card" hidden>
+        <h2>Tenant users</h2>
+        <p class="muted">Admin only. Creates users in the JWT tenant. Operators and viewers cannot open this panel.</p>
+        <div class="ops-table-wrap">
+          <table>
+            <caption class="sr-only">Users in this tenant</caption>
+            <thead>
+              <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+              </tr>
+            </thead>
+            <tbody id="users-body">
+              <tr><td colspan="3" class="muted">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <form id="create-user-form" class="create-user-form">
+          <label for="new-user-email">Email</label>
+          <input id="new-user-email" name="email" type="email" required autocomplete="off" />
+          <label for="new-user-name">Name</label>
+          <input id="new-user-name" name="name" type="text" required />
+          <label for="new-user-role">Role</label>
+          <select id="new-user-role" name="role">
+            <option value="viewer">viewer</option>
+            <option value="operator">operator</option>
+            <option value="admin">admin</option>
+          </select>
+          <label for="new-user-password">Temporary password</label>
+          <input id="new-user-password" name="password" type="password" required minlength="10" autocomplete="new-password" />
+          <button type="submit" class="btn btn-indigo">Create user</button>
+        </form>
+        <p id="users-error" class="login-error" role="alert"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+  .ops-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    background: var(--shris-canvas);
+  }
+  .ops-nav {
+    background: var(--shris-navy-900);
+    color: #E2E8F0;
+    padding: 1.5rem 1rem;
+  }
+  .ops-brand { font-weight: 800; font-size: 1.05rem; margin-bottom: 1.5rem; color: #fff; }
+  .ops-brand span { color: var(--shris-indigo-light); }
+  .ops-nav-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #CBD5E1;
+    margin-bottom: 0.5rem;
+  }
+  .ops-nav-item {
+    display: block;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #94A3B8;
+    margin-bottom: 0.2rem;
+  }
+  .ops-nav-item.active, .ops-nav-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+  .ops-main { padding: 1.5rem 1.75rem 3rem; }
+  [hidden] { display: none !important; }
+  .ops-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    min-height: 10.5rem;
+    align-items: flex-start;
+  }
+  .ops-topbar h1 { font-size: 1.65rem; color: var(--shris-navy-950); margin-top: 0.2rem; }
+  .ops-top-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; min-height: 2.5rem; }
+  .ops-top-meta .badge { white-space: nowrap; }
+  .noc-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    height: 5.25rem;
+    overflow: hidden;
+  }
+  .noc-cell { padding: 0.85rem 1rem; height: 5.25rem; box-sizing: border-box; }
+  .noc-cell span { font-size: 0.72rem; color: var(--shris-tx-tertiary); display: block; }
+  .noc-cell strong {
+    font-size: 0.92rem;
+    color: var(--shris-navy-950);
+    display: block;
+    margin-top: 0.3rem;
+    min-height: 1.4em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 900px) {
+    .noc-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      height: 11.5rem;
+    }
+    .noc-cell { height: 5.25rem; }
+  }
+  .login-panel { max-width: 440px; min-height: 26rem; }
+  .login-panel h2 { font-size: 1.2rem; margin-bottom: 0.4rem; }
+  .login-panel label { display: block; font-size: 0.78rem; font-weight: 600; margin: 0.75rem 0 0.3rem; color: var(--shris-navy-950); }
+  .login-panel input {
+    width: 100%;
+    border: 1px solid var(--shris-border);
+    border-radius: 10px;
+    padding: 0.65rem 0.75rem;
+    font-family: var(--font-body);
+  }
+  .login-error { color: #B91C1C; font-size: 0.82rem; margin-top: 0.75rem; min-height: 1.2em; }
+  .ops-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .ops-metric span { font-size: 0.78rem; color: var(--shris-tx-tertiary); }
+  .ops-metric strong { display: block; font-size: 1.6rem; color: var(--shris-navy-950); margin-top: 0.35rem; }
+  .funnel-card { margin-bottom: 1.25rem; }
+  .funnel-card h2, .funnel-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--shris-navy-950); }
+  .funnel-card h3 { margin-top: 1.25rem; font-size: 0.95rem; }
+  .funnel-visual, .lang-mix {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .funnel-visual li, .lang-mix li {
+    display: grid;
+    grid-template-columns: minmax(7rem, 9rem) 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .funnel-meta { display: flex; flex-direction: column; gap: 0.1rem; }
+  .funnel-meta span, .lang-mix span { font-size: 0.8rem; font-weight: 600; color: #334155; }
+  .funnel-meta b, .lang-mix b { font-size: 1.05rem; color: #0f172a; }
+  .funnel-track {
+    height: 14px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .funnel-fill {
+    height: 100%;
+    width: 0%;
+    background: #3730a3;
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+  .funnel-fill.lang-en { background: #1e3a8a; }
+  .funnel-fill.lang-hi { background: #0f766e; }
+  .funnel-fill.lang-ta { background: #b45309; }
+  .funnel-fill.lang-te { background: #7c3aed; }
+  .handoff-list { display: flex; flex-direction: column; gap: 0.85rem; }
+  .handoff-item {
+    border: 1px solid var(--shris-border);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    background: #fff;
+  }
+  .handoff-item h3 { font-size: 0.95rem; margin: 0 0 0.35rem; color: #0f172a; }
+  .handoff-item p { margin: 0.25rem 0; font-size: 0.82rem; color: #334155; }
+  .handoff-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.65rem; }
+  .handoff-actions input[type="text"] {
+    flex: 1;
+    min-width: 12rem;
+    border: 1px solid var(--shris-border);
+    border-radius: 8px;
+    padding: 0.45rem 0.65rem;
+    color: #0f172a;
+  }
+  .ops-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.9fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .ops-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .ops-card-head h2, .ops-side h2, .funnel-card h2 { font-size: 1.1rem; color: inherit; }
+  .ops-table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th { text-align: left; color: var(--shris-tx-tertiary); font-weight: 600; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--shris-border); }
+  td { padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--shris-border-subtle); color: var(--shris-tx-primary); vertical-align: top; }
+  code { font-family: var(--font-mono); font-size: 0.75rem; }
+  .muted { color: var(--shris-tx-tertiary); font-size: 0.75rem; }
+  .status { text-transform: capitalize; font-weight: 700; font-size: 0.75rem; }
+  .status-simulated, .status-seizing_trunk, .status-live { color: #047857; }
+  .status-simulator { color: #4338CA; }
+  .status-unconfigured { color: #64748B; }
+  .status-lab { color: #B45309; }
+  .status-blocked { color: #EF4444; }
+  .dispatch-card h2 { color: #fff; font-size: 1.15rem; margin-bottom: 0.4rem; }
+  .dispatch-card p { color: #94A3B8; font-size: 0.82rem; margin-bottom: 1rem; }
+  .dispatch-card label { display: block; font-size: 0.75rem; color: #A5BBFC; margin: 0.6rem 0 0.3rem; }
+  .dispatch-card input, .dispatch-card select {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.65rem 0.75rem;
+    font-family: var(--font-body);
+  }
+  .dispatch-result {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    white-space: pre-wrap;
+    color: #CBD5E1;
+    max-height: 160px;
+    overflow: auto;
+  }
+  .campaign-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 0.75rem; }
+  .campaign-row { display: flex; justify-content: space-between; font-size: 0.88rem; }
+  .campaign-bar {
+    height: 6px;
+    border-radius: 99px;
+    background: var(--shris-surface-muted);
+    margin: 0.4rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .campaign-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--p);
+    background: var(--shris-indigo);
+  }
+  .users-card { margin-top: 1.25rem; }
+  .users-card h2 { font-size: 1.1rem; margin-bottom: 0.35rem; }
+  .create-user-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem 1rem;
+    margin-top: 1rem;
+    max-width: 640px;
+  }
+  .create-user-form label { font-size: 0.75rem; font-weight: 600; color: var(--shris-navy-950); }
+  .create-user-form input, .create-user-form select {
+    grid-column: span 1;
+    border: 1px solid var(--shris-border);
+    border-radius: 10px;
+    padding: 0.55rem 0.7rem;
+    font-family: var(--font-body);
+  }
+  .create-user-form button { grid-column: 1 / -1; justify-self: start; margin-top: 0.25rem; }
+  @media (max-width: 1100px) {
+    .ops-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .ops-metrics, .ops-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1101px) {
+    .ops-shell { grid-template-columns: 220px 1fr; }
+  }
+</style>
+
+<script>
+  const TOKEN_KEY = 'shris_jwt';
+  const ROLE_KEY = 'shris_role';
+  const TENANT_KEY = 'shris_tenant';
+  const shell = document.querySelector('.ops-shell') as HTMLElement | null;
+  const apiBase = shell?.dataset.apiBase || 'http://127.0.0.1:8787/v1';
+  const traiBadge = document.getElementById('trai-badge');
+  const apiBadge = document.getElementById('api-badge');
+  const resultEl = document.getElementById('dispatch-result');
+  const loginPanel = document.getElementById('login-panel');
+  const authBlock = document.getElementById('ops-authenticated');
+  const logoutBtn = document.getElementById('logout-btn');
+  const loginError = document.getElementById('login-error');
+
+  function token(): string {
+    return sessionStorage.getItem(TOKEN_KEY) || '';
+  }
+
+  function headers(json = false): HeadersInit {
+    const h: Record<string, string> = { Accept: 'application/json' };
+    if (json) h['Content-Type'] = 'application/json';
+    if (token()) h.Authorization = `Bearer ${token()}`;
+    return h;
+  }
+
+  function istHour(): number {
+    const parts = new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hour12: false, timeZone: 'Asia/Kolkata' }).formatToParts(new Date());
+    return Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  }
+
+  function updateTrai() {
+    const hour = istHour();
+    const open = hour >= 9 && hour < 21;
+    if (traiBadge) {
+      traiBadge.textContent = open ? `TRAI window: OPEN (${hour}:00 IST)` : `TRAI window: CLOSED (${hour}:00 IST)`;
+      traiBadge.className = open ? 'badge badge-emerald' : 'badge badge-indigo';
+    }
+  }
+  updateTrai();
+  setInterval(updateTrai, 60000);
+
+  function applyRole(role: string, tenant = sessionStorage.getItem(TENANT_KEY) || '') {
+    sessionStorage.setItem(ROLE_KEY, role);
+    const badge = document.getElementById('role-badge');
+    const tenantBadge = document.getElementById('tenant-badge');
+    const dispatchCard = document.getElementById('dispatch-card');
+    const usersCard = document.getElementById('users-card');
+    const integrationsCard = document.getElementById('integrations-card');
+    const agentsCard = document.getElementById('agents-card');
+    if (badge) {
+      badge.hidden = false;
+      badge.textContent = role;
+    }
+    if (tenantBadge && tenant) {
+      tenantBadge.hidden = false;
+      tenantBadge.textContent = tenant;
+    }
+    if (dispatchCard) dispatchCard.hidden = role === 'viewer';
+    if (usersCard) usersCard.hidden = role !== 'admin';
+    if (integrationsCard) integrationsCard.hidden = role !== 'admin';
+    if (agentsCard) agentsCard.hidden = role !== 'admin';
+    const campForm = document.getElementById('create-campaign-form');
+    if (campForm) campForm.hidden = role === 'viewer';
+  }
+
+  function showAuth(on: boolean) {
+    if (loginPanel) loginPanel.hidden = on;
+    if (authBlock) authBlock.hidden = !on;
+    if (logoutBtn) logoutBtn.hidden = !on;
+  }
+
+  async function probeApi() {
+    const set = (id: string, value: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+    try {
+      const res = await fetch(`${apiBase}/health`);
+      const data = await res.json() as {
+        status?: string;
+        mode?: string;
+        traiOpen?: boolean;
+        istHour?: number;
+        tenant?: string;
+        queueDepth?: number;
+        hipaa?: { enabled?: boolean };
+      };
+      if (apiBadge) apiBadge.textContent = `API: ${data.status || 'ok'} (${data.mode || 'simulator'})`;
+      set('noc-status', `${data.status || 'ok'} · ${data.mode || 'simulator'}`);
+      set('noc-trai', data.traiOpen ? `OPEN (${data.istHour}:00 IST)` : `CLOSED (${data.istHour}:00 IST)`);
+      set('noc-tenant', data.tenant || 'tenant_local');
+      set('noc-queue', String(data.queueDepth ?? 0));
+      const hipaaBadge = document.getElementById('hipaa-badge');
+      if (hipaaBadge) {
+        hipaaBadge.hidden = !data.hipaa?.enabled;
+        hipaaBadge.textContent = data.hipaa?.enabled ? 'HIPAA mode' : '';
+      }
+    } catch {
+      if (apiBadge) apiBadge.textContent = 'API: offline';
+      set('noc-status', 'offline');
+    }
+  }
+
+  async function refreshWorkspace() {
+    const [kpisRes, callsRes, campRes, numRes, handoffRes] = await Promise.all([
+      fetch(`${apiBase}/kpis`, { headers: headers() }),
+      fetch(`${apiBase}/calls`, { headers: headers() }),
+      fetch(`${apiBase}/campaigns`, { headers: headers() }),
+      fetch(`${apiBase}/numbers`, { headers: headers() }),
+      fetch(`${apiBase}/handoffs`, { headers: headers() })
+    ]);
+    if (kpisRes.status === 401 || callsRes.status === 401) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      showAuth(false);
+      return;
+    }
+    const kpis = await kpisRes.json();
+    const set = (id: string, value: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+    set('kpi-attempted', String(kpis.attempted ?? kpis.dispatched ?? 0));
+    set('kpi-connected', String(kpis.connected ?? 0));
+    set('kpi-qualified', String(kpis.qualified ?? 0));
+    set('kpi-booked', String(kpis.booked ?? 0));
+    set('funnel-d', String(kpis.attempted ?? kpis.dispatched ?? 0));
+    set('funnel-c', String(kpis.connected ?? 0));
+    set('funnel-q', String(kpis.qualified ?? 0));
+    set('funnel-b', String(kpis.booked ?? 0));
+    const attempted = Number(kpis.attempted ?? kpis.dispatched ?? 0) || 0;
+    const stages = [
+      ['d', 'Attempted', Number(kpis.attempted ?? kpis.dispatched ?? 0)],
+      ['c', 'Connected', Number(kpis.connected ?? 0)],
+      ['q', 'Qualified', Number(kpis.qualified ?? 0)],
+      ['b', 'Booked', Number(kpis.booked ?? 0)]
+    ] as const;
+    const denom = Math.max(attempted, 1);
+    for (const [id, label, value] of stages) {
+      const fill = document.getElementById(`funnel-fill-${id}`);
+      if (fill) fill.style.width = `${Math.min(100, Math.round((value / denom) * 100))}%`;
+      const sr = document.getElementById(`funnel-${id}-label`);
+      if (sr) sr.textContent = `${label} ${value} of ${attempted}`;
+    }
+    const mix = (kpis.languageMix ?? {}) as Record<string, number>;
+    const langs = [
+      ['en', 'en-IN', 'English'],
+      ['hi', 'hi-IN', 'Hindi'],
+      ['ta', 'ta-IN', 'Tamil'],
+      ['te', 'te-IN', 'Telugu']
+    ] as const;
+    const langTotal = langs.reduce((n, [, key]) => n + Number(mix[key] ?? 0), 0) || 1;
+    for (const [short, key, label] of langs) {
+      const count = Number(mix[key] ?? 0);
+      set(`lang-${short}`, String(count));
+      const fill = document.getElementById(`lang-fill-${short}`);
+      if (fill) fill.style.width = `${Math.min(100, Math.round((count / langTotal) * 100))}%`;
+      const sr = document.getElementById(`lang-${short}-label`);
+      if (sr) sr.textContent = `${label} ${count}`;
+    }
+
+    const callsBody = await callsRes.json();
+    const tbody = document.getElementById('fleet-body');
+    const calls = (callsBody.calls || []) as Array<{
+      id: string;
+      status: string;
+      disclosurePlayed: boolean;
+      request: { to: string; agent_id: string };
+      qa?: { score: number };
+    }>;
+    if (tbody) {
+      tbody.innerHTML = calls.length
+        ? calls.slice(0, 12).map((c) => `<tr>
+            <td><code>${c.id}</code></td>
+            <td>${c.request.agent_id}</td>
+            <td>${c.request.to}</td>
+            <td><span class="status status-${c.status}">${c.status}</span></td>
+            <td>${c.disclosurePlayed ? 'Played' : '—'}</td>
+            <td>${c.qa ? Math.round(c.qa.score * 100) + '%' : '—'}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="6" class="muted">No persisted calls yet. Dispatch a simulator job.</td></tr>';
+    }
+
+    const camps = await campRes.json();
+    const list = document.getElementById('campaign-list');
+    if (list) {
+      list.innerHTML = (camps.campaigns || []).map((c: { name: string; domain: string; connected: number; blocked: number }) => {
+        const total = c.connected + c.blocked || 1;
+        const p = Math.round((c.connected / total) * 100);
+        return `<li>
+          <div class="campaign-row"><strong>${c.name}</strong><span>${p}%</span></div>
+          <div class="campaign-bar" style="--p:${p}%"></div>
+          <p class="muted">${c.domain} · ${c.connected} connected · ${c.blocked} blocked</p>
+        </li>`;
+      }).join('');
+    }
+
+    if (numRes.ok) {
+      const nums = await numRes.json() as {
+        numbers: Array<{ id: string; e164: string; label: string; active: boolean; rotatedAt?: string }>;
+      };
+      const nbody = document.getElementById('numbers-body');
+      const canRotate = sessionStorage.getItem(ROLE_KEY) !== 'viewer';
+      if (nbody) {
+        nbody.innerHTML = (nums.numbers || []).map((n) => `<tr>
+          <td>${n.label}</td>
+          <td><code>${n.e164}</code></td>
+          <td>${n.active ? 'active' : 'idle'}${n.rotatedAt ? ' · rotated' : ''}</td>
+          <td>${canRotate ? `<button type="button" class="btn btn-outline btn-sm did-rotate" data-did="${n.id}">Rotate</button>` : 'read-only'}</td>
+        </tr>`).join('') || '<tr><td colspan="4" class="muted">No simulator DIDs.</td></tr>';
+      }
+    }
+
+    if (handoffRes.ok) {
+      const payload = await handoffRes.json() as {
+        handoffs: Array<{
+          id: string;
+          domain: string;
+          assignedTo?: string;
+          handoffStatus?: string;
+          turns: Array<{ speaker: string; text: string }>;
+        }>;
+      };
+      const box = document.getElementById('handoff-list');
+      const canAct = sessionStorage.getItem(ROLE_KEY) !== 'viewer';
+      const rows = payload.handoffs || [];
+      if (box) {
+        box.innerHTML = rows.length
+          ? rows.map((h) => {
+              const last = [...h.turns].reverse().find((t) => t.speaker === 'customer')?.text || 'Caller requested a specialist.';
+              const actions = canAct
+                ? `<div class="handoff-actions">
+                    <button type="button" class="btn btn-outline btn-sm handoff-accept" data-id="${h.id}">Accept</button>
+                    <label class="sr-only" for="handoff-reply-${h.id}">Specialist reply</label>
+                    <input id="handoff-reply-${h.id}" type="text" data-reply-for="${h.id}" placeholder="Reply as specialist" />
+                    <button type="button" class="btn btn-indigo btn-sm handoff-reply" data-id="${h.id}">Send reply</button>
+                    <button type="button" class="btn btn-outline btn-sm handoff-resolve" data-id="${h.id}">Resolve</button>
+                  </div>`
+                : '<p class="muted">Viewer: queue is read-only.</p>';
+              return `<article class="handoff-item">
+                <h3><code>${h.id}</code> · ${h.domain} · ${h.handoffStatus || 'queued'}</h3>
+                <p>${last}</p>
+                <p class="muted">${h.assignedTo ? `Assigned to ${h.assignedTo}` : 'Unassigned'}</p>
+                ${actions}
+              </article>`;
+            }).join('')
+          : '<p class="muted">No live handoffs. Ask for a human in the voice loop.</p>';
+      }
+    }
+
+    const usersCard = document.getElementById('users-card');
+    if (usersCard && !usersCard.hidden) {
+      const usersRes = await fetch(`${apiBase}/users`, { headers: headers() });
+      const usersBody = await usersRes.json();
+      const ubody = document.getElementById('users-body');
+      if (ubody && usersRes.ok) {
+        const users = (usersBody.users || []) as Array<{ email: string; name: string; role: string }>;
+        ubody.innerHTML = users.map((u) => `<tr><td><code>${u.email}</code></td><td>${u.name}</td><td>${u.role}</td></tr>`).join('');
+      }
+    }
+
+    const integrationsCardEl = document.getElementById('integrations-card');
+    if (integrationsCardEl && !integrationsCardEl.hidden) {
+      const intRes = await fetch(`${apiBase}/integrations`, { headers: headers() });
+      const ierr = document.getElementById('integrations-error');
+      const ibody = document.getElementById('integrations-body');
+      const inote = document.getElementById('integrations-note');
+      if (!intRes.ok) {
+        if (ierr) ierr.textContent = 'Could not load integrations (admin only).';
+      } else {
+        if (ierr) ierr.textContent = '';
+        const payload = await intRes.json() as {
+          note?: string;
+          providers?: Array<{ label: string; mode: string; env: string[] }>;
+        };
+        if (inote) inote.textContent = payload.note || '';
+        if (ibody) {
+          ibody.innerHTML = (payload.providers || []).map((p) => `<tr>
+            <td>${p.label}</td>
+            <td><span class="status status-${p.mode}">${p.mode}</span></td>
+            <td><code>${(p.env || []).join(', ')}</code></td>
+          </tr>`).join('');
+        }
+      }
+    }
+
+    const agentsCardEl = document.getElementById('agents-card');
+    if (agentsCardEl && !agentsCardEl.hidden) {
+      const agRes = await fetch(`${apiBase}/agents`, { headers: headers() });
+      const aerr = document.getElementById('agents-error');
+      if (!agRes.ok) {
+        if (aerr) aerr.textContent = 'Could not load agents (sign in).';
+      } else {
+        if (aerr) aerr.textContent = '';
+        const payload = await agRes.json() as {
+          agents: Array<{ id: string; name: string; disclosure: string; qualifyScript: string; language: string }>;
+        };
+        const select = document.getElementById('agent-select') as HTMLSelectElement | null;
+        if (select) {
+          const keep = select.value;
+          select.innerHTML = (payload.agents || []).map((a) => `<option value="${a.id}">${a.name}</option>`).join('');
+          if (keep && [...select.options].some((o) => o.value === keep)) select.value = keep;
+          const current = (payload.agents || []).find((a) => a.id === select.value);
+          const disc = document.getElementById('agent-disclosure') as HTMLInputElement | null;
+          const script = document.getElementById('agent-script') as HTMLInputElement | null;
+          const lang = document.getElementById('agent-language') as HTMLSelectElement | null;
+          if (current && disc) disc.value = current.disclosure;
+          if (current && script) script.value = current.qualifyScript;
+          if (current && lang) lang.value = current.language;
+          select.onchange = () => {
+            const next = (payload.agents || []).find((a) => a.id === select.value);
+            if (next && disc) disc.value = next.disclosure;
+            if (next && script) script.value = next.qualifyScript;
+            if (next && lang) lang.value = next.language;
+          };
+        }
+      }
+    }
+  }
+
+  document.getElementById('login-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+    if (loginError) loginError.textContent = '';
+    try {
+      const res = await fetch(`${apiBase}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        if (loginError) loginError.textContent = 'Invalid credentials. Check Shris-ai-app .env.example.';
+        return;
+      }
+      sessionStorage.setItem(TOKEN_KEY, data.token);
+      if (data.tenant) sessionStorage.setItem(TENANT_KEY, data.tenant);
+      applyRole(data.role || 'admin', data.tenant);
+      showAuth(true);
+      await refreshWorkspace();
+    } catch {
+      if (loginError) loginError.textContent = 'Runtime offline. Start Shris-ai-app on port 8787.';
+    }
+  });
+
+  logoutBtn?.addEventListener('click', () => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(ROLE_KEY);
+    sessionStorage.removeItem(TENANT_KEY);
+    showAuth(false);
+  });
+
+  document.getElementById('dispatch-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const to = (form.elements.namedItem('to') as HTMLInputElement).value;
+    const agent_id = (form.elements.namedItem('agent_id') as HTMLSelectElement).value;
+    if (resultEl) resultEl.textContent = 'Evaluating TRAI / DND / DLT / disclosure…';
+    try {
+      const res = await fetch(`${apiBase}/calls/dispatch`, {
+        method: 'POST',
+        headers: headers(true),
+        body: JSON.stringify({ to, agent_id, language: 'en-IN', simulate: true })
+      });
+      const data = await res.json();
+      if (resultEl) resultEl.textContent = JSON.stringify(data, null, 2);
+      await refreshWorkspace();
+    } catch (err) {
+      if (resultEl) resultEl.textContent = String(err);
+    }
+  });
+
+  let voiceConvId = '';
+  document.getElementById('voice-loop-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const domain = (form.elements.namedItem('domain') as HTMLSelectElement).value;
+    const text = (form.elements.namedItem('text') as HTMLInputElement).value;
+    const out = document.getElementById('voice-loop-result');
+    try {
+      if (!voiceConvId) {
+        const created = await fetch(`${apiBase}/conversations`, {
+          method: 'POST',
+          headers: headers(true),
+          body: JSON.stringify({ domain })
+        });
+        const body = await created.json() as { conversation?: { id: string }; error?: string };
+        voiceConvId = body.conversation?.id ?? '';
+        if (!voiceConvId) {
+          if (out) out.textContent = JSON.stringify(body, null, 2);
+          return;
+        }
+      }
+      const res = await fetch(`${apiBase}/conversations/${voiceConvId}/turns`, {
+        method: 'POST',
+        headers: headers(true),
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      if (out) out.textContent = JSON.stringify(data, null, 2);
+      await refreshWorkspace();
+    } catch (err) {
+      if (out) out.textContent = String(err);
+    }
+  });
+
+  document.getElementById('create-user-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const err = document.getElementById('users-error');
+    if (err) err.textContent = '';
+    const payload = {
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      role: (form.elements.namedItem('role') as HTMLSelectElement).value,
+      password: (form.elements.namedItem('password') as HTMLInputElement).value
+    };
+    const res = await fetch(`${apiBase}/users`, {
+      method: 'POST',
+      headers: headers(true),
+      body: JSON.stringify(payload)
+    });
+    if (res.status === 403) {
+      if (err) err.textContent = 'Only tenant admins can create users.';
+      return;
+    }
+    if (!res.ok) {
+      if (err) err.textContent = 'Could not create user (duplicate email or invalid payload).';
+      return;
+    }
+    form.reset();
+    await refreshWorkspace();
+  });
+
+  document.getElementById('agent-config-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const err = document.getElementById('agents-error');
+    if (err) err.textContent = '';
+    const id = (form.elements.namedItem('id') as HTMLSelectElement).value;
+    const payload = {
+      language: (form.elements.namedItem('language') as HTMLSelectElement).value,
+      disclosure: (form.elements.namedItem('disclosure') as HTMLInputElement).value,
+      qualifyScript: (form.elements.namedItem('qualifyScript') as HTMLInputElement).value
+    };
+    const res = await fetch(`${apiBase}/agents/${id}`, {
+      method: 'PUT',
+      headers: headers(true),
+      body: JSON.stringify(payload)
+    });
+    if (res.status === 403) {
+      if (err) err.textContent = 'Only tenant admins can edit playbooks.';
+      return;
+    }
+    if (!res.ok) {
+      if (err) err.textContent = 'Could not save playbook.';
+      return;
+    }
+    await refreshWorkspace();
+  });
+
+  document.getElementById('create-campaign-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const err = document.getElementById('campaign-error');
+    if (err) err.textContent = '';
+    const payload = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      domain: (form.elements.namedItem('domain') as HTMLInputElement).value || 'General',
+      agent_id: (form.elements.namedItem('agent_id') as HTMLSelectElement).value
+    };
+    const res = await fetch(`${apiBase}/campaigns`, {
+      method: 'POST',
+      headers: headers(true),
+      body: JSON.stringify(payload)
+    });
+    if (res.status === 403) {
+      if (err) err.textContent = 'Viewers cannot create campaigns.';
+      return;
+    }
+    if (!res.ok) {
+      if (err) err.textContent = 'Could not create campaign.';
+      return;
+    }
+    form.reset();
+    await refreshWorkspace();
+  });
+
+  document.getElementById('handoff-card')?.addEventListener('click', async (event) => {
+    const btn = (event.target as HTMLElement).closest('button') as HTMLButtonElement | null;
+    if (!btn || !btn.dataset.id) return;
+    const err = document.getElementById('handoff-error');
+    if (err) err.textContent = '';
+    const id = btn.dataset.id;
+    let path = '';
+    let body: string | undefined;
+    if (btn.classList.contains('handoff-accept')) path = `/handoffs/${id}/accept`;
+    if (btn.classList.contains('handoff-resolve')) path = `/handoffs/${id}/resolve`;
+    if (btn.classList.contains('handoff-reply')) {
+      const input = document.getElementById(`handoff-reply-${id}`) as HTMLInputElement | null;
+      const text = input?.value.trim() || '';
+      if (!text) {
+        if (err) err.textContent = 'Reply text is required.';
+        return;
+      }
+      path = `/handoffs/${id}/reply`;
+      body = JSON.stringify({ text });
+    }
+    if (!path) return;
+    const res = await fetch(`${apiBase}${path}`, {
+      method: 'POST',
+      headers: headers(true),
+      body: body ?? '{}'
+    });
+    if (res.status === 403) {
+      if (err) err.textContent = 'Operators and admins handle warm transfers.';
+      return;
+    }
+    if (!res.ok) {
+      if (err) err.textContent = 'Handoff action failed.';
+      return;
+    }
+    await refreshWorkspace();
+  });
+
+  document.getElementById('numbers-card')?.addEventListener('click', async (event) => {
+    const btn = (event.target as HTMLElement).closest('.did-rotate') as HTMLButtonElement | null;
+    if (!btn) return;
+    const err = document.getElementById('numbers-error');
+    if (err) err.textContent = '';
+    const res = await fetch(`${apiBase}/numbers/rotate`, {
+      method: 'POST',
+      headers: headers(true),
+      body: JSON.stringify({ id: btn.dataset.did })
+    });
+    if (res.status === 403) {
+      if (err) err.textContent = 'Viewers cannot rotate DIDs.';
+      return;
+    }
+    if (!res.ok) {
+      if (err) err.textContent = 'Could not rotate DID.';
+      return;
+    }
+    await refreshWorkspace();
+  });
+
+  probeApi();
+  if (token()) {
+    showAuth(true);
+    applyRole(sessionStorage.getItem(ROLE_KEY) || 'admin');
+    refreshWorkspace();
+  }
+</script>

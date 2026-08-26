@@ -44,7 +44,7 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
 
       <!-- Links 1: Platform -->
       <div class="footer-nav-col">
-        <h4>Platform</h4>
+        <p class="footer-nav-heading">Platform</p>
         <ul>
           <li><a href="/platform">Voice Intelligence</a></li>
           <li><a href="/platform#multilingual">Multilingual Engine</a></li>
@@ -56,19 +56,19 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
 
       <!-- Links 2: Developers & Resources -->
       <div class="footer-nav-col">
-        <h4>Developers</h4>
+        <p class="footer-nav-heading">Developers</p>
         <ul>
           <li><a href="/developers">REST & WebSocket APIs</a></li>
           <li><a href="/developers#sdk">Python & Node SDK</a></li>
+          <li><a href="/docs/overview">Platform Documentation</a></li>
           <li><a href="/resources">Research & Benchmarks</a></li>
           <li><a href="/resources#whitepapers">Telephony Whitepapers</a></li>
-          <li><a href="/developers">API Documentation</a></li>
         </ul>
       </div>
 
       <!-- Links 3: Company -->
       <div class="footer-nav-col">
-        <h4>Company</h4>
+        <p class="footer-nav-heading">Company</p>
         <ul>
           <li><a href="/company">About & Sovereign Compute</a></li>
           <li><a href="/company#careers">Careers & Research</a></li>
@@ -83,9 +83,10 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
     <div class="footer-bottom-row">
       <p>© 2026 Thejands LLP. All rights reserved. Sovereign Voice Compute.</p>
       <div class="footer-legal-links">
-        <a href="/company">Privacy Policy</a>
-        <a href="/company">Terms of Service</a>
-        <a href="/platform#security">Security Statement</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/security">Security Statement</a>
+        <a href="/compliance">TRAI & DPDP</a>
       </div>
     </div>
   </div>
@@ -153,7 +154,7 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
     margin: 0;
   }
 
-  .footer-nav-col h4 {
+  .footer-nav-col .footer-nav-heading {
     font-size: 0.92rem;
     color: var(--shris-navy-950);
     margin-bottom: 1rem;

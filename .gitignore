@@ -17,3 +17,9 @@ yarn-error.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Full Lighthouse dumps (keep last-run.json)
+lighthouse/home.json
+lighthouse/docs.json
+lighthouse/app.json
+

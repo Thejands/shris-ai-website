@@ -1,0 +1,186 @@
+---
+const hide = Astro.url.pathname.startsWith('/app');
+---
+
+{!hide && (
+<div class="voice-widget" id="voice-widget">
+  <button type="button" class="voice-fab" id="voice-fab" aria-expanded="false" aria-controls="voice-panel">
+    Speak to Shris
+  </button>
+  <div class="voice-panel card-dark" id="voice-panel" hidden role="dialog" aria-modal="false" aria-labelledby="voice-panel-title">
+    <p class="voice-kicker">Browser voice demo · no PSTN</p>
+    <p class="voice-title" id="voice-panel-title">Talk, understand, execute</p>
+    <p>Web Speech in the browser plus POST /v1/conversations/:id/tts (lab WAV via Darwin say, espeak, or a sine fixture). Understanding runs on POST /v1/conversations/:id/turns.</p>
+    <p class="voice-disclosure">AI disclosure: you are speaking with a Shris AI voice worker demo.</p>
+    <div class="voice-actions">
+      <button type="button" class="btn btn-indigo btn-sm" id="voice-listen">Start listening</button>
+      <button type="button" class="btn btn-outline btn-sm" id="voice-stop" style="color:#fff;background:rgba(255,255,255,0.08);">Stop</button>
+    </div>
+    <input id="voice-typed" type="text" placeholder="Type Hinglish if mic is blocked" autocomplete="off" aria-label="Type a conversation turn" />
+    <p id="voice-status" class="voice-status">Idle</p>
+    <p id="voice-transcript" class="voice-transcript"></p>
+  </div>
+</div>
+)}
+
+<style>
+  .voice-widget {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.65rem;
+  }
+
+  .voice-fab {
+    border: none;
+    cursor: pointer;
+    background: var(--shris-navy-900);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.75rem 1.15rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-dark-glow);
+  }
+
+  .voice-panel {
+    width: min(340px, calc(100vw - 2rem));
+    padding: 1.15rem;
+  }
+
+  .voice-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #A5BBFC;
+    margin-bottom: 0.35rem;
+  }
+
+  .voice-title {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-display);
+  }
+
+  .voice-panel p { color: #94A3B8; font-size: 0.8rem; }
+
+  .voice-disclosure {
+    color: #CBD5E1 !important;
+    margin: 0.6rem 0;
+  }
+
+  .voice-actions { display: flex; gap: 0.5rem; margin-bottom: 0.6rem; }
+
+  .voice-status, .voice-transcript {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #E2E8F0 !important;
+  }
+
+  #voice-typed {
+    width: 100%;
+    margin: 0.45rem 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: #141624;
+    color: #F8FAFC;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.78rem;
+  }
+</style>
+
+<script>
+  import { playConversationTts, postVoiceTurn } from '../../scripts/voice-loop';
+
+  const fab = document.getElementById('voice-fab');
+  const panel = document.getElementById('voice-panel');
+  const listenBtn = document.getElementById('voice-listen');
+  const stopBtn = document.getElementById('voice-stop');
+  const statusEl = document.getElementById('voice-status');
+  const transcriptEl = document.getElementById('voice-transcript');
+  const typed = document.getElementById('voice-typed') as HTMLInputElement | null;
+
+  type Rec = {
+    start: () => void;
+    stop: () => void;
+    onresult: ((ev: { results: { [i: number]: { isFinal?: boolean; 0: { transcript: string } } } }) => void) | null;
+    onerror: (() => void) | null;
+    lang: string;
+    interimResults: boolean;
+  };
+
+  const SpeechRecognition = (window as unknown as { webkitSpeechRecognition?: new () => Rec; SpeechRecognition?: new () => Rec }).SpeechRecognition
+    || (window as unknown as { webkitSpeechRecognition?: new () => Rec }).webkitSpeechRecognition;
+
+  let rec: Rec | null = null;
+
+  fab?.addEventListener('click', () => {
+    const open = fab.getAttribute('aria-expanded') === 'true';
+    fab.setAttribute('aria-expanded', String(!open));
+    if (panel) panel.hidden = open;
+  });
+
+  function speak(text: string) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-IN';
+    window.speechSynthesis.speak(u);
+  }
+
+  async function sendTurn(text: string) {
+    if (statusEl) statusEl.textContent = 'Understanding…';
+    const remote = await postVoiceTurn(text);
+    const say = remote?.say ?? 'Runtime offline. Start Shris-ai-app on :8787, then retry.';
+    if (transcriptEl) {
+      const nlu = remote?.nlu;
+      transcriptEl.textContent = `You: ${text}\nShris: ${say}${nlu ? `\n[${nlu.domain} · ${nlu.intent}]` : ''}`;
+    }
+    if (statusEl) statusEl.textContent = remote?.execute ? 'Actions executed (CRM + calendar + WhatsApp simulator)' : 'Idle';
+    const played = await playConversationTts(say);
+    if (!played) speak(say);
+  }
+
+  listenBtn?.addEventListener('click', () => {
+    window.speechSynthesis?.cancel();
+    if (!SpeechRecognition) {
+      if (statusEl) statusEl.textContent = 'Mic unavailable — type a turn below.';
+      void sendTurn('3 BHK Whitefield Saturday visit');
+      return;
+    }
+    rec = new SpeechRecognition();
+    rec.lang = 'en-IN';
+    rec.interimResults = true;
+    rec.onresult = (ev) => {
+      const row = ev.results[0];
+      const text = row[0].transcript;
+      if (row.isFinal) void sendTurn(text);
+    };
+    rec.onerror = () => {
+      if (statusEl) statusEl.textContent = 'Mic blocked — type a turn or using sample.';
+      void sendTurn('3 BHK site visit Saturday');
+    };
+    rec.start();
+    if (statusEl) statusEl.textContent = 'Listening…';
+  });
+
+  typed?.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Enter') return;
+    const text = typed.value.trim();
+    if (!text) return;
+    typed.value = '';
+    void sendTurn(text);
+  });
+
+  stopBtn?.addEventListener('click', () => {
+    rec?.stop();
+    window.speechSynthesis?.cancel();
+    if (statusEl) statusEl.textContent = 'Stopped';
+  });
+</script>

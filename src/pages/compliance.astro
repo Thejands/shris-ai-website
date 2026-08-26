@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+---
+
+<Layout
+  title="TRAI, DND, DLT & DPDP Compliance | Shris AI"
+  description="India regulatory controls for the Shris AI voice workforce: 9am–9pm calling windows, DND scrub, DLT templates, AI disclosure, and DPDP."
+>
+  <Header />
+  <main id="main-content" class="legal-main">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 2.5rem;">
+        <div class="eyebrow-container">
+          <div class="eyebrow-line"></div>
+          <p class="eyebrow-text">India Regulatory Runtime</p>
+          <div class="eyebrow-line"></div>
+        </div>
+        <h1>Compliance is a gate, not a footnote.</h1>
+        <p class="lead">Every outbound dispatch in Shris-ai-app is evaluated against TRAI commercial hours, DND preference, DLT registration, AI disclosure, and DPDP purpose limitation before a SIP trunk is seized.</p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card-light">
+          <span class="badge badge-indigo">TRAI</span>
+          <h2>09:00–21:00 IST</h2>
+          <p>Default commercial outbound voice is permitted only between 9am and 9pm Asia/Kolkata. Dispatches outside the window are queued for the next legal slot and logged as compliance.blocked.</p>
+        </article>
+        <article class="card-light">
+          <span class="badge badge-indigo">DND</span>
+          <h2>Preference scrub</h2>
+          <p>Numbers are checked against the National Customer Preference Register before dial. DND hits never leave the orchestrator.</p>
+        </article>
+        <article class="card-light">
+          <span class="badge badge-emerald">DLT</span>
+          <h2>PE–TM templates</h2>
+          <p>WhatsApp and SMS follow-ups for Indian traffic require registered DLT headers and template IDs bound to the tenant principal entity.</p>
+        </article>
+        <article class="card-light">
+          <span class="badge badge-emerald">AI disclosure</span>
+          <h2>Spoken notice</h2>
+          <p>Agents identify as an AI voice worker of the tenant brand on connect, with the utterance stored on the call audit record.</p>
+        </article>
+        <article class="card-light">
+          <span class="badge badge-indigo">DPDP</span>
+          <h2>Personal data</h2>
+          <p>Audio and transcripts are purpose-limited. Erasure and access requests route to the tenant administrator. Cross-border transfer is off by default.</p>
+        </article>
+        <article class="card-light">
+          <span class="badge badge-indigo">Encryption</span>
+          <h2>TLS 1.3 / AES-256</h2>
+          <p>Media SRTP, APIs TLS 1.3, optional ZDR after CRM sync. Full statement on <a href="/security">Security</a>.</p>
+        </article>
+      </div>
+
+      <div class="card-dark" style="margin-top: 2.5rem;">
+        <h2 style="color: #fff;">Inspect the gate in the console</h2>
+        <p style="color: #94A3B8;">The operations workspace shows TRAI window status in real time and will refuse a simulated dispatch that fails the policy engine.</p>
+        <div style="display:flex;gap:0.75rem;margin-top:1.25rem;flex-wrap:wrap;">
+          <a href="/app" class="btn btn-indigo">Open Console</a>
+          <a href="/docs/trai-dnd-dlt" class="btn btn-outline" style="color:#fff;background:rgba(255,255,255,0.08);">Read TRAI docs</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-main { padding-top: 6.5rem; padding-bottom: 4.5rem; }
+  .legal-main h1 { color: var(--shris-navy-950); }
+  .legal-main h2 { font-size: 1.35rem; margin: 0.85rem 0 0.5rem; color: var(--shris-navy-950); }
+  .legal-main p { color: var(--shris-tx-secondary); line-height: 1.65; }
+  .legal-main a { color: var(--shris-indigo); font-weight: 600; }
+</style>
