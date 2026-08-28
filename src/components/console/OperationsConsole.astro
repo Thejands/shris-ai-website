@@ -3,52 +3,80 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
 ---
 
 <section class="ops-shell" id="main-content" data-api-base={apiBase}>
-  <aside class="ops-nav" aria-label="Console">
-    <p class="ops-brand">SHRIS <span>AI</span></p>
-    <p class="ops-nav-label">Workspace</p>
-    <a href="/app" class="ops-nav-item active" aria-current="page">Live operations</a>
-    <a href="/docs/ha-operations" class="ops-nav-item">HA runbook</a>
-    <a href="/docs/connect-checklist" class="ops-nav-item">Connect checklist</a>
-    <a href="/docs/overview" class="ops-nav-item">Docs</a>
-    <a href="/compliance" class="ops-nav-item">TRAI / DPDP</a>
-    <a href="/developers" class="ops-nav-item">APIs</a>
-    <a href="/" class="ops-nav-item">Marketing site</a>
+  <aside class="ops-sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-mark" aria-hidden="true">((•))</span>
+      <div>
+        <p class="brand-name">Shris AI</p>
+        <p class="brand-sub">AI Voice Workforce Platform</p>
+      </div>
+    </div>
+
+    <div class="sidebar-tenant" id="sidebar-tenant" hidden>
+      <span id="sidebar-tenant-name">—</span>
+      <span class="tenant-role" id="sidebar-tenant-role"></span>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Console">
+      <button type="button" class="nav-item active" data-panel="overview">Overview</button>
+
+      <p class="nav-group">AI Workforce</p>
+      <button type="button" class="nav-item" data-panel="agents">Agents</button>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Agent Templates" data-soon-body="No template concept yet — agents are configured individually per tenant.">Agent Templates</button>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Knowledge" data-soon-body="No document store or retrieval layer exists yet — agents run on hardcoded qualify scripts.">Knowledge</button>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Tools" data-soon-body="No function-calling / tool registry in the dialog engine yet.">Tools</button>
+
+      <p class="nav-group">Communications</p>
+      <button type="button" class="nav-item" data-panel="inbound">Inbound Calls</button>
+      <button type="button" class="nav-item" data-panel="outbound">Outbound Calls</button>
+      <button type="button" class="nav-item" data-panel="conversations">Conversations</button>
+      <button type="button" class="nav-item" data-panel="numbers">Phone Numbers</button>
+
+      <p class="nav-group">Automation</p>
+      <button type="button" class="nav-item" data-panel="campaigns">Campaigns</button>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Workflows" data-soon-body="No visual workflow builder — the dialog state machine is fixed and coded, not tenant-authored.">Workflows</button>
+
+      <p class="nav-group">Business</p>
+      <button type="button" class="nav-item" data-panel="contacts">Contacts</button>
+      <button type="button" class="nav-item" data-panel="integrations">Integrations</button>
+
+      <p class="nav-group">Intelligence</p>
+      <button type="button" class="nav-item" data-panel="analytics">Analytics</button>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Conversation Intelligence" data-soon-body="QA scoring exists (disclosure / opt-out checks). Sentiment, topic tagging, and coaching insights don't.">Conversation Intelligence</button>
+
+      <p class="nav-group">Platform</p>
+      <a class="nav-item" href="/developers">Developers</a>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Usage &amp; Billing" data-soon-body="No metering or pricing model exists yet — this is a new subsystem, not a UI gap.">Usage &amp; Billing</button>
+
+      <p class="nav-group">Admin</p>
+      <button type="button" class="nav-item" data-panel="team">Team</button>
+      <button type="button" class="nav-item" data-panel="compliance">Security &amp; Compliance</button>
+      <button type="button" class="nav-item nav-soon" data-panel="soon" data-soon-title="Settings" data-soon-body="No tenant-settings API beyond agent configuration exists yet.">Settings</button>
+    </nav>
   </aside>
 
   <div class="ops-main">
     <header class="ops-topbar">
       <div>
-        <p class="eyebrow-text" style="padding:0;">Sovereign Voice Operations</p>
-        <h1>Agentic communications console</h1>
+        <p class="ops-topbar-eyebrow" id="topbar-eyebrow">Overview</p>
+        <h1 id="topbar-title">Real-time performance across your AI voice operations</h1>
       </div>
-      <div class="ops-top-meta">
+      <div class="ops-top-actions">
         <span class="badge badge-emerald" id="trai-badge">TRAI window: —————</span>
         <span class="badge badge-indigo" id="api-badge">API: —————————</span>
         <span class="badge badge-emerald" id="hipaa-badge" hidden>HIPAA mode</span>
-        <span class="badge badge-indigo" id="role-badge" hidden>role</span>
-        <span class="badge badge-indigo" id="tenant-badge" hidden>tenant</span>
+        <label class="demo-toggle">
+          <input type="checkbox" id="demo-toggle" />
+          <span class="demo-toggle-track" aria-hidden="true"></span>
+          <span class="demo-toggle-label">Demo data</span>
+        </label>
         <button type="button" class="btn btn-sm btn-outline" id="logout-btn" hidden>Sign out</button>
       </div>
     </header>
 
-    <section class="noc-strip" id="noc-strip" aria-label="NOC health">
-      <article class="card-light noc-cell">
-        <span>API health</span>
-        <strong id="noc-status">—</strong>
-      </article>
-      <article class="card-light noc-cell">
-        <span>TRAI window</span>
-        <strong id="noc-trai">—</strong>
-      </article>
-      <article class="card-light noc-cell">
-        <span>Default tenant</span>
-        <strong id="noc-tenant">—</strong>
-      </article>
-      <article class="card-light noc-cell">
-        <span>Queue depth</span>
-        <strong id="noc-queue">—</strong>
-      </article>
-    </section>
+    <p class="demo-banner" id="demo-banner" hidden>
+      Showing sample data — this tenant's real numbers are hidden while Demo data is on.
+    </p>
 
     <div id="login-panel" class="card-light login-panel">
       <h2>Tenant sign-in</h2>
@@ -64,147 +92,114 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
     </div>
 
     <div id="ops-authenticated" hidden>
-      <div class="ops-metrics" aria-label="Funnel KPIs">
-        <article class="card-light ops-metric">
-          <span>Attempted</span>
-          <strong id="kpi-attempted">—</strong>
-        </article>
-        <article class="card-light ops-metric">
-          <span>Connected</span>
-          <strong id="kpi-connected">—</strong>
-        </article>
-        <article class="card-light ops-metric">
-          <span>Qualified</span>
-          <strong id="kpi-qualified">—</strong>
-        </article>
-        <article class="card-light ops-metric">
-          <span>Booked</span>
-          <strong id="kpi-booked">—</strong>
-        </article>
+
+      <!-- ============ OVERVIEW ============ -->
+      <div class="panel" data-panel="overview">
+        <div class="kpi-grid">
+          <article class="kpi-card" data-kpi="total-calls">
+            <div class="kpi-head"><span class="kpi-icon kpi-icon-blue">☎</span><span class="kpi-label">Total Calls</span></div>
+            <strong class="kpi-value" id="kpi2-total-calls">—</strong>
+            <span class="kpi-sub" id="kpi2-total-calls-sub"></span>
+          </article>
+          <article class="kpi-card" data-kpi="connected-calls">
+            <div class="kpi-head"><span class="kpi-icon kpi-icon-green">✓</span><span class="kpi-label">Connected Calls</span></div>
+            <strong class="kpi-value" id="kpi2-connected-calls">—</strong>
+            <span class="kpi-sub" id="kpi2-connected-calls-sub"></span>
+          </article>
+          <article class="kpi-card" data-kpi="conversations">
+            <div class="kpi-head"><span class="kpi-icon kpi-icon-violet">◈</span><span class="kpi-label">Conversations</span></div>
+            <strong class="kpi-value" id="kpi2-conversations">—</strong>
+            <span class="kpi-sub" id="kpi2-conversations-sub"></span>
+          </article>
+          <article class="kpi-card" data-kpi="avg-duration">
+            <div class="kpi-head"><span class="kpi-icon kpi-icon-amber">◷</span><span class="kpi-label">Avg. Call Duration</span></div>
+            <strong class="kpi-value" id="kpi2-avg-duration">—</strong>
+            <span class="kpi-sub" id="kpi2-avg-duration-sub">Not tracked yet — no duration field on call records.</span>
+          </article>
+          <article class="kpi-card" data-kpi="success-rate">
+            <div class="kpi-head"><span class="kpi-icon kpi-icon-teal">◎</span><span class="kpi-label">Success Rate</span></div>
+            <strong class="kpi-value" id="kpi2-success-rate">—</strong>
+            <span class="kpi-sub" id="kpi2-success-rate-sub">Connected ÷ (connected + blocked)</span>
+          </article>
+          <article class="kpi-card" data-kpi="cost">
+            <div class="kpi-head"><span class="kpi-icon kpi-icon-rose">₹</span><span class="kpi-label">Cost This Month</span></div>
+            <strong class="kpi-value" id="kpi2-cost">—</strong>
+            <span class="kpi-sub" id="kpi2-cost-sub">Not tracked yet — no metering/billing subsystem.</span>
+          </article>
+        </div>
+
+        <div class="stat-strip">
+          <article class="stat-cell">
+            <span class="stat-icon">📣</span>
+            <div><strong id="stat-campaigns">—</strong><span>Active Campaigns</span></div>
+          </article>
+          <article class="stat-cell">
+            <span class="stat-icon">🤖</span>
+            <div><strong id="stat-agents">—</strong><span>Active Agents</span></div>
+          </article>
+          <article class="stat-cell">
+            <span class="stat-icon">👥</span>
+            <div><strong id="stat-contacts">—</strong><span>Total Contacts</span></div>
+          </article>
+          <article class="stat-cell">
+            <span class="stat-icon">⛔</span>
+            <div><strong id="stat-dnc">—</strong><span>DNC Numbers</span></div>
+          </article>
+          <article class="stat-cell">
+            <span class="stat-icon">🛡</span>
+            <div><strong id="stat-compliance">—</strong><span>Compliance Score</span></div>
+          </article>
+        </div>
+
+        <p class="overview-note">Charts (performance trend, call-outcome distribution, time-of-day heatmap) and the top-agents / recent-conversations tables aren't built yet — they need real aggregation work the backend doesn't do today. This first pass wires the number cards to real endpoints.</p>
       </div>
 
-      <div class="card-light funnel-card">
-        <h2 id="funnel-heading">Pipeline funnel</h2>
-        <p class="muted">Live counts from GET /v1/kpis. Bar length is each stage as a share of attempted.</p>
-        <ol class="funnel-visual" id="funnel-list" aria-labelledby="funnel-heading">
-          <li>
-            <div class="funnel-meta"><span>Attempted</span><b id="funnel-d">0</b></div>
-            <div class="funnel-track" role="img" aria-labelledby="funnel-d-label">
-              <div class="funnel-fill" id="funnel-fill-d" data-stage="attempted"></div>
-            </div>
-            <span class="sr-only" id="funnel-d-label">Attempted 0 of 0</span>
-          </li>
-          <li>
-            <div class="funnel-meta"><span>Connected</span><b id="funnel-c">0</b></div>
-            <div class="funnel-track" role="img" aria-labelledby="funnel-c-label">
-              <div class="funnel-fill" id="funnel-fill-c" data-stage="connected"></div>
-            </div>
-            <span class="sr-only" id="funnel-c-label">Connected 0 of 0</span>
-          </li>
-          <li>
-            <div class="funnel-meta"><span>Qualified</span><b id="funnel-q">0</b></div>
-            <div class="funnel-track" role="img" aria-labelledby="funnel-q-label">
-              <div class="funnel-fill" id="funnel-fill-q" data-stage="qualified"></div>
-            </div>
-            <span class="sr-only" id="funnel-q-label">Qualified 0 of 0</span>
-          </li>
-          <li>
-            <div class="funnel-meta"><span>Booked</span><b id="funnel-b">0</b></div>
-            <div class="funnel-track" role="img" aria-labelledby="funnel-b-label">
-              <div class="funnel-fill" id="funnel-fill-b" data-stage="booked"></div>
-            </div>
-            <span class="sr-only" id="funnel-b-label">Booked 0 of 0</span>
-          </li>
-        </ol>
-        <h3 id="lang-heading">Language mix</h3>
-        <ul class="lang-mix" aria-labelledby="lang-heading">
-          <li>
-            <span>English (en-IN)</span>
-            <div class="funnel-track" role="img" aria-labelledby="lang-en-label"><div class="funnel-fill lang-en" id="lang-fill-en"></div></div>
-            <b id="lang-en">0</b>
-            <span class="sr-only" id="lang-en-label">English 0</span>
-          </li>
-          <li>
-            <span>Hindi (hi-IN)</span>
-            <div class="funnel-track" role="img" aria-labelledby="lang-hi-label"><div class="funnel-fill lang-hi" id="lang-fill-hi"></div></div>
-            <b id="lang-hi">0</b>
-            <span class="sr-only" id="lang-hi-label">Hindi 0</span>
-          </li>
-          <li>
-            <span>Tamil (ta-IN)</span>
-            <div class="funnel-track" role="img" aria-labelledby="lang-ta-label"><div class="funnel-fill lang-ta" id="lang-fill-ta"></div></div>
-            <b id="lang-ta">0</b>
-            <span class="sr-only" id="lang-ta-label">Tamil 0</span>
-          </li>
-          <li>
-            <span>Telugu (te-IN)</span>
-            <div class="funnel-track" role="img" aria-labelledby="lang-te-label"><div class="funnel-fill lang-te" id="lang-fill-te"></div></div>
-            <b id="lang-te">0</b>
-            <span class="sr-only" id="lang-te-label">Telugu 0</span>
-          </li>
-        </ul>
+      <!-- ============ AGENTS ============ -->
+      <div class="panel" data-panel="agents" hidden>
+        <div class="card-light users-card" id="agents-card">
+          <h2>Agent playbooks</h2>
+          <p class="muted">Per-tenant disclosure, qualify script, and language. JWT-scoped — Acme cannot edit local agents.</p>
+          <form id="agent-config-form" class="create-user-form">
+            <label for="agent-select">Agent</label>
+            <select id="agent-select" name="id"></select>
+            <label for="agent-language">Language</label>
+            <select id="agent-language" name="language">
+              <option value="en-IN">English (India)</option>
+              <option value="hi-IN">Hindi</option>
+              <option value="ta-IN">Tamil</option>
+              <option value="te-IN">Telugu</option>
+            </select>
+            <label for="agent-disclosure">AI disclosure</label>
+            <input id="agent-disclosure" name="disclosure" type="text" required />
+            <label for="agent-script">Qualify script</label>
+            <input id="agent-script" name="qualifyScript" type="text" required />
+            <button type="submit" class="btn btn-indigo">Save playbook</button>
+          </form>
+          <p id="agents-error" class="login-error" role="alert"></p>
+        </div>
       </div>
 
-      <div class="card-light funnel-card" id="handoff-card">
-        <h2 id="handoff-heading">Warm handoff queue</h2>
-        <p class="muted">Conversations in <code>handoff</code> state. Operators accept, reply as the specialist, then resolve.</p>
-        <div id="handoff-list" class="handoff-list" aria-labelledby="handoff-heading">
-          <p class="muted">No live handoffs. Ask for a human in the voice loop.</p>
-        </div>
-        <p id="handoff-error" class="login-error" role="alert"></p>
-      </div>
-
-      <div class="card-light funnel-card" id="qa-card">
-        <div class="ops-card-head">
-          <h2 id="qa-heading">Call QA scores</h2>
-          <label class="qa-filter">
-            <input type="checkbox" id="qa-low-only" />
-            Low scores only (&lt;80%)
-          </label>
-        </div>
-        <p class="muted">From persisted call records (GET /v1/calls, optional qaMax). Disclosure and opt-out checks from the conversation QA scorer — not a live QA vendor.</p>
-        <div class="ops-table-wrap">
-          <table>
-            <caption class="sr-only">Call QA scores for this tenant</caption>
-            <thead>
-              <tr>
-                <th scope="col">Call</th>
-                <th scope="col">Score</th>
-                <th scope="col">Disclosure</th>
-                <th scope="col">Notes</th>
-              </tr>
-            </thead>
-            <tbody id="qa-body">
-              <tr><td colspan="4" class="muted">Sign in to load QA scores.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <!-- ============ INBOUND CALLS ============ -->
+      <div class="panel" data-panel="inbound" hidden>
         <div class="card-light ops-table-card">
           <div class="ops-card-head">
-            <h2>Persisted fleet</h2>
-            <span class="pulse-dot"></span>
+            <h2>Inbound calls</h2>
           </div>
+          <p class="muted">All persisted calls for this tenant — not yet split by inbound/outbound direction on the call record.</p>
           <div class="ops-table-wrap">
             <table>
               <caption class="sr-only">Persisted voice calls for this tenant</caption>
               <thead>
-                <tr>
-                  <th scope="col">Call</th>
-                  <th scope="col">Agent</th>
-                  <th scope="col">To</th>
-                  <th scope="col">Status</th>
-                    <th scope="col">Disclosure</th>
-                    <th scope="col">QA</th>
-                </tr>
+                <tr><th scope="col">Call</th><th scope="col">Agent</th><th scope="col">To</th><th scope="col">Status</th><th scope="col">Disclosure</th><th scope="col">QA</th></tr>
               </thead>
-              <tbody id="fleet-body">
-                <tr><td colspan="6" class="muted">Sign in to load persisted calls.</td></tr>
-              </tbody>
+              <tbody id="fleet-body-inbound"><tr><td colspan="6" class="muted">Sign in to load persisted calls.</td></tr></tbody>
             </table>
           </div>
         </div>
+      </div>
 
+      <!-- ============ OUTBOUND CALLS ============ -->
+      <div class="panel" data-panel="outbound" hidden>
         <div class="ops-side">
           <div class="card-dark dispatch-card" id="dispatch-card">
             <h2>Dispatch test (simulator)</h2>
@@ -225,7 +220,24 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
             </form>
             <pre id="dispatch-result" class="dispatch-result" aria-live="polite">Idle. API {apiBase}</pre>
           </div>
+        </div>
+        <div class="card-light ops-table-card" style="margin-top:1.25rem;">
+          <div class="ops-card-head"><h2>Persisted fleet</h2><span class="pulse-dot"></span></div>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Persisted voice calls for this tenant</caption>
+              <thead>
+                <tr><th scope="col">Call</th><th scope="col">Agent</th><th scope="col">To</th><th scope="col">Status</th><th scope="col">Disclosure</th><th scope="col">QA</th></tr>
+              </thead>
+              <tbody id="fleet-body"><tr><td colspan="6" class="muted">Sign in to load persisted calls.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
+      <!-- ============ CONVERSATIONS ============ -->
+      <div class="panel" data-panel="conversations" hidden>
+        <div class="ops-side">
           <div class="card-light" id="voice-loop-card">
             <h2>Voice loop (no PSTN)</h2>
             <p class="muted">POST /v1/conversations/:id/turns — Hinglish NLU, disclosure, CRM/calendar/WhatsApp on book.</p>
@@ -246,377 +258,404 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
             <pre id="voice-loop-result" class="dispatch-result" aria-live="polite">Start a turn after sign-in (JWT optional on this route).</pre>
           </div>
 
-          <div class="card-light" id="campaigns-card">
-            <h2>Campaigns</h2>
-            <p class="muted" id="campaigns-hint">Operators and admins can create campaigns. Viewers can list only.</p>
-            <form id="create-campaign-form" class="create-user-form">
-              <label for="camp-name">Name</label>
-              <input id="camp-name" name="name" type="text" required placeholder="Weekend site visits" />
-              <label for="camp-domain">Domain</label>
-              <input id="camp-domain" name="domain" type="text" placeholder="Real Estate" />
-              <label for="camp-agent">Agent playbook</label>
-              <select id="camp-agent" name="agent_id">
-                <option value="agent_re_falcon_city">Real Estate · Aarav</option>
-                <option value="agent_hc_opd">Healthcare · Priya</option>
-                <option value="agent_bfsi_kyc">BFSI · Vikram</option>
-                <option value="agent_edu_admit">Education · Ananya</option>
-                <option value="agent_retail_cod">Retail · Kavya</option>
-                <option value="agent_travel_vip">Travel · Kabir</option>
-              </select>
-              <button type="submit" class="btn btn-indigo">Create campaign</button>
-            </form>
-            <p id="campaign-error" class="login-error" role="alert"></p>
-            <ul class="campaign-list" id="campaign-list"></ul>
-          </div>
-
-          <div class="card-light" id="numbers-card">
-            <h2>DID inventory</h2>
-            <p class="muted">Simulator numbers. Operators can rotate; viewers list only. Live carrier DIDs stay in tenant env.</p>
-            <div class="ops-table-wrap">
-              <table>
-                <caption class="sr-only">Inbound DID inventory</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Label</th>
-                    <th scope="col">E.164</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Rotate</th>
-                  </tr>
-                </thead>
-                <tbody id="numbers-body">
-                  <tr><td colspan="4" class="muted">Sign in to load inventory.</td></tr>
-                </tbody>
-              </table>
+          <div class="card-light funnel-card" id="handoff-card">
+            <h2 id="handoff-heading">Warm handoff queue</h2>
+            <p class="muted">Conversations in <code>handoff</code> state. Operators accept, reply as the specialist, then resolve.</p>
+            <div id="handoff-list" class="handoff-list" aria-labelledby="handoff-heading">
+              <p class="muted">No live handoffs. Ask for a human in the voice loop.</p>
             </div>
-            <p id="numbers-error" class="login-error" role="alert"></p>
+            <p id="handoff-error" class="login-error" role="alert"></p>
           </div>
         </div>
       </div>
 
-      <div class="card-light users-card" id="integrations-card" hidden>
-        <h2>Connect status</h2>
-        <p class="muted">Admin only. Modes come from env presence. Secrets are never shown. <a href="/docs/connect-checklist">Connect checklist</a>.</p>
-        <div class="ops-table-wrap">
-          <table>
-            <caption class="sr-only">Integration provider modes</caption>
-            <thead>
-              <tr>
-                <th scope="col">Provider</th>
-                <th scope="col">Mode</th>
-                <th scope="col">Env to unlock live</th>
-              </tr>
-            </thead>
-            <tbody id="integrations-body">
-              <tr><td colspan="3" class="muted">Loading…</td></tr>
-            </tbody>
-          </table>
+      <!-- ============ PHONE NUMBERS ============ -->
+      <div class="panel" data-panel="numbers" hidden>
+        <div class="card-light" id="numbers-card">
+          <h2>DID inventory</h2>
+          <p class="muted">Simulator numbers. Operators can rotate; viewers list only. Live carrier DIDs stay in tenant env.</p>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Inbound DID inventory</caption>
+              <thead><tr><th scope="col">Label</th><th scope="col">E.164</th><th scope="col">Status</th><th scope="col">Rotate</th></tr></thead>
+              <tbody id="numbers-body"><tr><td colspan="4" class="muted">Sign in to load inventory.</td></tr></tbody>
+            </table>
+          </div>
+          <p id="numbers-error" class="login-error" role="alert"></p>
         </div>
-        <p id="integrations-note" class="muted"></p>
-        <p id="integrations-error" class="login-error" role="alert"></p>
       </div>
 
-      <div class="card-light users-card" id="agents-card" hidden>
-        <h2>Agent playbooks</h2>
-        <p class="muted">Admin only. Per-tenant disclosure, qualify script, and language. JWT-scoped — Acme cannot edit local agents.</p>
-        <form id="agent-config-form" class="create-user-form">
-          <label for="agent-select">Agent</label>
-          <select id="agent-select" name="id"></select>
-          <label for="agent-language">Language</label>
-          <select id="agent-language" name="language">
-            <option value="en-IN">English (India)</option>
-            <option value="hi-IN">Hindi</option>
-            <option value="ta-IN">Tamil</option>
-            <option value="te-IN">Telugu</option>
-          </select>
-          <label for="agent-disclosure">AI disclosure</label>
-          <input id="agent-disclosure" name="disclosure" type="text" required />
-          <label for="agent-script">Qualify script</label>
-          <input id="agent-script" name="qualifyScript" type="text" required />
-          <button type="submit" class="btn btn-indigo">Save playbook</button>
-        </form>
-        <p id="agents-error" class="login-error" role="alert"></p>
+      <!-- ============ CAMPAIGNS ============ -->
+      <div class="panel" data-panel="campaigns" hidden>
+        <div class="card-light" id="campaigns-card">
+          <h2>Campaigns</h2>
+          <p class="muted" id="campaigns-hint">Operators and admins can create campaigns. Viewers can list only. Nothing dials from this list yet — batch execution is a separate, not-yet-built engine.</p>
+          <form id="create-campaign-form" class="create-user-form">
+            <label for="camp-name">Name</label>
+            <input id="camp-name" name="name" type="text" required placeholder="Weekend site visits" />
+            <label for="camp-domain">Domain</label>
+            <input id="camp-domain" name="domain" type="text" placeholder="Real Estate" />
+            <label for="camp-agent">Agent playbook</label>
+            <select id="camp-agent" name="agent_id">
+              <option value="agent_re_falcon_city">Real Estate · Aarav</option>
+              <option value="agent_hc_opd">Healthcare · Priya</option>
+              <option value="agent_bfsi_kyc">BFSI · Vikram</option>
+              <option value="agent_edu_admit">Education · Ananya</option>
+              <option value="agent_retail_cod">Retail · Kavya</option>
+              <option value="agent_travel_vip">Travel · Kabir</option>
+            </select>
+            <button type="submit" class="btn btn-indigo">Create campaign</button>
+          </form>
+          <p id="campaign-error" class="login-error" role="alert"></p>
+          <ul class="campaign-list" id="campaign-list"></ul>
+        </div>
       </div>
 
-      <div class="card-light users-card" id="users-card" hidden>
-        <h2>Tenant users</h2>
-        <p class="muted">Admin only. Creates users in the JWT tenant. Operators and viewers cannot open this panel.</p>
-        <div class="ops-table-wrap">
-          <table>
-            <caption class="sr-only">Users in this tenant</caption>
-            <thead>
-              <tr>
-                <th scope="col">Email</th>
-                <th scope="col">Name</th>
-                <th scope="col">Role</th>
-              </tr>
-            </thead>
-            <tbody id="users-body">
-              <tr><td colspan="3" class="muted">Loading…</td></tr>
-            </tbody>
-          </table>
+      <!-- ============ CONTACTS ============ -->
+      <div class="panel" data-panel="contacts" hidden>
+        <div class="card-light ops-table-card">
+          <div class="ops-card-head"><h2>Contacts</h2></div>
+          <p class="muted">Leads ingested via POST /v1/leads. No separate CRM-style contact model yet — this is the raw lead list.</p>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Tenant contacts</caption>
+              <thead><tr><th scope="col">Name</th><th scope="col">Phone</th><th scope="col">Source</th><th scope="col">Domain</th><th scope="col">Created</th></tr></thead>
+              <tbody id="contacts-body"><tr><td colspan="5" class="muted">Sign in to load contacts.</td></tr></tbody>
+            </table>
+          </div>
         </div>
-        <form id="create-user-form" class="create-user-form">
-          <label for="new-user-email">Email</label>
-          <input id="new-user-email" name="email" type="email" required autocomplete="off" />
-          <label for="new-user-name">Name</label>
-          <input id="new-user-name" name="name" type="text" required />
-          <label for="new-user-role">Role</label>
-          <select id="new-user-role" name="role">
-            <option value="viewer">viewer</option>
-            <option value="operator">operator</option>
-            <option value="admin">admin</option>
-          </select>
-          <label for="new-user-password">Temporary password</label>
-          <input id="new-user-password" name="password" type="password" required minlength="10" autocomplete="new-password" />
-          <button type="submit" class="btn btn-indigo">Create user</button>
-        </form>
-        <p id="users-error" class="login-error" role="alert"></p>
       </div>
+
+      <!-- ============ INTEGRATIONS ============ -->
+      <div class="panel" data-panel="integrations" hidden>
+        <div class="card-light users-card" id="integrations-card">
+          <h2>Connect status</h2>
+          <p class="muted">Admin only. Modes come from env presence. Secrets are never shown. <a href="/docs/connect-checklist">Connect checklist</a>.</p>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Integration provider modes</caption>
+              <thead><tr><th scope="col">Provider</th><th scope="col">Mode</th><th scope="col">Env to unlock live</th></tr></thead>
+              <tbody id="integrations-body"><tr><td colspan="3" class="muted">Loading…</td></tr></tbody>
+            </table>
+          </div>
+          <p id="integrations-note" class="muted"></p>
+          <p id="integrations-error" class="login-error" role="alert"></p>
+        </div>
+      </div>
+
+      <!-- ============ ANALYTICS ============ -->
+      <div class="panel" data-panel="analytics" hidden>
+        <div class="card-light funnel-card">
+          <h2 id="funnel-heading">Pipeline funnel</h2>
+          <p class="muted">Live counts from GET /v1/kpis. Bar length is each stage as a share of attempted.</p>
+          <ol class="funnel-visual" id="funnel-list" aria-labelledby="funnel-heading">
+            <li>
+              <div class="funnel-meta"><span>Attempted</span><b id="funnel-d">0</b></div>
+              <div class="funnel-track" role="img" aria-labelledby="funnel-d-label"><div class="funnel-fill" id="funnel-fill-d" data-stage="attempted"></div></div>
+              <span class="sr-only" id="funnel-d-label">Attempted 0 of 0</span>
+            </li>
+            <li>
+              <div class="funnel-meta"><span>Connected</span><b id="funnel-c">0</b></div>
+              <div class="funnel-track" role="img" aria-labelledby="funnel-c-label"><div class="funnel-fill" id="funnel-fill-c" data-stage="connected"></div></div>
+              <span class="sr-only" id="funnel-c-label">Connected 0 of 0</span>
+            </li>
+            <li>
+              <div class="funnel-meta"><span>Qualified</span><b id="funnel-q">0</b></div>
+              <div class="funnel-track" role="img" aria-labelledby="funnel-q-label"><div class="funnel-fill" id="funnel-fill-q" data-stage="qualified"></div></div>
+              <span class="sr-only" id="funnel-q-label">Qualified 0 of 0</span>
+            </li>
+            <li>
+              <div class="funnel-meta"><span>Booked</span><b id="funnel-b">0</b></div>
+              <div class="funnel-track" role="img" aria-labelledby="funnel-b-label"><div class="funnel-fill" id="funnel-fill-b" data-stage="booked"></div></div>
+              <span class="sr-only" id="funnel-b-label">Booked 0 of 0</span>
+            </li>
+          </ol>
+          <h3 id="lang-heading">Language mix</h3>
+          <ul class="lang-mix" aria-labelledby="lang-heading">
+            <li><span>English (en-IN)</span><div class="funnel-track" role="img" aria-labelledby="lang-en-label"><div class="funnel-fill lang-en" id="lang-fill-en"></div></div><b id="lang-en">0</b><span class="sr-only" id="lang-en-label">English 0</span></li>
+            <li><span>Hindi (hi-IN)</span><div class="funnel-track" role="img" aria-labelledby="lang-hi-label"><div class="funnel-fill lang-hi" id="lang-fill-hi"></div></div><b id="lang-hi">0</b><span class="sr-only" id="lang-hi-label">Hindi 0</span></li>
+            <li><span>Tamil (ta-IN)</span><div class="funnel-track" role="img" aria-labelledby="lang-ta-label"><div class="funnel-fill lang-ta" id="lang-fill-ta"></div></div><b id="lang-ta">0</b><span class="sr-only" id="lang-ta-label">Tamil 0</span></li>
+            <li><span>Telugu (te-IN)</span><div class="funnel-track" role="img" aria-labelledby="lang-te-label"><div class="funnel-fill lang-te" id="lang-fill-te"></div></div><b id="lang-te">0</b><span class="sr-only" id="lang-te-label">Telugu 0</span></li>
+          </ul>
+        </div>
+
+        <div class="card-light funnel-card" id="qa-card">
+          <div class="ops-card-head">
+            <h2 id="qa-heading">Call QA scores</h2>
+            <label class="qa-filter"><input type="checkbox" id="qa-low-only" /> Low scores only (&lt;80%)</label>
+          </div>
+          <p class="muted">From persisted call records (GET /v1/calls, optional qaMax). Disclosure and opt-out checks from the conversation QA scorer — not a live QA vendor.</p>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Call QA scores for this tenant</caption>
+              <thead><tr><th scope="col">Call</th><th scope="col">Score</th><th scope="col">Disclosure</th><th scope="col">Notes</th></tr></thead>
+              <tbody id="qa-body"><tr><td colspan="4" class="muted">Sign in to load QA scores.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ TEAM ============ -->
+      <div class="panel" data-panel="team" hidden>
+        <div class="card-light users-card" id="users-card">
+          <h2>Tenant users</h2>
+          <p class="muted">Admin only. Creates users in the JWT tenant. Operators and viewers cannot open this panel.</p>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Users in this tenant</caption>
+              <thead><tr><th scope="col">Email</th><th scope="col">Name</th><th scope="col">Role</th></tr></thead>
+              <tbody id="users-body"><tr><td colspan="3" class="muted">Loading…</td></tr></tbody>
+            </table>
+          </div>
+          <form id="create-user-form" class="create-user-form">
+            <label for="new-user-email">Email</label>
+            <input id="new-user-email" name="email" type="email" required autocomplete="off" />
+            <label for="new-user-name">Name</label>
+            <input id="new-user-name" name="name" type="text" required />
+            <label for="new-user-role">Role</label>
+            <select id="new-user-role" name="role">
+              <option value="viewer">viewer</option>
+              <option value="operator">operator</option>
+              <option value="admin">admin</option>
+            </select>
+            <label for="new-user-password">Temporary password</label>
+            <input id="new-user-password" name="password" type="password" required minlength="10" autocomplete="new-password" />
+            <button type="submit" class="btn btn-indigo">Create user</button>
+          </form>
+          <p id="users-error" class="login-error" role="alert"></p>
+        </div>
+      </div>
+
+      <!-- ============ SECURITY & COMPLIANCE ============ -->
+      <div class="panel" data-panel="compliance" hidden>
+        <div class="card-light ops-table-card">
+          <div class="ops-card-head"><h2>Audit log</h2></div>
+          <p class="muted">Admin only. Immutable append-only log from GET /v1/audit.</p>
+          <div class="ops-table-wrap">
+            <table>
+              <caption class="sr-only">Tenant audit log</caption>
+              <thead><tr><th scope="col">When</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Detail</th></tr></thead>
+              <tbody id="audit-body"><tr><td colspan="4" class="muted">Sign in as admin to load the audit log.</td></tr></tbody>
+            </table>
+          </div>
+          <p id="audit-error" class="login-error" role="alert"></p>
+        </div>
+      </div>
+
+      <!-- ============ SOON PLACEHOLDER ============ -->
+      <div class="panel soon-panel" data-panel="soon" hidden>
+        <div class="card-light soon-card">
+          <h2 id="soon-title">Not built yet</h2>
+          <p class="muted" id="soon-body"></p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <style>
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    border: 0;
-  }
+  /* ---- Dark console theme (scoped to this component only) ---- */
   .ops-shell {
+    --console-bg: #0B0E14;
+    --console-surface: #131722;
+    --console-surface-raised: #171C29;
+    --console-border: #232838;
+    --console-ink: #E7E9F0;
+    --console-ink-soft: #A6ACC2;
+    --console-muted: #6C7390;
+    --console-accent: #4F6BFF;
+    --console-accent-soft: #7C8FFF;
+    --console-green: #22C55E;
+    --console-red: #EF4444;
+    --console-amber: #F59E0B;
+    --console-teal: #14B8A6;
+    --console-violet: #A855F7;
+    --console-rose: #F43F5E;
+
+    display: grid;
+    grid-template-columns: 260px 1fr;
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    background: var(--shris-canvas);
+    background: var(--console-bg);
+    color: var(--console-ink);
+    font-family: var(--font-sans);
   }
-  .ops-nav {
-    background: var(--shris-navy-900);
-    color: #E2E8F0;
-    padding: 1.5rem 1rem;
-  }
-  .ops-brand { font-weight: 800; font-size: 1.05rem; margin-bottom: 1.5rem; color: #fff; }
-  .ops-brand span { color: var(--shris-indigo-light); }
-  .ops-nav-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #CBD5E1;
-    margin-bottom: 0.5rem;
-  }
-  .ops-nav-item {
-    display: block;
-    padding: 0.5rem 0.7rem;
-    border-radius: 8px;
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: #94A3B8;
-    margin-bottom: 0.2rem;
-  }
-  .ops-nav-item.active, .ops-nav-item:hover {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
-  }
-  .ops-main { padding: 1.5rem 1.75rem 3rem; }
-  [hidden] { display: none !important; }
-  .ops-topbar {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-    min-height: 10.5rem;
-    align-items: flex-start;
-  }
-  .ops-topbar h1 { font-size: 1.65rem; color: var(--shris-navy-950); margin-top: 0.2rem; }
-  .ops-top-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; min-height: 2.5rem; }
-  .ops-top-meta .badge { white-space: nowrap; }
-  .noc-strip {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-    height: 5.25rem;
-    overflow: hidden;
-  }
-  .noc-cell { padding: 0.85rem 1rem; height: 5.25rem; box-sizing: border-box; }
-  .noc-cell span { font-size: 0.72rem; color: var(--shris-tx-tertiary); display: block; }
-  .noc-cell strong {
-    font-size: 0.92rem;
-    color: var(--shris-navy-950);
-    display: block;
-    margin-top: 0.3rem;
-    min-height: 1.4em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  @media (max-width: 900px) {
-    .noc-strip {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      height: 11.5rem;
-    }
-    .noc-cell { height: 5.25rem; }
-  }
-  .login-panel { max-width: 440px; min-height: 26rem; }
-  .login-panel h2 { font-size: 1.2rem; margin-bottom: 0.4rem; }
-  .login-panel label { display: block; font-size: 0.78rem; font-weight: 600; margin: 0.75rem 0 0.3rem; color: var(--shris-navy-950); }
-  .login-panel input {
-    width: 100%;
-    border: 1px solid var(--shris-border);
-    border-radius: 10px;
-    padding: 0.65rem 0.75rem;
-    font-family: var(--font-body);
-  }
-  .login-error { color: #B91C1C; font-size: 0.82rem; margin-top: 0.75rem; min-height: 1.2em; }
-  .ops-metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-  .ops-metric span { font-size: 0.78rem; color: var(--shris-tx-tertiary); }
-  .ops-metric strong { display: block; font-size: 1.6rem; color: var(--shris-navy-950); margin-top: 0.35rem; }
-  .funnel-card { margin-bottom: 1.25rem; }
-  .funnel-card h2, .funnel-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--shris-navy-950); }
-  .funnel-card h3 { margin-top: 1.25rem; font-size: 0.95rem; }
-  .funnel-visual, .lang-mix {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+
+  /* ---- sidebar ---- */
+  .ops-sidebar {
+    background: var(--console-surface);
+    border-right: 1px solid var(--console-border);
+    padding: 1.25rem 1rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.25rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
   }
-  .funnel-visual li, .lang-mix li {
-    display: grid;
-    grid-template-columns: minmax(7rem, 9rem) 1fr auto;
-    gap: 0.75rem;
-    align-items: center;
-  }
-  .funnel-meta { display: flex; flex-direction: column; gap: 0.1rem; }
-  .funnel-meta span, .lang-mix span { font-size: 0.8rem; font-weight: 600; color: #334155; }
-  .funnel-meta b, .lang-mix b { font-size: 1.05rem; color: #0f172a; }
-  .funnel-track {
-    height: 14px;
-    background: #e2e8f0;
-    border-radius: 999px;
-    overflow: hidden;
-  }
-  .funnel-fill {
-    height: 100%;
-    width: 0%;
-    background: #3730a3;
-    border-radius: 999px;
-    transition: width 0.35s ease;
-  }
-  .funnel-fill.lang-en { background: #1e3a8a; }
-  .funnel-fill.lang-hi { background: #0f766e; }
-  .funnel-fill.lang-ta { background: #b45309; }
-  .funnel-fill.lang-te { background: #7c3aed; }
-  .handoff-list { display: flex; flex-direction: column; gap: 0.85rem; }
-  .handoff-item {
-    border: 1px solid var(--shris-border);
-    border-radius: 12px;
-    padding: 0.85rem 1rem;
-    background: #fff;
-  }
-  .handoff-item h3 { font-size: 0.95rem; margin: 0 0 0.35rem; color: #0f172a; }
-  .handoff-item p { margin: 0.25rem 0; font-size: 0.82rem; color: #334155; }
-  .handoff-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.65rem; }
-  .handoff-actions input[type="text"] {
-    flex: 1;
-    min-width: 12rem;
-    border: 1px solid var(--shris-border);
+  .sidebar-brand { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem 0.5rem 1.1rem; }
+  .brand-mark { font-family: var(--font-mono); color: var(--console-accent); font-size: 1.1rem; }
+  .brand-name { margin: 0; font-weight: 700; font-size: 0.95rem; color: var(--console-ink); }
+  .brand-sub { margin: 0; font-size: 0.7rem; color: var(--console-muted); }
+
+  .sidebar-tenant {
+    margin: 0 0.5rem 1rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--console-surface-raised);
+    border: 1px solid var(--console-border);
     border-radius: 8px;
-    padding: 0.45rem 0.65rem;
-    color: #0f172a;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
-  .ops-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 0.9fr;
-    gap: 1.25rem;
-    align-items: start;
+  .sidebar-tenant span:first-child { font-size: 0.82rem; font-weight: 600; color: var(--console-ink); }
+  .tenant-role { font-size: 0.7rem; color: var(--console-muted); text-transform: capitalize; }
+
+  .sidebar-nav { display: flex; flex-direction: column; gap: 0.1rem; }
+  .nav-group {
+    margin: 0.9rem 0.5rem 0.35rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--console-muted);
   }
-  .ops-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .ops-card-head h2, .ops-side h2, .funnel-card h2 { font-size: 1.1rem; color: inherit; }
-  .ops-table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-  th { text-align: left; color: var(--shris-tx-tertiary); font-weight: 600; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--shris-border); }
-  td { padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--shris-border-subtle); color: var(--shris-tx-primary); vertical-align: top; }
-  code { font-family: var(--font-mono); font-size: 0.75rem; }
-  .muted { color: var(--shris-tx-tertiary); font-size: 0.75rem; }
-  .status { text-transform: capitalize; font-weight: 700; font-size: 0.75rem; }
-  .status-simulated, .status-seizing_trunk, .status-live { color: #047857; }
-  .status-simulator { color: #4338CA; }
-  .status-unconfigured { color: #64748B; }
-  .status-lab { color: #B45309; }
-  .status-blocked { color: #EF4444; }
-  .dispatch-card h2 { color: #fff; font-size: 1.15rem; margin-bottom: 0.4rem; }
-  .dispatch-card p { color: #94A3B8; font-size: 0.82rem; margin-bottom: 1rem; }
-  .dispatch-card label { display: block; font-size: 0.75rem; color: #A5BBFC; margin: 0.6rem 0 0.3rem; }
-  .dispatch-card input, .dispatch-card select {
+  .nav-item {
+    all: unset;
+    display: block;
+    box-sizing: border-box;
     width: 100%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: #fff;
-    border-radius: 10px;
-    padding: 0.65rem 0.75rem;
-    font-family: var(--font-body);
+    padding: 0.5rem 0.75rem;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    color: var(--console-ink-soft);
+    cursor: pointer;
   }
-  .dispatch-result {
-    margin-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    white-space: pre-wrap;
-    color: #CBD5E1;
-    max-height: 160px;
-    overflow: auto;
+  .nav-item:hover { background: var(--console-surface-raised); color: var(--console-ink); }
+  .nav-item.active { background: var(--console-accent); color: #fff; font-weight: 600; }
+  .nav-item.nav-soon { color: var(--console-muted); }
+  .nav-item.nav-soon:hover { color: var(--console-ink-soft); }
+
+  /* ---- main ---- */
+  .ops-main { padding: 1.75rem 2rem 3rem; min-width: 0; }
+
+  .ops-topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .ops-topbar-eyebrow { margin: 0 0 0.2rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--console-accent-soft); }
+  .ops-topbar h1 { margin: 0; font-size: 1.4rem; color: var(--console-ink); max-width: 46ch; }
+  .ops-top-actions { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+
+  .badge { font-family: var(--font-mono); font-size: 0.7rem; padding: 0.25rem 0.6rem; border-radius: 99px; border: 1px solid var(--console-border); }
+  .badge-emerald { background: rgba(34,197,94,0.12); color: var(--console-green); border-color: rgba(34,197,94,0.3); }
+  .badge-indigo { background: rgba(79,107,255,0.14); color: var(--console-accent-soft); border-color: rgba(79,107,255,0.3); }
+
+  .demo-toggle { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
+  .demo-toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .demo-toggle-track {
+    width: 34px; height: 19px; border-radius: 99px; background: var(--console-border);
+    position: relative; transition: background 0.15s ease; flex-shrink: 0;
   }
-  .campaign-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 0.75rem; }
-  .campaign-row { display: flex; justify-content: space-between; font-size: 0.88rem; }
-  .campaign-bar {
-    height: 6px;
-    border-radius: 99px;
-    background: var(--shris-surface-muted);
-    margin: 0.4rem 0;
-    position: relative;
-    overflow: hidden;
+  .demo-toggle-track::after {
+    content: ""; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px;
+    border-radius: 50%; background: #fff; transition: transform 0.15s ease;
   }
-  .campaign-bar::after {
-    content: '';
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: var(--p);
-    background: var(--shris-indigo);
+  .demo-toggle input:checked + .demo-toggle-track { background: var(--console-amber); }
+  .demo-toggle input:checked + .demo-toggle-track::after { transform: translateX(15px); }
+  .demo-toggle input:focus-visible + .demo-toggle-track { outline: 2px solid var(--console-accent-soft); outline-offset: 2px; }
+  .demo-toggle-label { font-size: 0.8rem; color: var(--console-ink-soft); }
+
+  .demo-banner {
+    margin: 0.75rem 0 1.25rem;
+    padding: 0.55rem 0.9rem;
+    background: rgba(245,158,11,0.12);
+    border: 1px solid rgba(245,158,11,0.35);
+    color: var(--console-amber);
+    border-radius: 8px;
+    font-size: 0.82rem;
   }
-  .users-card { margin-top: 1.25rem; }
-  .users-card h2 { font-size: 1.1rem; margin-bottom: 0.35rem; }
-  .create-user-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem 1rem;
-    margin-top: 1rem;
-    max-width: 640px;
+
+  /* ---- login (reuse global card-light but recolor within this component) ---- */
+  .login-panel { background: var(--console-surface); border: 1px solid var(--console-border); border-radius: 10px; padding: 1.5rem; max-width: 480px; margin-top: 1rem; }
+  .login-panel h2 { margin-top: 0; color: var(--console-ink); }
+  .login-panel .muted { color: var(--console-ink-soft); font-size: 0.85rem; }
+  .login-panel label { display: block; margin: 0.75rem 0 0.25rem; font-size: 0.8rem; color: var(--console-ink-soft); }
+  .login-panel input { width: 100%; box-sizing: border-box; padding: 0.55rem 0.7rem; border-radius: 6px; border: 1px solid var(--console-border); background: var(--console-surface-raised); color: var(--console-ink); }
+  .login-error { color: var(--console-red); font-size: 0.82rem; min-height: 1.2em; }
+
+  /* ---- KPI overview ---- */
+  .panel { min-width: 0; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.9rem; margin-bottom: 1.1rem; }
+  .kpi-card { background: var(--console-surface); border: 1px solid var(--console-border); border-radius: 12px; padding: 1rem 1.1rem; }
+  .kpi-head { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.7rem; }
+  .kpi-icon { width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #fff; flex-shrink: 0; }
+  .kpi-icon-blue { background: #3B5BFF; }
+  .kpi-icon-green { background: #16A34A; }
+  .kpi-icon-violet { background: #9333EA; }
+  .kpi-icon-amber { background: #D97706; }
+  .kpi-icon-teal { background: #0D9488; }
+  .kpi-icon-rose { background: #E11D48; }
+  .kpi-label { font-size: 0.78rem; color: var(--console-ink-soft); }
+  .kpi-value { display: block; font-size: 1.55rem; font-weight: 700; color: var(--console-ink); font-variant-numeric: tabular-nums; }
+  .kpi-sub { display: block; margin-top: 0.3rem; font-size: 0.72rem; color: var(--console-muted); line-height: 1.4; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.9rem; margin-bottom: 1.25rem; }
+  .stat-cell { background: var(--console-surface); border: 1px solid var(--console-border); border-radius: 12px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 0.7rem; }
+  .stat-icon { font-size: 1.15rem; }
+  .stat-cell strong { display: block; font-size: 1.1rem; color: var(--console-ink); font-variant-numeric: tabular-nums; }
+  .stat-cell span { font-size: 0.72rem; color: var(--console-muted); }
+
+  .overview-note { font-size: 0.8rem; color: var(--console-muted); max-width: 68ch; border-top: 1px dashed var(--console-border); padding-top: 0.9rem; }
+
+  /* ---- generic cards inside panels (recolor the shared card-light/card-dark classes) ---- */
+  .card-light, .card-dark {
+    background: var(--console-surface) !important;
+    border: 1px solid var(--console-border) !important;
+    border-radius: 12px !important;
+    color: var(--console-ink) !important;
+    padding: 1.25rem 1.4rem !important;
   }
-  .create-user-form label { font-size: 0.75rem; font-weight: 600; color: var(--shris-navy-950); }
-  .create-user-form input, .create-user-form select {
-    grid-column: span 1;
-    border: 1px solid var(--shris-border);
-    border-radius: 10px;
-    padding: 0.55rem 0.7rem;
-    font-family: var(--font-body);
+  .card-light h2, .card-dark h2, .card-light h3, .card-dark h3 { color: var(--console-ink); margin-top: 0; }
+  .card-light .muted, .card-dark p { color: var(--console-ink-soft); font-size: 0.85rem; }
+  .ops-side { display: grid; gap: 1.1rem; }
+  .ops-card-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--console-green); box-shadow: 0 0 0 4px rgba(34,197,94,0.18); }
+
+  .ops-table-wrap { overflow-x: auto; margin-top: 0.75rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  th { text-align: left; font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--console-muted); padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--console-border); white-space: nowrap; }
+  td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--console-border); color: var(--console-ink-soft); }
+  td code { color: var(--console-ink); }
+
+  .create-user-form { display: grid; gap: 0.2rem; margin-top: 0.5rem; }
+  .create-user-form label { font-size: 0.78rem; color: var(--console-ink-soft); margin-top: 0.5rem; }
+  .create-user-form input, .create-user-form select, #dispatch-form input, #dispatch-form select, #agent-config-form input, #agent-config-form select {
+    padding: 0.5rem 0.65rem; border-radius: 6px; border: 1px solid var(--console-border); background: var(--console-surface-raised); color: var(--console-ink);
   }
-  .create-user-form button { grid-column: 1 / -1; justify-self: start; margin-top: 0.25rem; }
-  @media (max-width: 1100px) {
-    .ops-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-    .ops-metrics, .ops-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (min-width: 1101px) {
-    .ops-shell { grid-template-columns: 220px 1fr; }
+
+  .dispatch-result { background: var(--console-surface-raised); border: 1px solid var(--console-border); border-radius: 8px; padding: 0.7rem; font-size: 0.75rem; color: var(--console-ink-soft); white-space: pre-wrap; margin-top: 0.75rem; }
+
+  .funnel-track { background: var(--console-surface-raised); border-radius: 99px; height: 8px; overflow: hidden; margin: 0.3rem 0; }
+  .funnel-fill { display: block; height: 100%; background: var(--console-accent); border-radius: inherit; width: 0%; }
+  .funnel-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--console-ink-soft); }
+  .funnel-visual { list-style: none; padding: 0; margin: 0 0 1.1rem; }
+  .lang-mix { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+  .lang-mix li { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 0.6rem; font-size: 0.8rem; color: var(--console-ink-soft); }
+
+  .campaign-list { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.7rem; }
+  .campaign-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--console-ink); }
+  .campaign-bar { height: 6px; border-radius: 99px; background: var(--console-surface-raised); position: relative; overflow: hidden; margin: 0.3rem 0; }
+  .campaign-bar::after { content: ""; position: absolute; inset: 0; width: var(--p, 0%); background: var(--console-accent); }
+
+  .soon-card { text-align: left; }
+  .soon-card h2::before { content: "🚧 "; }
+
+  .handoff-list { display: grid; gap: 0.75rem; }
+  .handoff-item { border: 1px solid var(--console-border); border-radius: 8px; padding: 0.8rem 1rem; }
+  .qa-filter { font-size: 0.78rem; color: var(--console-ink-soft); display: flex; align-items: center; gap: 0.4rem; }
+
+  @media (max-width: 900px) {
+    .ops-shell { grid-template-columns: 1fr; }
+    .ops-sidebar { position: static; height: auto; }
   }
 </style>
 
@@ -624,6 +663,8 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
   const TOKEN_KEY = 'shris_jwt';
   const ROLE_KEY = 'shris_role';
   const TENANT_KEY = 'shris_tenant';
+  const DEMO_KEY = 'shris_demo_mode';
+
   const shell = document.querySelector('.ops-shell') as HTMLElement | null;
   const apiBase = shell?.dataset.apiBase || 'http://127.0.0.1:8787/v1';
   const traiBadge = document.getElementById('trai-badge');
@@ -633,6 +674,8 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
   const authBlock = document.getElementById('ops-authenticated');
   const logoutBtn = document.getElementById('logout-btn');
   const loginError = document.getElementById('login-error');
+  const demoToggle = document.getElementById('demo-toggle') as HTMLInputElement | null;
+  const demoBanner = document.getElementById('demo-banner');
 
   function token(): string {
     return sessionStorage.getItem(TOKEN_KEY) || '';
@@ -663,24 +706,16 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
 
   function applyRole(role: string, tenant = sessionStorage.getItem(TENANT_KEY) || '') {
     sessionStorage.setItem(ROLE_KEY, role);
-    const badge = document.getElementById('role-badge');
-    const tenantBadge = document.getElementById('tenant-badge');
+    const tenantWrap = document.getElementById('sidebar-tenant');
+    const tenantName = document.getElementById('sidebar-tenant-name');
+    const tenantRole = document.getElementById('sidebar-tenant-role');
+    if (tenantWrap) tenantWrap.hidden = false;
+    if (tenantName && tenant) tenantName.textContent = tenant;
+    if (tenantRole) tenantRole.textContent = role;
     const dispatchCard = document.getElementById('dispatch-card');
     const usersCard = document.getElementById('users-card');
-    const integrationsCard = document.getElementById('integrations-card');
-    const agentsCard = document.getElementById('agents-card');
-    if (badge) {
-      badge.hidden = false;
-      badge.textContent = role;
-    }
-    if (tenantBadge && tenant) {
-      tenantBadge.hidden = false;
-      tenantBadge.textContent = tenant;
-    }
     if (dispatchCard) dispatchCard.hidden = role === 'viewer';
     if (usersCard) usersCard.hidden = role !== 'admin';
-    if (integrationsCard) integrationsCard.hidden = role !== 'admin';
-    if (agentsCard) agentsCard.hidden = role !== 'admin';
     const campForm = document.getElementById('create-campaign-form');
     if (campForm) campForm.hidden = role === 'viewer';
   }
@@ -691,27 +726,134 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
     if (logoutBtn) logoutBtn.hidden = !on;
   }
 
-  async function probeApi() {
+  // ---------------- sidebar routing ----------------
+  const navItems = Array.from(document.querySelectorAll<HTMLButtonElement>('.nav-item[data-panel]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('.panel[data-panel]'));
+  const topbarEyebrow = document.getElementById('topbar-eyebrow');
+  const topbarTitle = document.getElementById('topbar-title');
+  const soonTitle = document.getElementById('soon-title');
+  const soonBody = document.getElementById('soon-body');
+
+  const PANEL_TITLES: Record<string, [string, string]> = {
+    overview: ['Overview', "Real-time performance across your AI voice operations"],
+    agents: ['AI Workforce', 'Agent playbooks'],
+    inbound: ['Communications', 'Inbound calls'],
+    outbound: ['Communications', 'Outbound calls & dispatch'],
+    conversations: ['Communications', 'Conversations & handoffs'],
+    numbers: ['Communications', 'Phone numbers'],
+    campaigns: ['Automation', 'Campaigns'],
+    contacts: ['Business', 'Contacts'],
+    integrations: ['Business', 'Integrations'],
+    analytics: ['Intelligence', 'Analytics'],
+    team: ['Admin', 'Team'],
+    compliance: ['Admin', 'Security & compliance']
+  };
+
+  function selectPanel(key: string, trigger?: HTMLButtonElement) {
+    for (const p of panels) p.hidden = p.dataset.panel !== key;
+    for (const n of navItems) n.classList.toggle('active', n === trigger);
+    if (key === 'soon' && trigger) {
+      if (soonTitle) soonTitle.innerHTML = trigger.dataset.soonTitle || 'Not built yet';
+      if (soonBody) soonBody.textContent = trigger.dataset.soonBody || '';
+      if (topbarEyebrow) topbarEyebrow.textContent = 'Not built yet';
+      if (topbarTitle) topbarTitle.textContent = trigger.dataset.soonTitle || '';
+      return;
+    }
+    const meta = PANEL_TITLES[key];
+    if (meta) {
+      if (topbarEyebrow) topbarEyebrow.textContent = meta[0];
+      if (topbarTitle) topbarTitle.textContent = meta[1];
+    }
+  }
+
+  for (const item of navItems) {
+    item.addEventListener('click', () => {
+      const key = item.dataset.panel;
+      if (!key) return;
+      selectPanel(key, item);
+    });
+  }
+
+  // ---------------- demo data ----------------
+  const DEMO = {
+    totalCalls: 128450, connectedCalls: 98765, conversations: 74321,
+    avgDuration: '04:32', successRate: '62.4%', cost: '₹2,48,302',
+    campaigns: 12, agents: 8, contacts: 124680, dnc: 8432, compliance: '98%'
+  };
+
+  let lastReal: {
+    totalCalls: number; connectedCalls: number; conversations: number;
+    successRate: string; campaigns: number; agents: number; contacts: number;
+    dnc: string; compliance: string;
+  } | null = null;
+
+  function isDemo(): boolean {
+    return localStorage.getItem(DEMO_KEY) === '1';
+  }
+
+  function fmt(n: number): string {
+    return n.toLocaleString('en-IN');
+  }
+
+  function renderOverview() {
+    const demo = isDemo();
+    if (demoBanner) demoBanner.hidden = !demo;
     const set = (id: string, value: string) => {
       const el = document.getElementById(id);
       if (el) el.textContent = value;
     };
+    if (demo) {
+      set('kpi2-total-calls', fmt(DEMO.totalCalls));
+      set('kpi2-connected-calls', fmt(DEMO.connectedCalls));
+      set('kpi2-conversations', fmt(DEMO.conversations));
+      set('kpi2-avg-duration', DEMO.avgDuration);
+      set('kpi2-success-rate', DEMO.successRate);
+      set('kpi2-cost', DEMO.cost);
+      set('stat-campaigns', fmt(DEMO.campaigns));
+      set('stat-agents', fmt(DEMO.agents));
+      set('stat-contacts', fmt(DEMO.contacts));
+      set('stat-dnc', fmt(DEMO.dnc));
+      set('stat-compliance', DEMO.compliance);
+      const avgSub = document.getElementById('kpi2-avg-duration-sub');
+      const costSub = document.getElementById('kpi2-cost-sub');
+      if (avgSub) avgSub.textContent = 'Sample value — Demo data is on.';
+      if (costSub) costSub.textContent = 'Sample value — Demo data is on.';
+      return;
+    }
+    const avgSub = document.getElementById('kpi2-avg-duration-sub');
+    const costSub = document.getElementById('kpi2-cost-sub');
+    if (avgSub) avgSub.textContent = 'Not tracked yet — no duration field on call records.';
+    if (costSub) costSub.textContent = 'Not tracked yet — no metering/billing subsystem.';
+    set('kpi2-avg-duration', '—');
+    set('kpi2-cost', '—');
+    if (lastReal) {
+      set('kpi2-total-calls', fmt(lastReal.totalCalls));
+      set('kpi2-connected-calls', fmt(lastReal.connectedCalls));
+      set('kpi2-conversations', fmt(lastReal.conversations));
+      set('kpi2-success-rate', lastReal.successRate);
+      set('stat-campaigns', fmt(lastReal.campaigns));
+      set('stat-agents', fmt(lastReal.agents));
+      set('stat-contacts', fmt(lastReal.contacts));
+      set('stat-dnc', lastReal.dnc);
+      set('stat-compliance', lastReal.compliance);
+    }
+  }
+
+  demoToggle?.addEventListener('change', () => {
+    localStorage.setItem(DEMO_KEY, demoToggle.checked ? '1' : '0');
+    renderOverview();
+  });
+  if (demoToggle) demoToggle.checked = isDemo();
+  renderOverview();
+
+  async function probeApi() {
     try {
       const res = await fetch(`${apiBase}/health`);
       const data = await res.json() as {
-        status?: string;
-        mode?: string;
-        traiOpen?: boolean;
-        istHour?: number;
-        tenant?: string;
-        queueDepth?: number;
-        hipaa?: { enabled?: boolean };
+        status?: string; mode?: string; traiOpen?: boolean; istHour?: number;
+        tenant?: string; queueDepth?: number; hipaa?: { enabled?: boolean };
       };
       if (apiBadge) apiBadge.textContent = `API: ${data.status || 'ok'} (${data.mode || 'simulator'})`;
-      set('noc-status', `${data.status || 'ok'} · ${data.mode || 'simulator'}`);
-      set('noc-trai', data.traiOpen ? `OPEN (${data.istHour}:00 IST)` : `CLOSED (${data.istHour}:00 IST)`);
-      set('noc-tenant', data.tenant || 'tenant_local');
-      set('noc-queue', String(data.queueDepth ?? 0));
       const hipaaBadge = document.getElementById('hipaa-badge');
       if (hipaaBadge) {
         hipaaBadge.hidden = !data.hipaa?.enabled;
@@ -719,17 +861,19 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       }
     } catch {
       if (apiBadge) apiBadge.textContent = 'API: offline';
-      set('noc-status', 'offline');
     }
   }
 
   async function refreshWorkspace() {
-    const [kpisRes, callsRes, campRes, numRes, handoffRes] = await Promise.all([
+    const [kpisRes, callsRes, campRes, numRes, handoffRes, agentsRes, leadsRes, dncRes] = await Promise.all([
       fetch(`${apiBase}/kpis`, { headers: headers() }),
       fetch(`${apiBase}/calls`, { headers: headers() }),
       fetch(`${apiBase}/campaigns`, { headers: headers() }),
       fetch(`${apiBase}/numbers`, { headers: headers() }),
-      fetch(`${apiBase}/handoffs`, { headers: headers() })
+      fetch(`${apiBase}/handoffs`, { headers: headers() }),
+      fetch(`${apiBase}/agents`, { headers: headers() }),
+      fetch(`${apiBase}/leads`, { headers: headers() }),
+      fetch(`${apiBase}/admin/dnd-snapshot`, { headers: headers() })
     ]);
     if (kpisRes.status === 401 || callsRes.status === 401) {
       sessionStorage.removeItem(TOKEN_KEY);
@@ -741,6 +885,8 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       const el = document.getElementById(id);
       if (el) el.textContent = value;
     };
+
+    // Analytics panel (unchanged funnel/language mix)
     set('kpi-attempted', String(kpis.attempted ?? kpis.dispatched ?? 0));
     set('kpi-connected', String(kpis.connected ?? 0));
     set('kpi-qualified', String(kpis.qualified ?? 0));
@@ -765,10 +911,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
     }
     const mix = (kpis.languageMix ?? {}) as Record<string, number>;
     const langs = [
-      ['en', 'en-IN', 'English'],
-      ['hi', 'hi-IN', 'Hindi'],
-      ['ta', 'ta-IN', 'Tamil'],
-      ['te', 'te-IN', 'Telugu']
+      ['en', 'en-IN', 'English'], ['hi', 'hi-IN', 'Hindi'], ['ta', 'ta-IN', 'Tamil'], ['te', 'te-IN', 'Telugu']
     ] as const;
     const langTotal = langs.reduce((n, [, key]) => n + Number(mix[key] ?? 0), 0) || 1;
     for (const [short, key, label] of langs) {
@@ -780,32 +923,45 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       if (sr) sr.textContent = `${label} ${count}`;
     }
 
+    // Calls tables (outbound + inbound share the same persisted-call data today)
     const callsBody = await callsRes.json();
-    const tbody = document.getElementById('fleet-body');
     const calls = (callsBody.calls || []) as Array<{
-      id: string;
-      status: string;
-      disclosurePlayed: boolean;
-      request: { to: string; agent_id: string };
-      qa?: { score: number };
+      id: string; status: string; disclosurePlayed: boolean;
+      request: { to: string; agent_id: string }; qa?: { score: number };
     }>;
-    if (tbody) {
-      tbody.innerHTML = calls.length
+    const rowsHtml = calls.length
+      ? calls.slice(0, 12).map((c) => `<tr>
+          <td><code>${c.id}</code></td>
+          <td>${c.request.agent_id}</td>
+          <td>${c.request.to}</td>
+          <td>${c.status}</td>
+          <td>${c.disclosurePlayed ? 'Played' : '—'}</td>
+          <td>${c.qa ? Math.round(c.qa.score * 100) + '%' : '—'}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="6" class="muted">No persisted calls yet. Dispatch a simulator job.</td></tr>';
+    const fleetBody = document.getElementById('fleet-body');
+    if (fleetBody) fleetBody.innerHTML = rowsHtml;
+    const fleetBodyInbound = document.getElementById('fleet-body-inbound');
+    if (fleetBodyInbound) fleetBodyInbound.innerHTML = rowsHtml;
+
+    const qaBody = document.getElementById('qa-body');
+    if (qaBody) {
+      qaBody.innerHTML = calls.length
         ? calls.slice(0, 12).map((c) => `<tr>
             <td><code>${c.id}</code></td>
-            <td>${c.request.agent_id}</td>
-            <td>${c.request.to}</td>
-            <td><span class="status status-${c.status}">${c.status}</span></td>
-            <td>${c.disclosurePlayed ? 'Played' : '—'}</td>
             <td>${c.qa ? Math.round(c.qa.score * 100) + '%' : '—'}</td>
+            <td>${c.disclosurePlayed ? 'Played' : '—'}</td>
+            <td>${c.qa ? '' : 'No QA scored yet'}</td>
           </tr>`).join('')
-        : '<tr><td colspan="6" class="muted">No persisted calls yet. Dispatch a simulator job.</td></tr>';
+        : '<tr><td colspan="4" class="muted">No persisted calls yet.</td></tr>';
     }
 
+    // Campaigns
     const camps = await campRes.json();
+    const campaigns = (camps.campaigns || []) as Array<{ name: string; domain: string; connected: number; blocked: number }>;
     const list = document.getElementById('campaign-list');
     if (list) {
-      list.innerHTML = (camps.campaigns || []).map((c: { name: string; domain: string; connected: number; blocked: number }) => {
+      list.innerHTML = campaigns.map((c) => {
         const total = c.connected + c.blocked || 1;
         const p = Math.round((c.connected / total) * 100);
         return `<li>
@@ -816,31 +972,24 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       }).join('');
     }
 
+    // Numbers
     if (numRes.ok) {
-      const nums = await numRes.json() as {
-        numbers: Array<{ id: string; e164: string; label: string; active: boolean; rotatedAt?: string }>;
-      };
+      const nums = await numRes.json() as { numbers: Array<{ id: string; e164: string; label: string; active: boolean; rotatedAt?: string }> };
       const nbody = document.getElementById('numbers-body');
       const canRotate = sessionStorage.getItem(ROLE_KEY) !== 'viewer';
       if (nbody) {
         nbody.innerHTML = (nums.numbers || []).map((n) => `<tr>
-          <td>${n.label}</td>
-          <td><code>${n.e164}</code></td>
+          <td>${n.label}</td><td><code>${n.e164}</code></td>
           <td>${n.active ? 'active' : 'idle'}${n.rotatedAt ? ' · rotated' : ''}</td>
           <td>${canRotate ? `<button type="button" class="btn btn-outline btn-sm did-rotate" data-did="${n.id}">Rotate</button>` : 'read-only'}</td>
         </tr>`).join('') || '<tr><td colspan="4" class="muted">No simulator DIDs.</td></tr>';
       }
     }
 
+    // Handoffs
     if (handoffRes.ok) {
       const payload = await handoffRes.json() as {
-        handoffs: Array<{
-          id: string;
-          domain: string;
-          assignedTo?: string;
-          handoffStatus?: string;
-          turns: Array<{ speaker: string; text: string }>;
-        }>;
+        handoffs: Array<{ id: string; domain: string; assignedTo?: string; handoffStatus?: string; turns: Array<{ speaker: string; text: string }> }>;
       };
       const box = document.getElementById('handoff-list');
       const canAct = sessionStorage.getItem(ROLE_KEY) !== 'viewer';
@@ -869,6 +1018,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       }
     }
 
+    // Team (admin only)
     const usersCard = document.getElementById('users-card');
     if (usersCard && !usersCard.hidden) {
       const usersRes = await fetch(`${apiBase}/users`, { headers: headers() });
@@ -880,63 +1030,131 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       }
     }
 
-    const integrationsCardEl = document.getElementById('integrations-card');
-    if (integrationsCardEl && !integrationsCardEl.hidden) {
-      const intRes = await fetch(`${apiBase}/integrations`, { headers: headers() });
-      const ierr = document.getElementById('integrations-error');
-      const ibody = document.getElementById('integrations-body');
-      const inote = document.getElementById('integrations-note');
-      if (!intRes.ok) {
-        if (ierr) ierr.textContent = 'Could not load integrations (admin only).';
-      } else {
-        if (ierr) ierr.textContent = '';
-        const payload = await intRes.json() as {
-          note?: string;
-          providers?: Array<{ label: string; mode: string; env: string[] }>;
-        };
-        if (inote) inote.textContent = payload.note || '';
-        if (ibody) {
-          ibody.innerHTML = (payload.providers || []).map((p) => `<tr>
-            <td>${p.label}</td>
-            <td><span class="status status-${p.mode}">${p.mode}</span></td>
-            <td><code>${(p.env || []).join(', ')}</code></td>
-          </tr>`).join('');
-        }
+    // Integrations (admin only, best-effort)
+    const intRes = await fetch(`${apiBase}/integrations`, { headers: headers() });
+    const ierr = document.getElementById('integrations-error');
+    const ibody = document.getElementById('integrations-body');
+    const inote = document.getElementById('integrations-note');
+    if (!intRes.ok) {
+      if (ierr) ierr.textContent = 'Could not load integrations (admin only).';
+    } else {
+      if (ierr) ierr.textContent = '';
+      const payload = await intRes.json() as { note?: string; providers?: Array<{ label: string; mode: string; env: string[] }> };
+      if (inote) inote.textContent = payload.note || '';
+      if (ibody) {
+        ibody.innerHTML = (payload.providers || []).map((p) => `<tr>
+          <td>${p.label}</td><td>${p.mode}</td><td><code>${(p.env || []).join(', ')}</code></td>
+        </tr>`).join('');
       }
     }
 
-    const agentsCardEl = document.getElementById('agents-card');
-    if (agentsCardEl && !agentsCardEl.hidden) {
-      const agRes = await fetch(`${apiBase}/agents`, { headers: headers() });
-      const aerr = document.getElementById('agents-error');
-      if (!agRes.ok) {
-        if (aerr) aerr.textContent = 'Could not load agents (sign in).';
-      } else {
-        if (aerr) aerr.textContent = '';
-        const payload = await agRes.json() as {
-          agents: Array<{ id: string; name: string; disclosure: string; qualifyScript: string; language: string }>;
+    // Agents (used by both the Agents panel and the Overview count)
+    let agentsCount = 0;
+    if (agentsRes.ok) {
+      const payload = await agentsRes.json() as {
+        agents: Array<{ id: string; name: string; disclosure: string; qualifyScript: string; language: string }>;
+      };
+      agentsCount = payload.agents.length;
+      const select = document.getElementById('agent-select') as HTMLSelectElement | null;
+      if (select) {
+        const keep = select.value;
+        select.innerHTML = payload.agents.map((a) => `<option value="${a.id}">${a.name}</option>`).join('');
+        if (keep && [...select.options].some((o) => o.value === keep)) select.value = keep;
+        const current = payload.agents.find((a) => a.id === select.value);
+        const disc = document.getElementById('agent-disclosure') as HTMLInputElement | null;
+        const script = document.getElementById('agent-script') as HTMLInputElement | null;
+        const lang = document.getElementById('agent-language') as HTMLSelectElement | null;
+        if (current && disc) disc.value = current.disclosure;
+        if (current && script) script.value = current.qualifyScript;
+        if (current && lang) lang.value = current.language;
+        select.onchange = () => {
+          const next = payload.agents.find((a) => a.id === select.value);
+          if (next && disc) disc.value = next.disclosure;
+          if (next && script) script.value = next.qualifyScript;
+          if (next && lang) lang.value = next.language;
         };
-        const select = document.getElementById('agent-select') as HTMLSelectElement | null;
-        if (select) {
-          const keep = select.value;
-          select.innerHTML = (payload.agents || []).map((a) => `<option value="${a.id}">${a.name}</option>`).join('');
-          if (keep && [...select.options].some((o) => o.value === keep)) select.value = keep;
-          const current = (payload.agents || []).find((a) => a.id === select.value);
-          const disc = document.getElementById('agent-disclosure') as HTMLInputElement | null;
-          const script = document.getElementById('agent-script') as HTMLInputElement | null;
-          const lang = document.getElementById('agent-language') as HTMLSelectElement | null;
-          if (current && disc) disc.value = current.disclosure;
-          if (current && script) script.value = current.qualifyScript;
-          if (current && lang) lang.value = current.language;
-          select.onchange = () => {
-            const next = (payload.agents || []).find((a) => a.id === select.value);
-            if (next && disc) disc.value = next.disclosure;
-            if (next && script) script.value = next.qualifyScript;
-            if (next && lang) lang.value = next.language;
-          };
-        }
       }
     }
+
+    // Contacts (leads) — read once, reused below for the Overview count too
+    type LeadsPayload = { leads: Array<{ name: string; phone: string; source: string; domain: string; createdAt: string }> };
+    let leadsPayload: LeadsPayload | null = null;
+    if (leadsRes.ok) {
+      leadsPayload = await leadsRes.json() as LeadsPayload;
+      const payload = leadsPayload;
+      const cbody = document.getElementById('contacts-body');
+      if (cbody) {
+        cbody.innerHTML = payload.leads.length
+          ? payload.leads.slice(0, 30).map((l) => `<tr>
+              <td>${l.name}</td><td><code>${l.phone}</code></td><td>${l.source}</td><td>${l.domain}</td>
+              <td>${new Date(l.createdAt).toLocaleString('en-IN')}</td>
+            </tr>`).join('')
+          : '<tr><td colspan="5" class="muted">No leads yet.</td></tr>';
+      }
+    }
+
+    // DNC snapshot (admin only, best-effort — not everyone can see it)
+    let dncCount: string = '—';
+    if (dncRes.ok) {
+      const meta = await dncRes.json() as { count: number };
+      dncCount = fmt(meta.count);
+    }
+
+    // Audit log (admin only, best-effort)
+    const auditRes = await fetch(`${apiBase}/audit`, { headers: headers() });
+    const auditBody = document.getElementById('audit-body');
+    const auditError = document.getElementById('audit-error');
+    if (auditRes.ok) {
+      if (auditError) auditError.textContent = '';
+      const payload = await auditRes.json() as { events: Array<{ at: string; actor: string; action: string; detail: unknown }> };
+      if (auditBody) {
+        auditBody.innerHTML = payload.events.length
+          ? payload.events.slice(0, 40).map((e) => `<tr>
+              <td>${new Date(e.at).toLocaleString('en-IN')}</td><td>${e.actor}</td><td>${e.action}</td>
+              <td><code>${JSON.stringify(e.detail).slice(0, 80)}</code></td>
+            </tr>`).join('')
+          : '<tr><td colspan="4" class="muted">No audit events yet.</td></tr>';
+      }
+    } else if (auditError) {
+      auditError.textContent = 'Could not load audit log (admin only).';
+    }
+
+    // Overview KPI numbers, computed from real data above
+    const dispatched = Number(kpis.dispatched ?? 0) || 0;
+    const connected = Number(kpis.connected ?? 0) || 0;
+    const blocked = Number(kpis.blocked ?? 0) || 0;
+    const blockedTrai = Number(kpis.blockedTrai ?? 0) || 0;
+    const blockedDnd = Number(kpis.blockedDnd ?? 0) || 0;
+    const disclosureRate = Number(kpis.disclosureRate ?? 1);
+    const successRate = connected + blocked > 0 ? `${Math.round((connected / (connected + blocked)) * 1000) / 10}%` : '—';
+    const complianceParts = [
+      disclosureRate,
+      1 - blockedDnd / Math.max(1, dispatched),
+      1 - blockedTrai / Math.max(1, dispatched)
+    ];
+    const complianceScore = `${Math.round((complianceParts.reduce((a, b) => a + b, 0) / complianceParts.length) * 100)}%`;
+
+    let conversationsCount = 0;
+    const convRes = await fetch(`${apiBase}/conversations`, { headers: headers() });
+    if (convRes.ok) {
+      const payload = await convRes.json() as { conversations: unknown[] };
+      conversationsCount = payload.conversations.length;
+    }
+
+    const contactsCount = leadsPayload?.leads.length ?? 0;
+
+    lastReal = {
+      totalCalls: dispatched,
+      connectedCalls: connected,
+      conversations: conversationsCount,
+      successRate,
+      campaigns: campaigns.length,
+      agents: agentsCount,
+      contacts: contactsCount,
+      dnc: dncCount,
+      compliance: complianceScore
+    };
+    renderOverview();
   }
 
   document.getElementById('login-form')?.addEventListener('submit', async (event) => {
@@ -947,9 +1165,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
     if (loginError) loginError.textContent = '';
     try {
       const res = await fetch(`${apiBase}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password })
       });
       const data = await res.json();
       if (!res.ok) {
@@ -981,196 +1197,141 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
     if (resultEl) resultEl.textContent = 'Evaluating TRAI / DND / DLT / disclosure…';
     try {
       const res = await fetch(`${apiBase}/calls/dispatch`, {
-        method: 'POST',
-        headers: headers(true),
-        body: JSON.stringify({ to, agent_id, language: 'en-IN', simulate: true })
+        method: 'POST', headers: headers(true), body: JSON.stringify({ to, agent_id, simulate: true })
       });
       const data = await res.json();
       if (resultEl) resultEl.textContent = JSON.stringify(data, null, 2);
       await refreshWorkspace();
-    } catch (err) {
-      if (resultEl) resultEl.textContent = String(err);
+    } catch {
+      if (resultEl) resultEl.textContent = 'Dispatch failed — runtime offline?';
     }
   });
 
-  let voiceConvId = '';
   document.getElementById('voice-loop-form')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const domain = (form.elements.namedItem('domain') as HTMLSelectElement).value;
     const text = (form.elements.namedItem('text') as HTMLInputElement).value;
     const out = document.getElementById('voice-loop-result');
+    if (out) out.textContent = 'Starting conversation…';
     try {
-      if (!voiceConvId) {
-        const created = await fetch(`${apiBase}/conversations`, {
-          method: 'POST',
-          headers: headers(true),
-          body: JSON.stringify({ domain })
-        });
-        const body = await created.json() as { conversation?: { id: string }; error?: string };
-        voiceConvId = body.conversation?.id ?? '';
-        if (!voiceConvId) {
-          if (out) out.textContent = JSON.stringify(body, null, 2);
-          return;
-        }
-      }
-      const res = await fetch(`${apiBase}/conversations/${voiceConvId}/turns`, {
-        method: 'POST',
-        headers: headers(true),
-        body: JSON.stringify({ text })
+      const created = await fetch(`${apiBase}/conversations`, {
+        method: 'POST', headers: headers(true), body: JSON.stringify({ domain })
       });
-      const data = await res.json();
+      const conv = await created.json();
+      const turn = await fetch(`${apiBase}/conversations/${conv.conversation.id}/turns`, {
+        method: 'POST', headers: headers(true), body: JSON.stringify({ text })
+      });
+      const data = await turn.json();
       if (out) out.textContent = JSON.stringify(data, null, 2);
+    } catch {
+      if (out) out.textContent = 'Voice loop failed — runtime offline?';
+    }
+  });
+
+  document.getElementById('create-campaign-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const domain = (form.elements.namedItem('domain') as HTMLInputElement).value;
+    const agent_id = (form.elements.namedItem('agent_id') as HTMLSelectElement).value;
+    const err = document.getElementById('campaign-error');
+    if (err) err.textContent = '';
+    try {
+      const res = await fetch(`${apiBase}/campaigns`, {
+        method: 'POST', headers: headers(true), body: JSON.stringify({ name, domain, agent_id })
+      });
+      if (!res.ok) {
+        if (err) err.textContent = 'Could not create campaign.';
+        return;
+      }
+      form.reset();
       await refreshWorkspace();
-    } catch (err) {
-      if (out) out.textContent = String(err);
+    } catch {
+      if (err) err.textContent = 'Runtime offline.';
+    }
+  });
+
+  document.getElementById('agent-config-form')?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const id = (document.getElementById('agent-select') as HTMLSelectElement).value;
+    const language = (form.elements.namedItem('language') as HTMLSelectElement).value;
+    const disclosure = (form.elements.namedItem('disclosure') as HTMLInputElement).value;
+    const qualifyScript = (form.elements.namedItem('qualifyScript') as HTMLInputElement).value;
+    const err = document.getElementById('agents-error');
+    if (err) err.textContent = '';
+    try {
+      const res = await fetch(`${apiBase}/agents/${id}`, {
+        method: 'PUT', headers: headers(true), body: JSON.stringify({ language, disclosure, qualifyScript })
+      });
+      if (!res.ok && err) err.textContent = 'Could not save (admin only).';
+    } catch {
+      if (err) err.textContent = 'Runtime offline.';
     }
   });
 
   document.getElementById('create-user-form')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const role = (form.elements.namedItem('role') as HTMLSelectElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
     const err = document.getElementById('users-error');
     if (err) err.textContent = '';
-    const payload = {
-      email: (form.elements.namedItem('email') as HTMLInputElement).value,
-      name: (form.elements.namedItem('name') as HTMLInputElement).value,
-      role: (form.elements.namedItem('role') as HTMLSelectElement).value,
-      password: (form.elements.namedItem('password') as HTMLInputElement).value
-    };
-    const res = await fetch(`${apiBase}/users`, {
-      method: 'POST',
-      headers: headers(true),
-      body: JSON.stringify(payload)
-    });
-    if (res.status === 403) {
-      if (err) err.textContent = 'Only tenant admins can create users.';
-      return;
-    }
-    if (!res.ok) {
-      if (err) err.textContent = 'Could not create user (duplicate email or invalid payload).';
-      return;
-    }
-    form.reset();
-    await refreshWorkspace();
-  });
-
-  document.getElementById('agent-config-form')?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const err = document.getElementById('agents-error');
-    if (err) err.textContent = '';
-    const id = (form.elements.namedItem('id') as HTMLSelectElement).value;
-    const payload = {
-      language: (form.elements.namedItem('language') as HTMLSelectElement).value,
-      disclosure: (form.elements.namedItem('disclosure') as HTMLInputElement).value,
-      qualifyScript: (form.elements.namedItem('qualifyScript') as HTMLInputElement).value
-    };
-    const res = await fetch(`${apiBase}/agents/${id}`, {
-      method: 'PUT',
-      headers: headers(true),
-      body: JSON.stringify(payload)
-    });
-    if (res.status === 403) {
-      if (err) err.textContent = 'Only tenant admins can edit playbooks.';
-      return;
-    }
-    if (!res.ok) {
-      if (err) err.textContent = 'Could not save playbook.';
-      return;
-    }
-    await refreshWorkspace();
-  });
-
-  document.getElementById('create-campaign-form')?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const err = document.getElementById('campaign-error');
-    if (err) err.textContent = '';
-    const payload = {
-      name: (form.elements.namedItem('name') as HTMLInputElement).value,
-      domain: (form.elements.namedItem('domain') as HTMLInputElement).value || 'General',
-      agent_id: (form.elements.namedItem('agent_id') as HTMLSelectElement).value
-    };
-    const res = await fetch(`${apiBase}/campaigns`, {
-      method: 'POST',
-      headers: headers(true),
-      body: JSON.stringify(payload)
-    });
-    if (res.status === 403) {
-      if (err) err.textContent = 'Viewers cannot create campaigns.';
-      return;
-    }
-    if (!res.ok) {
-      if (err) err.textContent = 'Could not create campaign.';
-      return;
-    }
-    form.reset();
-    await refreshWorkspace();
-  });
-
-  document.getElementById('handoff-card')?.addEventListener('click', async (event) => {
-    const btn = (event.target as HTMLElement).closest('button') as HTMLButtonElement | null;
-    if (!btn || !btn.dataset.id) return;
-    const err = document.getElementById('handoff-error');
-    if (err) err.textContent = '';
-    const id = btn.dataset.id;
-    let path = '';
-    let body: string | undefined;
-    if (btn.classList.contains('handoff-accept')) path = `/handoffs/${id}/accept`;
-    if (btn.classList.contains('handoff-resolve')) path = `/handoffs/${id}/resolve`;
-    if (btn.classList.contains('handoff-reply')) {
-      const input = document.getElementById(`handoff-reply-${id}`) as HTMLInputElement | null;
-      const text = input?.value.trim() || '';
-      if (!text) {
-        if (err) err.textContent = 'Reply text is required.';
+    try {
+      const res = await fetch(`${apiBase}/users`, {
+        method: 'POST', headers: headers(true), body: JSON.stringify({ email, name, role, password })
+      });
+      if (!res.ok) {
+        if (err) err.textContent = 'Could not create user (admin only, or already exists).';
         return;
       }
-      path = `/handoffs/${id}/reply`;
-      body = JSON.stringify({ text });
+      form.reset();
+      await refreshWorkspace();
+    } catch {
+      if (err) err.textContent = 'Runtime offline.';
     }
-    if (!path) return;
-    const res = await fetch(`${apiBase}${path}`, {
-      method: 'POST',
-      headers: headers(true),
-      body: body ?? '{}'
-    });
-    if (res.status === 403) {
-      if (err) err.textContent = 'Operators and admins handle warm transfers.';
-      return;
-    }
-    if (!res.ok) {
-      if (err) err.textContent = 'Handoff action failed.';
-      return;
-    }
-    await refreshWorkspace();
   });
 
-  document.getElementById('numbers-card')?.addEventListener('click', async (event) => {
-    const btn = (event.target as HTMLElement).closest('.did-rotate') as HTMLButtonElement | null;
-    if (!btn) return;
-    const err = document.getElementById('numbers-error');
-    if (err) err.textContent = '';
-    const res = await fetch(`${apiBase}/numbers/rotate`, {
-      method: 'POST',
-      headers: headers(true),
-      body: JSON.stringify({ id: btn.dataset.did })
-    });
-    if (res.status === 403) {
-      if (err) err.textContent = 'Viewers cannot rotate DIDs.';
+  document.addEventListener('click', async (event) => {
+    const target = event.target as HTMLElement;
+    const rotateBtn = target.closest<HTMLButtonElement>('.did-rotate');
+    if (rotateBtn) {
+      await fetch(`${apiBase}/numbers/rotate`, { method: 'POST', headers: headers(true), body: JSON.stringify({ id: rotateBtn.dataset.did }) });
+      await refreshWorkspace();
       return;
     }
-    if (!res.ok) {
-      if (err) err.textContent = 'Could not rotate DID.';
+    const acceptBtn = target.closest<HTMLButtonElement>('.handoff-accept');
+    if (acceptBtn) {
+      await fetch(`${apiBase}/handoffs/${acceptBtn.dataset.id}/accept`, { method: 'POST', headers: headers(true) });
+      await refreshWorkspace();
       return;
     }
-    await refreshWorkspace();
+    const resolveBtn = target.closest<HTMLButtonElement>('.handoff-resolve');
+    if (resolveBtn) {
+      await fetch(`${apiBase}/handoffs/${resolveBtn.dataset.id}/resolve`, { method: 'POST', headers: headers(true) });
+      await refreshWorkspace();
+      return;
+    }
+    const replyBtn = target.closest<HTMLButtonElement>('.handoff-reply');
+    if (replyBtn) {
+      const id = replyBtn.dataset.id;
+      const input = document.querySelector<HTMLInputElement>(`[data-reply-for="${id}"]`);
+      if (input && input.value.trim()) {
+        await fetch(`${apiBase}/handoffs/${id}/reply`, { method: 'POST', headers: headers(true), body: JSON.stringify({ text: input.value.trim() }) });
+        input.value = '';
+        await refreshWorkspace();
+      }
+    }
   });
 
-  probeApi();
   if (token()) {
-    showAuth(true);
     applyRole(sessionStorage.getItem(ROLE_KEY) || 'admin');
+    showAuth(true);
     refreshWorkspace();
   }
+  probeApi();
+  setInterval(probeApi, 30000);
 </script>
