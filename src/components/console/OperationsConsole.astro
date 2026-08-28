@@ -114,7 +114,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
           <article class="kpi-card" data-kpi="avg-duration">
             <div class="kpi-head"><span class="kpi-icon kpi-icon-amber">◷</span><span class="kpi-label">Avg. Call Duration</span></div>
             <strong class="kpi-value" id="kpi2-avg-duration">—</strong>
-            <span class="kpi-sub" id="kpi2-avg-duration-sub">Not tracked yet — no duration field on call records.</span>
+            <span class="kpi-sub" id="kpi2-avg-duration-sub">Sign in to load.</span>
           </article>
           <article class="kpi-card" data-kpi="success-rate">
             <div class="kpi-head"><span class="kpi-icon kpi-icon-teal">◎</span><span class="kpi-label">Success Rate</span></div>
@@ -784,7 +784,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
   let lastReal: {
     totalCalls: number; connectedCalls: number; conversations: number;
     successRate: string; campaigns: number; agents: number; contacts: number;
-    dnc: string; compliance: string;
+    dnc: string; compliance: string; avgDurationMs: number | null;
   } | null = null;
 
   function isDemo(): boolean {
@@ -793,6 +793,13 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
 
   function fmt(n: number): string {
     return n.toLocaleString('en-IN');
+  }
+
+  function fmtDuration(ms: number): string {
+    const totalSeconds = Math.round(ms / 1000);
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
   function renderOverview() {
@@ -822,9 +829,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
     }
     const avgSub = document.getElementById('kpi2-avg-duration-sub');
     const costSub = document.getElementById('kpi2-cost-sub');
-    if (avgSub) avgSub.textContent = 'Not tracked yet — no duration field on call records.';
     if (costSub) costSub.textContent = 'Not tracked yet — no metering/billing subsystem.';
-    set('kpi2-avg-duration', '—');
     set('kpi2-cost', '—');
     if (lastReal) {
       set('kpi2-total-calls', fmt(lastReal.totalCalls));
@@ -836,6 +841,16 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       set('stat-contacts', fmt(lastReal.contacts));
       set('stat-dnc', lastReal.dnc);
       set('stat-compliance', lastReal.compliance);
+      if (lastReal.avgDurationMs === null) {
+        set('kpi2-avg-duration', '—');
+        if (avgSub) avgSub.textContent = 'No completed calls yet.';
+      } else {
+        set('kpi2-avg-duration', fmtDuration(lastReal.avgDurationMs));
+        if (avgSub) avgSub.textContent = 'Across completed calls. Simulator calls time pipeline processing, not a live audio session.';
+      }
+    } else {
+      set('kpi2-avg-duration', '—');
+      if (avgSub) avgSub.textContent = 'Sign in to load.';
     }
   }
 
@@ -1133,6 +1148,7 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       1 - blockedTrai / Math.max(1, dispatched)
     ];
     const complianceScore = `${Math.round((complianceParts.reduce((a, b) => a + b, 0) / complianceParts.length) * 100)}%`;
+    const avgDurationMs = typeof kpis.avgDurationMs === 'number' ? kpis.avgDurationMs : null;
 
     let conversationsCount = 0;
     const convRes = await fetch(`${apiBase}/conversations`, { headers: headers() });
@@ -1152,7 +1168,8 @@ const apiBase = import.meta.env.PUBLIC_VOICE_API_ENDPOINT ?? 'http://127.0.0.1:8
       agents: agentsCount,
       contacts: contactsCount,
       dnc: dncCount,
-      compliance: complianceScore
+      compliance: complianceScore,
+      avgDurationMs
     };
     renderOverview();
   }
