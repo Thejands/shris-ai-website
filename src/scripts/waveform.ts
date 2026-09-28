@@ -1,7 +1,7 @@
 /**
  * SHRIS AI: HIGH-FIDELITY SOVEREIGN SPEECH & AUDIO ENGINE
  * Full-duplex conversational voice runtime & live 2-way microphone analyzer
- * Engineered by Thejands LLP
+ * Engineered by Thejands
  */
 
 export class WaveformVisualizer {
