@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host",
-    "build": "astro build",
+    "build": "astro build && node scripts/add-traffic-middleware.mjs",
     "preview": "astro preview"
   },
   "dependencies": {
