@@ -1,4 +1,10 @@
 ---
+interface Props {
+  /** Render the section title as the page's h1 (keeps the h2 look). */
+  headingLevel?: 'h1' | 'h2';
+}
+const { headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
 import { PRICING_TIERS } from '../../data/pricing';
 ---
 
@@ -10,7 +16,7 @@ import { PRICING_TIERS } from '../../data/pricing';
         <p class="eyebrow-text">Transparent Pricing</p>
         <div class="eyebrow-line"></div>
       </div>
-      <h2>Pay as you scale. Zero wasted spend.</h2>
+      <Heading class="section-heading">Pay as you scale. Zero wasted spend.</Heading>
       <p class="lead">
         Transparent pricing based exclusively on connected conversation minutes. No charges for busy tones or failed attempts.
       </p>

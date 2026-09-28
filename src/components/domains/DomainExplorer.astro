@@ -1,4 +1,10 @@
 ---
+interface Props {
+  /** Render the section title as the page's h1 (keeps the h2 look). */
+  headingLevel?: 'h1' | 'h2';
+}
+const { headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
 import { DOMAINS, OTHER_INDUSTRIES } from '../../data/domains';
 ---
 
@@ -10,7 +16,7 @@ import { DOMAINS, OTHER_INDUSTRIES } from '../../data/domains';
         <p class="eyebrow-text">Industry Playbooks</p>
         <div class="eyebrow-line"></div>
       </div>
-      <h2>One voice platform. Every industry.</h2>
+      <Heading class="section-heading">One voice platform. Every industry.</Heading>
       <p class="lead">
         Build specialized voice agents for the workflows your enterprise runs every day.
       </p>

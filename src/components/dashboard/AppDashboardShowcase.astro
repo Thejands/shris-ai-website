@@ -228,4 +228,23 @@
       display: none;
     }
   }
+
+  /* Small phones: the long demo label wraps instead of widening the page. */
+  @media (max-width: 480px) {
+    .action-buttons-group {
+      width: 100%;
+      gap: 1rem;
+    }
+
+    .pulse-glow-btn {
+      max-width: 100%;
+      white-space: normal;
+      text-align: center;
+      padding-inline: 1.25rem;
+    }
+
+    .quick-feature-pills {
+      justify-content: center;
+    }
+  }
 </style>

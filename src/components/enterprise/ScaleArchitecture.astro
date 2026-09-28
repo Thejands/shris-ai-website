@@ -222,5 +222,22 @@ const ARCH_PILLARS = [
     .scale-pillars-grid {
       grid-template-columns: 1fr;
     }
+
+    /* Stack the pipeline on phones instead of a sideways-scrolling strip. */
+    .topo-steps-row {
+      flex-direction: column;
+      align-items: stretch;
+      overflow-x: visible;
+    }
+
+    .topo-step {
+      min-width: 0;
+    }
+
+    .topo-arrow {
+      align-self: center;
+      transform: rotate(90deg);
+      line-height: 1;
+    }
   }
 </style>

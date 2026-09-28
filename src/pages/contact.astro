@@ -61,7 +61,7 @@ import Footer from '../components/navigation/Footer.astro';
             <form id="contact-page-form" style="display: flex; flex-direction: column; gap: 1.25rem;" novalidate>
               <input type="text" name="website" id="contact-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; opacity: 0; height: 0; width: 0;" />
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem;">
                 <div class="form-field">
                   <label for="contact-first-name" style="font-family: var(--font-mono); font-size: 0.72rem; color: #CBD5E1; text-transform: uppercase;">FIRST NAME *</label>
                   <input type="text" id="contact-first-name" required placeholder="Aarav" class="custom-input" />

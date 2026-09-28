@@ -1,4 +1,10 @@
 ---
+interface Props {
+  /** Render the section title as the page's h1 (keeps the h2 look). */
+  headingLevel?: 'h1' | 'h2';
+}
+const { headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
 import { DEVELOPER_SNIPPETS } from '../../data/developer';
 ---
 
@@ -10,7 +16,7 @@ import { DEVELOPER_SNIPPETS } from '../../data/developer';
         <p class="eyebrow-text">Developer APIs & SDKs</p>
         <div class="eyebrow-line"></div>
       </div>
-      <h2>Voice intelligence, programmable.</h2>
+      <Heading class="section-heading">Voice intelligence, programmable.</Heading>
       <p class="lead">
         Trigger outbound calls, stream real-time transcripts via WebSockets, and register custom tool handlers with clean, typed SDKs.
       </p>
