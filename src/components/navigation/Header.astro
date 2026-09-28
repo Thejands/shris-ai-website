@@ -181,6 +181,13 @@ const currentPath = Astro.url.pathname;
       display: flex;
     }
   }
+
+  /* Small phones: Contact lives in the drawer, keep the header to one row. */
+  @media (max-width: 600px) {
+    .nav-actions-right .btn-outline {
+      display: none;
+    }
+  }
 </style>
 
 <script>

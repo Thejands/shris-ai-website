@@ -93,7 +93,8 @@ h1 {
   letter-spacing: -0.035em;
 }
 
-h2 {
+h2,
+h1.section-heading {
   font-size: clamp(2rem, 3.8vw, 3.2rem);
   letter-spacing: -0.03em;
 }
@@ -350,6 +351,14 @@ html.surface-aa .badge-emerald {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+}
+
+/* Let grid items shrink below their content's min width, so long words,
+   inputs or nested grids never push a column past a narrow viewport. */
+.grid-2 > *,
+.grid-3 > *,
+.grid-4 > * {
+  min-width: 0;
 }
 
 .grid-3 {

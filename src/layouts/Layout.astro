@@ -18,7 +18,7 @@ const {
 const isApp = Astro.url.pathname.startsWith('/app');
 const isDocs = Astro.url.pathname.startsWith('/docs');
 const htmlClass = [isDocs || isApp ? 'surface-aa' : '', isApp ? 'app-console' : ''].filter(Boolean).join(' ');
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://shris.ai');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://shris.thejands.in');
 
 // Rich Schema.org Graph for SEO, EEO & GEO (Answer Engines)
 const jsonLd = {
@@ -26,11 +26,11 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': 'https://shris.ai/#organization',
+      '@id': 'https://shris.thejands.in/#organization',
       'name': 'Thejands LLP',
       'alternateName': 'Shris AI',
-      'url': 'https://shris.ai',
-      'logo': 'https://shris.ai/favicon.svg',
+      'url': 'https://shris.thejands.in',
+      'logo': 'https://shris.thejands.in/favicon.svg',
       'description': 'Pioneering sovereign voice intelligence and conversational AI workforce platforms in India.',
       'foundingDate': '2024',
       'address': {
@@ -44,16 +44,16 @@ const jsonLd = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://shris.ai/#website',
-      'url': 'https://shris.ai',
+      '@id': 'https://shris.thejands.in/#website',
+      'url': 'https://shris.thejands.in',
       'name': 'Shris AI | Sovereign Voice Platform',
       'publisher': {
-        '@id': 'https://shris.ai/#organization'
+        '@id': 'https://shris.thejands.in/#organization'
       }
     },
     {
       '@type': 'SoftwareApplication',
-      '@id': 'https://shris.ai/#software',
+      '@id': 'https://shris.thejands.in/#software',
       'name': 'Shris AI Sovereign Conversational Engine',
       'applicationCategory': 'BusinessApplication',
       'operatingSystem': 'Cloud, Any',

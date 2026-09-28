@@ -119,12 +119,12 @@ export async function submitLead(lead: LeadPayload): Promise<LeadSubmissionResul
 
     return {
       ok: false,
-      message: 'We could not submit your request right now. Please try again or email sales@shris.ai.',
+      message: 'We could not submit your request right now. Please try again or email hello@thejands.in.',
     };
   } catch {
     return {
       ok: false,
-      message: 'We could not submit your request right now. Please try again or email sales@shris.ai.',
+      message: 'We could not submit your request right now. Please try again or email hello@thejands.in.',
     };
   }
 }

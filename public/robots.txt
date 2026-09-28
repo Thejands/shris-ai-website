@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://shris.ai/sitemap.xml
+Sitemap: https://shris.thejands.in/sitemap.xml

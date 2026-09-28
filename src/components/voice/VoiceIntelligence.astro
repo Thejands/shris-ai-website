@@ -1,4 +1,10 @@
 ---
+interface Props {
+  /** Render the section title as the page's h1 (keeps the h2 look). */
+  headingLevel?: 'h1' | 'h2';
+}
+const { headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
 const ARCHITECTURE_LAYERS = [
   {
     layer: '01',
@@ -43,7 +49,7 @@ const ARCHITECTURE_LAYERS = [
         <p class="eyebrow-text">Speech Architecture</p>
         <div class="eyebrow-line"></div>
       </div>
-      <h2>Natural conversations. Intelligent outcomes.</h2>
+      <Heading class="section-heading">Natural conversations. Intelligent outcomes.</Heading>
       <p class="lead">
         A full-duplex conversational voice stack engineered for sub-300ms latency, human-like cadence, and deep business reasoning.
       </p>
