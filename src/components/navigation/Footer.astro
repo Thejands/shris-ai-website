@@ -81,12 +81,13 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
 
     <!-- Copyright -->
     <div class="footer-bottom-row">
-      <p>© 2026 Thejands LLP. All rights reserved. Sovereign Voice Compute.</p>
+      <p>© 2026 <a class="parent-link" href="https://thejands.in/?utm_source=shris.thejands.in&amp;utm_medium=referral&amp;utm_campaign=product-footer" rel="noopener">Thejands LLP</a>. All rights reserved. Sovereign Voice Compute.</p>
       <div class="footer-legal-links">
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms of Service</a>
         <a href="/security">Security Statement</a>
         <a href="/compliance">TRAI & DPDP</a>
+        <a href="https://thejands.in/?utm_source=shris.thejands.in&amp;utm_medium=referral&amp;utm_campaign=product-footer" rel="noopener">Thejands <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </div>
@@ -178,6 +179,12 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
     color: var(--shris-navy-950);
   }
 
+  .parent-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   .footer-bottom-row {
     display: flex;
     align-items: center;
@@ -191,8 +198,9 @@ import BrandWordmark from '../brand/BrandWordmark.astro';
 
   .footer-legal-links {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.75rem 1.5rem;
   }
 
   @media (max-width: 960px) {

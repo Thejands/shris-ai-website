@@ -3,7 +3,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://shris.ai',
+  site: 'https://shris.thejands.in',
   adapter: vercel(),
   build: {
     inlineStylesheets: 'auto'
