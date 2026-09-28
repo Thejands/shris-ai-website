@@ -22,7 +22,7 @@ export const DOC_PAGES: DocPage[] = [
     sections: [
       {
         heading: 'What Shris AI is',
-        body: 'Shris AI is a sovereign conversational voice runtime engineered by Thejands LLP. It turns inbound and outbound phone conversations into structured CRM updates, calendar bookings, WhatsApp follow-ups, and workflow events — with sub-300ms full-duplex latency and 10+ Indian languages including code-mixing.'
+        body: 'Shris AI is a sovereign conversational voice runtime engineered by Thejands. It turns inbound and outbound phone conversations into structured CRM updates, calendar bookings, WhatsApp follow-ups, and workflow events — with sub-300ms full-duplex latency and 10+ Indian languages including code-mixing.'
       },
       {
         heading: 'Product loop',

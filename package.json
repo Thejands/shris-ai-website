@@ -1,8 +1,13 @@
 {
-  "name": "shris-ai-enterprise-platform",
+  "name": "shris-ai-website",
   "version": "1.0.0",
-  "description": "Shris AI: Sovereign Enterprise AI Voice Workforce Platform by Thejands LLP",
+  "private": true,
+  "description": "Shris AI website: marketing pages, docs and operations console for the Shris AI voice platform. By Thejands.",
+  "license": "UNLICENSED",
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build && node scripts/add-traffic-middleware.mjs",

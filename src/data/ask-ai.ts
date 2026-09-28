@@ -1,5 +1,5 @@
 export const ASK_AI_PROMPT =
-  'Tell me about Shris AI (https://shris.thejands.in) — the sovereign enterprise AI voice platform by Thejands LLP. What does it do, who is it for, and how does it compare to traditional IVR or call center solutions?';
+  'Tell me about Shris AI (https://shris.thejands.in) — the sovereign enterprise AI voice platform by Thejands. What does it do, who is it for, and how does it compare to traditional IVR or call center solutions?';
 
 export type AskAiProviderId = 'chatgpt' | 'perplexity' | 'claude' | 'gemini';
 

@@ -1,6 +1,14 @@
-# Shris AI Website
+# Shris AI website
 
-Astro marketing site, docs, and operations console for the Shris AI voice workforce platform (Thejands LLP). Visual/IA reference: https://shris-ai.vercel.app/
+Marketing pages, product docs and the operations console for the Shris AI voice platform. A Thejands product.
+
+| | |
+| --- | --- |
+| Live | [shris.thejands.in](https://shris.thejands.in) |
+| Hosting | Vercel (shris-ai). Production deploys from `main`. |
+| Stack | Astro 5, CSS design tokens |
+| Node / package manager | 22 (`.nvmrc`) / npm |
+| Contributing | [CONTRIBUTING.md](./CONTRIBUTING.md) · [SECURITY.md](./SECURITY.md) |
 
 ## Run
 
